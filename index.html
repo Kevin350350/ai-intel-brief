@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 情报简报 — 2026-04-20</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --text-soft: #374151;
+    --card-bg: #ffffff;
+    --card-border: #e8e8ed;
+    --section-divider: #e5e7eb;
+    --signal-top: #dc2626;
+    --signal-notable: #ea580c;
+    --tag-geek-fg: #6d28d9;       --tag-geek-bg: #ede9fe;
+    --tag-dev-fg: #1d4ed8;        --tag-dev-bg: #dbeafe;
+    --tag-mass-fg: #57534e;       --tag-mass-bg: #f5f5f4;
+    --tag-official-fg: #b45309;   --tag-official-bg: #fef3c7;
+    --tag-academic-fg: #0e7490;   --tag-academic-bg: #cffafe;
+    --tag-commercial-fg: #be185d; --tag-commercial-bg: #fce7f3;
+    --tag-orche-fg: #047857;      --tag-orche-bg: #d1fae5;
+    --tag-landscape-fg: #78350f;  --tag-landscape-bg: #fef7e0;
+    --action-bg: #ecfdf5;
+    --action-border: #a7f3d0;
+    --action-text: #064e3b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-soft: #cbd5e1;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --section-divider: #334155;
+      --signal-top: #f87171;
+      --signal-notable: #fb923c;
+      --tag-geek-fg: #c4b5fd;       --tag-geek-bg: #3b0764;
+      --tag-dev-fg: #93c5fd;        --tag-dev-bg: #1e3a8a;
+      --tag-mass-fg: #d6d3d1;       --tag-mass-bg: #3f3f46;
+      --tag-official-fg: #fcd34d;   --tag-official-bg: #78350f;
+      --tag-academic-fg: #67e8f9;   --tag-academic-bg: #164e63;
+      --tag-commercial-fg: #f9a8d4; --tag-commercial-bg: #831843;
+      --tag-orche-fg: #6ee7b7;      --tag-orche-bg: #064e3b;
+      --tag-landscape-fg: #fcd34d;  --tag-landscape-bg: #713f12;
+      --action-bg: #064e3b;
+      --action-border: #047857;
+      --action-text: #d1fae5;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+  h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; }
+  .section { margin-bottom: 32px; }
+  .section-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--section-divider);
+  }
+  .section-icon { font-size: 1.3rem; }
+  .section-header h2 { font-size: 1.15rem; font-weight: 700; }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 1rem; font-weight: 700; margin-bottom: 8px;
+    display: flex; align-items: flex-start; gap: 10px;
+    color: var(--text);
+  }
+  .card-body { font-size: 0.92rem; color: var(--text-soft); }
+  .card-body p { margin-bottom: 8px; }
+  .card-body p:last-child { margin-bottom: 0; }
+  .card-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .compact-item {
+    padding: 10px 0; border-bottom: 1px solid var(--section-divider);
+    font-size: 0.92rem;
+  }
+  .compact-item:last-child { border-bottom: none; }
+  .compact-title {
+    font-weight: 600; display: flex; align-items: center;
+    gap: 8px; flex-wrap: wrap; color: var(--text);
+  }
+  .compact-desc {
+    color: var(--text-muted); font-size: 0.85rem;
+    margin-top: 4px; line-height: 1.55;
+  }
+  .sig {
+    display: inline-block; width: 12px; height: 12px;
+    border-radius: 50%; flex-shrink: 0;
+    vertical-align: middle; margin-right: 2px;
+  }
+  .sig-top { background: var(--signal-top); }
+  .sig-notable { background: var(--signal-notable); }
+  .tag {
+    display: inline-flex; align-items: center;
+    font-size: 0.72rem; font-weight: 600;
+    padding: 3px 9px; border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+  .tag-geek       { color: var(--tag-geek-fg);       background: var(--tag-geek-bg); }
+  .tag-dev        { color: var(--tag-dev-fg);        background: var(--tag-dev-bg); }
+  .tag-mass       { color: var(--tag-mass-fg);       background: var(--tag-mass-bg); }
+  .tag-official   { color: var(--tag-official-fg);   background: var(--tag-official-bg); }
+  .tag-academic   { color: var(--tag-academic-fg);   background: var(--tag-academic-bg); }
+  .tag-commercial { color: var(--tag-commercial-fg); background: var(--tag-commercial-bg); }
+  .tag-orche      { color: var(--tag-orche-fg);      background: var(--tag-orche-bg); }
+  .tag-landscape  { color: var(--tag-landscape-fg);  background: var(--tag-landscape-bg); }
+  .person { padding: 14px 0; border-bottom: 1px solid var(--section-divider); }
+  .person:last-child { border-bottom: none; }
+  .person-name { font-weight: 700; font-size: 0.98rem; color: var(--text); }
+  .person-role { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+  .person-content { font-size: 0.9rem; color: var(--text-soft); margin-top: 6px; }
+  .heat-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--section-divider);
+  }
+  .heat-item:last-child { border-bottom: none; }
+  .heat-rank {
+    font-size: 1.3rem; font-weight: 800;
+    color: var(--text-muted); min-width: 30px; flex-shrink: 0;
+  }
+  .heat-content { flex: 1; }
+  .heat-title {
+    font-weight: 600; font-size: 0.94rem;
+    display: flex; align-items: center;
+    gap: 8px; flex-wrap: wrap; color: var(--text);
+  }
+  .heat-evidence {
+    font-size: 0.82rem; color: var(--text-muted);
+    margin-top: 4px; font-style: italic;
+  }
+  .heat-desc { font-size: 0.88rem; color: var(--text-soft); margin-top: 4px; }
+  .tracking-empty {
+    color: var(--text-muted); font-style: italic;
+    padding: 12px 0; font-size: 0.9rem;
+  }
+  .action-box {
+    background: var(--action-bg);
+    border: 1px solid var(--action-border);
+    border-radius: 10px; padding: 16px 20px;
+    color: var(--action-text);
+  }
+  .action-box ul { padding-left: 20px; }
+  .action-box li { margin-bottom: 8px; font-size: 0.92rem; color: var(--action-text); }
+  .action-box li:last-child { margin-bottom: 0; }
+  .action-box strong { color: var(--action-text); }
+  a { color: var(--tag-dev-fg); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .audio-player {
+    margin: -12px 0 28px; padding: 12px 14px;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 10px;
+  }
+  .audio-player-label { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
+  .audio-player audio { width: 100%; height: 36px; display: block; }
+  .footer {
+    margin-top: 40px; padding-top: 16px;
+    border-top: 1px solid var(--section-divider);
+    font-size: 0.78rem; color: var(--text-muted); text-align: center;
+  }
+  .legend { margin-top: 8px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .legend-item { display: inline-flex; align-items: center; gap: 4px; }
+</style>
+</head>
+<body>
+
+<h1>AI 情报简报</h1>
+<p class="meta">2026-04-20（周一）· 覆盖过去 24-72 小时 · 阅读约 10 分钟</p>
+
+<div class="audio-player">
+  <div class="audio-player-label">🎧 语音播报（约 7-8 分钟）</div>
+  <audio controls preload="metadata">
+    <source src="audio/2026-04-20.mp3" type="audio/mpeg">
+    您的浏览器不支持音频播放。
+  </audio>
+</div>
+
+<!-- ============================================================
+  1. 今日焦点
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">🔥</span>
+    <h2>今日焦点</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      Google 发布 A2UI v0.9 — Agent-to-UI 生成式界面标准化协议
+    </div>
+    <div class="card-body">
+      <p>Google 于 4/17-4/19 正式发布 A2UI v0.9，框架无关的开放标准，允许 AI agent 在运行时动态生成 UI 组件，复用宿主应用已有的 React/Flutter/Angular/Lit 组件库。v0.9 新增 Python Agent SDK（pip 一键接入）、客户端定义函数、client-server 数据同步，并集成 A2A 1.0 协议。</p>
+      <p>依据：官方技术博客 + GitHub 14K stars + A2A 1.0 / AG-UI / Oracle / Vercel 生态同步跟进 —— agent 协议标准化的高密度会合点。来源：<a href="https://developers.googleblog.com/a2ui-v0-9-generative-ui/">developers.googleblog.com</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      xAI 发布独立 Grok 语音 API（STT + TTS）正式可用
+    </div>
+    <div class="card-body">
+      <p>xAI 于 4/17 正式发布 Grok Speech-to-Text 和 Text-to-Speech 两个独立 API，底层与 Grok 手机应用、Tesla 车载、Starlink 客服同一套基础设施。STT 支持 25 种语言，批量+流式模式，定价 $0.10/小时（批量）。官方声称在电话实体识别 benchmark 上错误率 5.0%，显著低于 ElevenLabs（12.0%）和 AssemblyAI（21.3%）—— 此为官方单一来源声明，需第三方独立验证。</p>
+      <p>依据：直接挑战 ElevenLabs / Deepgram / AssemblyAI 成熟语音 API 市场。来源：<a href="https://x.ai/news">x.ai/news</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-commercial">Commercial</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      Vercel 内部系统遭入侵（正在发酵）
+    </div>
+    <div class="card-body">
+      <p>Vercel 于今日（4/20）披露内部系统被攻破安全事件。HN 当前前页出现两条相关帖子（「Vercel Says Internal Systems Hit in Breach」126 分 + 「Vercel April 2026 security incident」）。此事件独立于早先的 React RSC CVE（4/8）。AI 开发者基础设施生态受到直接威胁。</p>
+      <p>依据：HN 前页双帖（已验证）。来源：<a href="https://vercel.com/changelog">vercel.com/changelog</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-commercial">Commercial</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  2. 追踪中
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">📡</span>
+    <h2>追踪中</h2>
+  </div>
+  <p class="tracking-empty">尚无追踪项目。对 ORCHE 说「追踪 [主题]」即可新增。</p>
+</div>
+
+<!-- ============================================================
+  3. 前沿人物动态
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">🎙</span>
+    <h2>前沿人物动态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="person">
+      <div class="person-name"><span class="sig sig-top"></span> Sam Altman</div>
+      <div class="person-role">OpenAI CEO</div>
+      <div class="person-content">4/15 OpenAI 发布受限访问网络安全模型 GPT-5.4-Cyber；同日 Altman 在 BlackRock 峰会公开「AI 定价应像电力按用量计费」愿景，被广泛引用。来源：<a href="https://techxplore.com/news/2026-04-openai-restricted-access-cybersecurity.html">techxplore</a></div>
+    </div>
+    <div class="person">
+      <div class="person-name"><span class="sig sig-notable"></span> Satya Nadella</div>
+      <div class="person-role">Microsoft CEO</div>
+      <div class="person-content">4/15 宣布 Copilot 进入 Word，新增 AI 驱动的逐字追踪修改与上下文评论功能，通过 Microsoft 365 Copilot Frontier 计划推出。来源：<a href="https://www.news9live.com/technology/artificial-intelligence/satya-nadella-unveils-ai-copilot-in-microsoft-word-with-smart-track-changes-and-comments-2956882">news9live</a></div>
+    </div>
+    <div class="person">
+      <div class="person-name"><span class="sig sig-notable"></span> Mark Zuckerberg</div>
+      <div class="person-role">Meta CEO</div>
+      <div class="person-content">4/14-15 媒体披露 Zuckerberg 已将办公桌迁至 Meta Superintelligence Labs 内，与 Alexandr Wang 并肩写代码，每周投入 5-10 小时亲自参与模型开发。来源：<a href="https://www.businessinsider.com/mark-zuckerberg-moved-desk-coding-again-sits-by-alexandr-wang-2026-4">businessinsider</a></div>
+    </div>
+    <div class="person">
+      <div class="person-name"><span class="sig sig-notable"></span> Swyx</div>
+      <div class="person-role">Latent Space 主理</div>
+      <div class="person-content">4/15 发布 AINews「Humanity's Last Gasp」期刊，讨论「AI 做更多工作却人人更忙」悖论，引用 SWE-Bench Pro、Mythos 达 78%、GDPval 认为 GPT-5.4 在多数经济领域优于或等同人类专家的数据点。来源：<a href="https://www.latent.space/p/ainews-humanitys-last-gasp">latent.space</a></div>
+    </div>
+    <div class="person">
+      <div class="person-name">Elon Musk</div>
+      <div class="person-role">xAI / Tesla</div>
+      <div class="person-content">4/15 确认 Tesla AI5 芯片已完成 tape-out，明确表示 AI4 已足以实现优于人类的 FSD 安全性，AI5 将优先用于 Optimus 与数据中心。来源为 teslarati 报道转述 X 推文，单一来源需留意。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  4. 技术突破
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">💡</span>
+    <h2>技术突破</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      GrandCode — AI 首次在 Codeforces 直播赛场全面超越人类
+    </div>
+    <div class="card-body">
+      <p>GrandCode 是首个在 Codeforces <strong>真实直播比赛</strong>中连续三次拿到第一（2026-03-21/28/29 的 Round 1087/1088/1089），击败包括传奇 Grandmaster 在内的所有人类选手，且每轮均最快完成所有题目。</p>
+      <p>技术机制：多 agent 模块（假设生成器 + 解题器 + 测例生成器 + 摘要器）协同 RL，引入 <strong>Agentic GRPO</strong> 处理多阶段 rollout 的延迟奖励与 off-policy 漂移；基座为 Qwen 3.5，数据生成借助 Claude / Gemini。编程 AI 从「实验室 benchmark 第一」到「直播赛场打败所有人类」的跨越，Agentic GRPO 作为通用多 agent RL 训练方法有跨任务迁移潜力。</p>
+      <p>来源：<a href="https://arxiv.org/abs/2604.02721">arXiv:2604.02721</a>。注：社区有「未独立验证赛账号身份」的质疑，机制细节待同行评审。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-academic">Academic</span>
+      <span class="tag tag-geek">极客</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      <span class="sig sig-notable"></span>
+      MolmoWeb — 全开放多模态 Web Agent，首次在开放权重规模 SOTA
+      <span class="tag tag-academic">Academic</span>
+    </div>
+    <div class="compact-desc">AllenAI 发布 MolmoWeb（4B/8B）+ MolmoWebMix 数据集，MolmoWeb-8B 在 WebVoyager 等 benchmark 击败以 GPT-4o 为基础的 SoM agents；pass@4 达 94.7%。开源路径给 Web agent 生态注入一记强开放信号。<a href="https://arxiv.org/abs/2604.08516">arXiv:2604.08516</a></div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      <span class="sig sig-notable"></span>
+      LightThinker++ — 推理压缩 + 记忆管理，长 agent 任务 token -70%
+      <span class="tag tag-academic">Academic</span>
+      <span class="tag tag-orche">ORCHE相关</span>
+    </div>
+    <div class="compact-desc">动态压缩中间思维 + Explicit Adaptive Memory Management；长 horizon 任务（80+ 轮）token 占用减少 60-70%，性能平均提升 14.8%。对 ORCHE 这类长 session agent 有直接工程价值。<a href="https://arxiv.org/abs/2604.03679">arXiv:2604.03679</a></div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      ARC-AGI-3 持续热度 — frontier 模型得分低于 0.26%
+      <span class="tag tag-academic">Academic</span>
+    </div>
+    <div class="compact-desc">3/25 发布的交互式 agent 推理 benchmark，Kaggle 竞赛进行中至 11 月，奖金池 $200 万。所有 frontier 模型得分 &lt; 0.26%，人类 100%——目前唯一未饱和的通用 agentic intelligence benchmark。r/LocalLLaMA 4/20 当前仍有热帖。<a href="https://arcprize.org/blog/arc-agi-3-launch">arcprize.org</a></div>
+  </div>
+</div>
+
+<!-- ============================================================
+  5. 开源生态
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">📦</span>
+    <h2>开源生态</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      Gemma 4（Google）+ Unsloth Dynamic v2.0 — 本地微调下限大幅降低
+    </div>
+    <div class="card-body">
+      <p>Google 4/2 发布 Gemma 4（E2B/E4B/26B-MoE/31B-Dense，Apache 2.0），31B 模型 Codeforces ELO 从 Gemma 3 的 110 跃至 2150（20 倍）。Unsloth 同步发布 Dynamic v2.0 GGUFs，支持 <strong>8GB VRAM 微调 Gemma 4 E2B/E4B</strong>；llama.cpp PR #21534 合并后 tokenization 稳定。</p>
+      <p>r/LocalLLaMA 多帖 350-2000 upvotes；Unsloth 62,175 stars（已验证）。社区从「发布」到「本地可微调 workflow」时间窗口从数周压缩至数天。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-geek">极客</span>
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="compact-item">
+      <div class="compact-title">
+        <span class="sig sig-notable"></span>
+        Qwen3.6-35B-A3B 发布（4/16）— SWE-Bench 73.4%，消费级硬件可跑
+        <span class="tag tag-official">Official</span>
+        <span class="tag tag-landscape">L 候选</span>
+      </div>
+      <div class="compact-desc">Alibaba 4/16 发布 Qwen3.6-35B-A3B（35B MoE / 实际激活 3B），Apache 2.0 协议。SWE-Bench 73.4%，接入顶级 agent 体系（如 GrandCode）的 coding 能力进一步扩散。<a href="https://github.com/QwenLM/Qwen3.5">GitHub</a></div>
+    </div>
+    <div class="compact-item">
+      <div class="compact-title">
+        <span class="sig sig-notable"></span>
+        vLLM v0.19.0 — 完整支持 Gemma 4，77k stars 生态基石
+        <span class="tag tag-official">Official</span>
+      </div>
+      <div class="compact-desc">4/3 发布，新增 Gemma 4 全架构支持（MoE、多模态、推理、tool-use），兼容 Transformers v5，Model Runner V2 持续成熟。开源 LLM serving 最主要基础设施。<a href="https://github.com/vllm-project/vllm/releases/tag/v0.19.0">release notes</a></div>
+    </div>
+    <div class="compact-item">
+      <div class="compact-title">
+        Sentence Transformers v5.4.0 — 首次原生多模态 Embedding
+        <span class="tag tag-official">Official</span>
+      </div>
+      <div class="compact-desc">4/9 发布，引入跨模态/多模态 Embedding（文本/图像/音频/视频），CrossEncoder 模块化可接 generative reranker。下游 RAG 应用可直接接入多模态索引。19k stars。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  6. Claude Code 专区
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">⚙</span>
+    <h2>Claude Code 专区</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      功能发布
+    </div>
+    <div class="card-body">
+      <p><strong>Desktop App 完全重设计 + Routines 云端自动化（4/14）</strong>—— 多会话并行（Git worktree）、集成终端、内置编辑器、diff 预览重建、三档显示密度；快捷键 <code>Cmd+;</code> 侧支提问不污染主线程。<strong>Routines 研究预览</strong>：prompt + repo + connectors 打包为可复用配置，三种触发（Schedule 最小 1 小时 / API webhook / GitHub 事件）。在 Anthropic 云端执行，无需本地开机。Pro 每日 5 次 / Max 15 次 / Team 25 次。<a href="https://claude.com/blog/introducing-routines-in-claude-code">官方博客</a></p>
+      <p><strong>Claude Opus 4.7 上线（4/16）</strong>—— API 定价维持 $5/$25 per MTok；Sonnet 4 / Opus 4 于 2026-06-15 退役。当前 session 已运行 Opus 4.7。</p>
+      <p>API 层配套：<strong>ant CLI</strong>（官方命令行客户端，与 Claude Code 原生集成）+ <strong>Advisor Tool</strong>（快速模型执行 + 高智能模型中途指导的双模协同）+ <strong>Managed Agents</strong>（托管 agent harness 含沙箱与 SSE streaming），均 4/8-9 发布。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      应用场景讨论 — Boris Cherny 分享团队内部 10 条用法
+    </div>
+    <div class="card-body">
+      <p>Claude Code 创始人 @bcherny 官方发布团队内部实际用法：</p>
+      <p><strong>并行 worktree 是最大生产力杠杆</strong>—— 团队标准 3-5 个并行会话，shell alias（za/zb/zc）一键切换；有人建「analysis worktree」专读 log + 跑 BigQuery。<strong>CLAUDE.md 复利工程</strong>—— 每次纠错后追加「Update CLAUDE.md so you don't make that mistake again」，让模型为自己写规则。<strong>复杂任务先 Plan Mode</strong>（Shift+Tab 双击），一个 Claude 写计划 + 另一个 Claude 以 staff engineer 身份 review。<strong>BigQuery + bq CLI</strong> 建 skill，团队 6 个月未写过 SQL。<strong>Subagent 用法</strong>—— 需更多 compute 的请求末尾加「use subagents」。<a href="https://twitter-thread.com/t/2017742741636321619">原帖</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-geek">极客</span>
+      <span class="tag tag-orche">ORCHE相关</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      评价 — Opus 4.6 质量回退投诉密集
+    </div>
+    <div class="card-body">
+      <p>4 月上旬多个 GitHub issue 同步出现 Opus 4.6 质量回退投诉（#48067 / #47700 / #45006 / #46429 / #46009）。集中模式：不搜索 codebase 直接改（「Opus feels like Haiku」）、自毁已有代码（`git checkout -f HEAD` 抹掉 3 天成果）、忽略 guardrails 跳过验证、视觉验证虚报「all looks good」。issues 大量 duplicate 标注说明 Anthropic 已注意到聚集性；用户措辞升级为取消订阅威胁。Anthropic 回应 reasoning budget 调整已在 changelog 说明，但用户认为未解决核心回退问题。</p>
+      <p><strong>竞品格局</strong>：多篇 4 月对比结论一致——CC 复杂任务第一（SWE-bench ~72-77%，token 效率比 Cursor 高 5.5 倍），Cursor 日常驾驶优（IDE 原生 + inline autocomplete），Copilot 企业合规入场。主流收敛为双轨（Cursor 写日常 + CC 处理跨文件/需实际执行的）。</p>
+      <p>单一警示：r/LocalLLaMA 当前热帖报告 Claude Code npm 包含可还原 source map 文件，社区视为安全信息泄露。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-commercial">Commercial</span>
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-orche">ORCHE相关</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  7. 横向热度
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">📊</span>
+    <h2>横向热度</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="heat-item">
+      <div class="heat-rank">1</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          <span class="sig sig-notable"></span>
+          Intel Arc Pro B65 本周上市 — $949 以下 32GB VRAM
+          <span class="tag tag-geek">极客</span>
+        </div>
+        <div class="heat-evidence">依据：Newegg 工作站 GPU 销量榜 B70 版第一 + r/LocalLLaMA 热帖 + $1000 以下 32GB 首次突破</div>
+        <div class="heat-desc">Intel Arc Pro B70（32GB GDDR6，$949）已上市；姊妹款 B65（20 Xe cores，197 TOPS，同样 32GB）按计划本周上市。社区视为「本地 inference 硬件新基准线」。</div>
+      </div>
+    </div>
+    <div class="heat-item">
+      <div class="heat-rank">2</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          大学教授改用打字机防 AI 代写
+          <span class="tag tag-mass">大众</span>
+        </div>
+        <div class="heat-evidence">依据：HN 4/20 当前前页 373 points + 350 comments</div>
+        <div class="heat-desc">AI 与教育边界焦虑的具象化事件。社会文化维度的 AI 冲突符号。</div>
+      </div>
+    </div>
+    <div class="heat-item">
+      <div class="heat-rank">3</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          Anthropic vs Pentagon guardrail war — 欧洲视角分析
+          <span class="tag tag-mass">大众</span>
+        </div>
+        <div class="heat-evidence">依据：The Next Web 深度分析 + EU AI Act 8 月全面执法节点衔接</div>
+        <div class="heat-desc">Anthropic 拒绝为 Pentagon 移除自主武器与大规模监控限制 → 被列「供应链风险」丢 $2 亿合约；OpenAI 签约。文章定性为对欧洲 AI Act 执法路径的警示。</div>
+      </div>
+    </div>
+    <div class="heat-item">
+      <div class="heat-rank">4</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          Hyperscaler AI 支出超过美国历史大型工程项目
+          <span class="tag tag-mass">大众</span>
+        </div>
+        <div class="heat-evidence">依据：HN 4/18 日榜 #12 + Twitter/X 广泛传播</div>
+        <div class="heat-desc">Microsoft/Google/Amazon/Meta 的 AI 数据中心投资总量已超曼哈顿计划 + 阿波罗计划 + 洲际公路系统规模对比。HN 讨论集中在资本配置可持续性。</div>
+      </div>
+    </div>
+    <div class="heat-item">
+      <div class="heat-rank">5</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          Adobe Firefly AI Assistant 进入 agent 时代（4/15）
+          <span class="tag tag-commercial">Commercial</span>
+        </div>
+        <div class="heat-evidence">依据：Adobe FY2025 营收 $237.7 亿 + CEO Narayen 宣布卸任 + Canva 2.6 亿 MAU 竞争压力</div>
+        <div class="heat-desc">打通 Photoshop / Premiere / Lightroom / Illustrator / Frame.io 的跨应用自然语言任务编排，代号「Project Moonlight」。集成 Anthropic Claude / Google / OpenAI / Runway。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  8. 行动建议
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">⚡</span>
+    <h2>行动建议</h2>
+  </div>
+  <div class="action-box">
+    <ul>
+      <li><strong>Claude Code Routines 云端自动化评估</strong>—— Anthropic 云端执行、Schedule/webhook/GitHub 三种触发，与 ORCHE Phase 3B Auto Wrap-Up POC 架构高度相关。（去向：Parking lot，挂接 Phase 3B 评估）</li>
+      <li><strong>Opus 4.7 上线 + 4.6 质量回退观察</strong>—— 当前 session 已运行 Opus 4.7，本周观察 ORCHE 行为是否出现 #48067/#47700 投诉模式（擅改代码、跳过验证、视觉虚报）。（去向：Task，本周观察期）</li>
+      <li><strong>LightThinker++ 推理压缩方法</strong>—— 长 agent 任务 token -70%，对 ORCHE 长 session 工程价值直接。（去向：Parking lot，Phase 3 再评估）</li>
+      <li><strong>Gemma 4 + Unsloth v2.0 本地微调生态</strong>—— ORCHE 若需本地模型或 Kevin 想自建能力，此组合为当前开源最佳起点。（去向：L 候选，周五 AI Landscape 批更新）</li>
+      <li><strong>追踪项启动建议</strong>—— 当前 Anchor 追踪清单空。可考虑追踪「Anthropic 模型质量信号」「agent-to-UI 协议演化（A2UI / AG-UI / A2A）」「本地 frontier 模型格局（Gemma/Qwen/DeepSeek）」。（去向：Kevin 决定是否加入追踪清单）</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  Generated by ORCHE · 2026-04-20 台北时间
+  <div class="legend">
+    <span class="legend-item"><span class="sig sig-top"></span>顶级</span>
+    <span class="legend-item"><span class="sig sig-notable"></span>显著</span>
+    <span class="legend-item">无符号 = 值得关注</span>
+  </div>
+</div>
+
+</body>
+</html>
