@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 情报简报 — 2026-04-23</title>
+<style>
+  /* ============== Design tokens (light mode) ============== */
+  :root {
+    --bg: #fafafa;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --text-soft: #374151;
+    --card-bg: #ffffff;
+    --card-border: #e8e8ed;
+    --section-divider: #e5e7eb;
+
+    /* Signal symbols (圆形, 仅此类用圆形) */
+    --signal-top: #dc2626;       /* 🔴 顶级 */
+    --signal-notable: #ea580c;   /* 🟠 显著 */
+
+    /* Tag palette (文字 + 颜色, 不用圆形) */
+    --tag-geek-fg: #6d28d9;       --tag-geek-bg: #ede9fe;
+    --tag-dev-fg: #1d4ed8;        --tag-dev-bg: #dbeafe;
+    --tag-mass-fg: #57534e;       --tag-mass-bg: #f5f5f4;
+    --tag-official-fg: #b45309;   --tag-official-bg: #fef3c7;
+    --tag-academic-fg: #0e7490;   --tag-academic-bg: #cffafe;
+    --tag-commercial-fg: #be185d; --tag-commercial-bg: #fce7f3;
+    --tag-orche-fg: #047857;      --tag-orche-bg: #d1fae5;
+    --tag-landscape-fg: #78350f;  --tag-landscape-bg: #fef7e0;
+    --tag-tier-fg: #1e40af;       --tag-tier-bg: #dbeafe;
+
+    /* Date inline badge (v2: 每条新闻 inline 标日期) */
+    --date-fg: #9ca3af;
+
+    /* Cross-section panel (v2: 实验室横截面) */
+    --cross-bg: #eff6ff;
+    --cross-border: #bfdbfe;
+    --cross-text: #1e3a8a;
+
+    /* Action box (fix: explicit colors for both modes) */
+    --action-bg: #ecfdf5;
+    --action-border: #a7f3d0;
+    --action-text: #064e3b;
+  }
+
+  /* ============== Dark mode (explicit coverage, no漏洞) ============== */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-soft: #cbd5e1;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --section-divider: #334155;
+
+      /* Signal symbols keep saturated for visibility */
+      --signal-top: #f87171;
+      --signal-notable: #fb923c;
+
+      /* Tag palette: 深色文字→浅色文字 + 深色底 */
+      --tag-geek-fg: #c4b5fd;       --tag-geek-bg: #3b0764;
+      --tag-dev-fg: #93c5fd;        --tag-dev-bg: #1e3a8a;
+      --tag-mass-fg: #d6d3d1;       --tag-mass-bg: #3f3f46;
+      --tag-official-fg: #fcd34d;   --tag-official-bg: #78350f;
+      --tag-academic-fg: #67e8f9;   --tag-academic-bg: #164e63;
+      --tag-commercial-fg: #f9a8d4; --tag-commercial-bg: #831843;
+      --tag-orche-fg: #6ee7b7;      --tag-orche-bg: #064e3b;
+      --tag-landscape-fg: #fcd34d;  --tag-landscape-bg: #713f12;
+      --tag-tier-fg: #bfdbfe;       --tag-tier-bg: #1e3a8a;
+
+      /* Date inline + cross-section (v2) */
+      --date-fg: #64748b;
+      --cross-bg: #1e293b;
+      --cross-border: #1e40af;
+      --cross-text: #bfdbfe;
+
+      /* Action box dark mode */
+      --action-bg: #064e3b;
+      --action-border: #047857;
+      --action-text: #d1fae5;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+
+  h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; }
+
+  /* ============== Section ============== */
+  .section { margin-bottom: 32px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--section-divider);
+  }
+  .section-icon { font-size: 1.3rem; }
+  .section-header h2 { font-size: 1.15rem; font-weight: 700; }
+
+  /* ============== Card (for major items) ============== */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--text);
+  }
+  .card-body {
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+  .card-body p { margin-bottom: 8px; }
+  .card-body p:last-child { margin-bottom: 0; }
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  /* ============== Compact item (for secondary items) ============== */
+  .compact-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--section-divider);
+    font-size: 0.92rem;
+  }
+  .compact-item:last-child { border-bottom: none; }
+  .compact-title {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--text);
+  }
+  .compact-desc {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 4px;
+    line-height: 1.55;
+  }
+
+  /* ============== Signal symbols (ONLY use for signal strength) ============== */
+  .sig {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    vertical-align: middle;
+    margin-right: 2px;
+  }
+  .sig-top { background: var(--signal-top); }
+  .sig-notable { background: var(--signal-notable); }
+
+  /* ============== Text+color tags (NEVER use圆形) ============== */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+  .tag-geek       { color: var(--tag-geek-fg);       background: var(--tag-geek-bg); }
+  .tag-dev        { color: var(--tag-dev-fg);        background: var(--tag-dev-bg); }
+  .tag-mass       { color: var(--tag-mass-fg);       background: var(--tag-mass-bg); }
+  .tag-official   { color: var(--tag-official-fg);   background: var(--tag-official-bg); }
+  .tag-academic   { color: var(--tag-academic-fg);   background: var(--tag-academic-bg); }
+  .tag-commercial { color: var(--tag-commercial-fg); background: var(--tag-commercial-bg); }
+  .tag-orche      { color: var(--tag-orche-fg);      background: var(--tag-orche-bg); }
+  .tag-landscape  { color: var(--tag-landscape-fg);  background: var(--tag-landscape-bg); }
+  .tag-tier       { color: var(--tag-tier-fg);       background: var(--tag-tier-bg); }
+
+  /* ============== Inline date badge (v2) ============== */
+  .date-inline {
+    font-size: 0.78rem;
+    color: var(--date-fg);
+    font-weight: 500;
+    background: var(--section-divider);
+    padding: 2px 7px;
+    border-radius: 4px;
+    vertical-align: middle;
+  }
+
+  /* ============== Cross-section panel (v2: 实验室横截面) ============== */
+  .cross-section {
+    background: var(--cross-bg);
+    border: 1px solid var(--cross-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: var(--cross-text);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-top: 12px;
+  }
+  .cross-section-title {
+    font-weight: 700;
+    margin-bottom: 6px;
+    font-size: 0.92rem;
+  }
+
+  /* ============== Person block ============== */
+  .person {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--section-divider);
+  }
+  .person:last-child { border-bottom: none; }
+  .person-name {
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: var(--text);
+  }
+  .person-role {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .person-content {
+    font-size: 0.9rem;
+    color: var(--text-soft);
+    margin-top: 6px;
+  }
+
+  /* ============== Heat item (signal map) ============== */
+  .heat-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--section-divider);
+  }
+  .heat-item:last-child { border-bottom: none; }
+  .heat-rank {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    min-width: 30px;
+    flex-shrink: 0;
+  }
+  .heat-content { flex: 1; }
+  .heat-title {
+    font-weight: 600;
+    font-size: 0.94rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--text);
+  }
+  .heat-evidence {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+  .heat-desc {
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    margin-top: 4px;
+  }
+
+  /* ============== Tracking section ============== */
+  .tracking-empty {
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 12px 0;
+    font-size: 0.9rem;
+  }
+
+  /* ============== Action box (dark mode FIXED) ============== */
+  .action-box {
+    background: var(--action-bg);
+    border: 1px solid var(--action-border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: var(--action-text);
+  }
+  .action-box ul { padding-left: 20px; }
+  .action-box li {
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+    color: var(--action-text);
+  }
+  .action-box li:last-child { margin-bottom: 0; }
+  .action-box strong { color: var(--action-text); }
+
+  /* ============== Misc ============== */
+  a { color: var(--tag-dev-fg); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .inline-note {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .audio-player {
+    margin: -12px 0 28px;
+    padding: 12px 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+  }
+  .audio-player-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .audio-player audio {
+    width: 100%;
+    height: 36px;
+    display: block;
+  }
+  .footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--section-divider);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .legend {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .legend-item { display: inline-flex; align-items: center; gap: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+  HEADER
+============================================================ -->
+<h1>AI 情报简报</h1>
+<p class="meta">2026-04-23 (Thu) &middot; 覆盖 24h 新闻 / 7d 人物与生态 &middot; 阅读约 15 分钟</p>
+
+<!-- 音频播放器 -->
+<div class="audio-player">
+  <div class="audio-player-label">&#x1F3A7; 语音播报（约 6 分钟）</div>
+  <audio controls preload="metadata">
+    <source src="audio/2026-04-23.mp3" type="audio/mpeg">
+    您的浏览器不支持音频播放。
+  </audio>
+</div>
+
+<!-- ============================================================
+  1. 今日焦点
+  内容规则：TOP 1-3 条，用 card。每 card 含：
+  - card-title（前置 .sig-top 或 .sig-notable 或无符号）
+  - card-body 叙述
+  - card-meta 含 tag（信号层 + 分类 + 可选 L候选）
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F525;</span>
+    <h2>今日焦点</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      Google Cloud Next '26：第八代 TPU 双芯片架构 + 企业 Agent 平台 <span class="date-inline">4/22</span>
+    </div>
+    <div class="card-body">
+      <p>Google 拉斯维加斯 Cloud Next 大会发布 <strong>TPU 8t（训练）与 TPU 8i（推理）</strong>——首次将训练与推理拆分为独立硅。TPU 8t 单 Pod 9,600 芯片达 121 ExaFLOPS，较上代 Ironwood 提升 2.8x；TPU 8i 推理性价比提升 80%，KV cache 全驻 on-chip SRAM。两款芯片 GA 时程 2026 年底。</p>
+      <p>同场发布 <strong>Gemini Enterprise Agent Platform</strong>（含 Agent 注册中心防重复建造）与 Workspace Intelligence 跨套件 AI 层。Bloomberg、The Decoder、The Register、CNBC 多路覆盖，HN/r/Bard/Slashdot 同步讨论。</p>
+      <p>对 ORCHE 意义：Google 将 inference 从训练逻辑解耦，直接回应 agent 持续运行场景的成本问题——是今年硬件架构最具战略意义的宣示，推理单位成本将再降，影响 agent 调用成本测算。<a href="https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/eighth-generation-tpu-agentic-era/">一手来源</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-commercial">Commercial</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      OpenAI Privacy Filter：1.5B 开权重 PII 脱敏模型 Apache 2.0 开源 <span class="date-inline">4/22</span>
+    </div>
+    <div class="card-body">
+      <p>OpenAI 发布 <strong>Privacy Filter</strong>——1.5B 参数 / 50M 激活 / 128k context，单向前传完成全文 PII 检测，可本地离线运行。PII-Masking-300k benchmark F1 96%（Precision 94% / Recall 98%）。Apache 2.0 授权，Hugging Face / GitHub 开放，支持 ETL 流程嵌入与 fine-tune。</p>
+      <p>VentureBeat、BetaNews、Gate News 多家报道。对 GDPR/HIPAA 合规场景有直接实用价值，on-device 特性绕过 cloud PII 合规担忧——OpenAI 少见的开源工具投放。</p>
+      <p>对 Kevin 意义：YCYZ/FYWR 若有客户数据处理需求，可零成本嵌入 pipeline 替代付费方案。<a href="https://openai.com/index/introducing-openai-privacy-filter/">一手来源</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      蚂蚁集团 Ling-2.6-flash 揭晓身份：OpenRouter「Elephant Alpha」正是它 <span class="date-inline">4/22</span>
+    </div>
+    <div class="card-body">
+      <p>蚂蚁集团宣布 <strong>Ling-2.6-flash</strong> 正是过去一周在 OpenRouter 以「Elephant Alpha」匿名上线的模型。104B 总参数 / 7.4B 激活，HBM 上 340 tokens/s，连续多日登 OpenRouter Trending 榜首，日均调用量达 100B tokens。定价 $0.1/$0.3 per M tokens，本周免费；BF16/FP8/INT4 版本近期开源。</p>
+      <p>「匿名上线→社区验证→官方认领」路径属罕见市场策略，显示中国 AI 效率模型在 OpenRouter 的实际采用已达到 frontier 水准。官方 BusinessWire + 新浪财经 + 多家中文科技媒体覆盖。</p>
+      <p>对 Kevin 意义：高速低价 agent 推理替代方案；开源版本出来后可直接部署，规避 API 依赖。<a href="https://openrouter.ai/inclusionai/ling-2.6-flash:free">OpenRouter 页</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-commercial">Commercial</span>
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  2. 追踪中
+  内容规则：扫 Anchor 追踪清单，每项报告更新。
+  无追踪项显示 .tracking-empty
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4E1;</span>
+    <h2>追踪中</h2>
+  </div>
+  <p class="tracking-empty">尚无追踪项目。对 ORCHE 说「追踪 [主题]」即可新增。本期候选：Google TPU 8t/8i 对 Claude API 成本影响 / Ling-2.6-flash 开源版验证 / Dual-Trace Memory 在 ORCHE 的试验路径。</p>
+</div>
+
+<!-- ============================================================
+  3. 前沿人物动态
+  内容规则：扫 Anchor 人物清单，只列有新动态者
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F399;</span>
+    <h2>前沿人物动态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="person">
+      <div class="person-name">
+        Satya Nadella <span class="date-inline">4/16 + 4/23</span>
+        <span class="tag tag-tier">T1/T2</span>
+      </div>
+      <div class="person-role">Microsoft CEO</div>
+      <div class="person-content">4/16 X 发文宣布 Wisconsin Fairwater 数据中心提前上线，称其为「全球最强 AI 数据中心」，数十万块 GB200 接入单一集群。4/23 在悉尼与澳大利亚总理同台，宣布 <strong>A$250 亿（约 USD 180 亿）投资</strong>——涵盖 Azure AI 扩容、网络防御、300 万人 AI 技能培训。一手：<a href="https://news.microsoft.com/source/asia/2026/04/23/investing-in-australias-ai-future/">Microsoft Asia News</a>。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">
+        Sam Altman <span class="date-inline">4/16</span>
+        <span class="tag tag-tier">T1</span>
+      </div>
+      <div class="person-role">OpenAI CEO</div>
+      <div class="person-content">OpenAI 发布 <strong>GPT-Rosalind</strong>——首个生命科学领域专用推理模型（生化、基因组学、蛋白质工程）。同日发布 Codex 重大更新（前情：4/21 已报）与 GPT-5.4-Cyber 网络安全变体。本周为 OpenAI 近期产品密度最高的一天。<a href="https://openai.com/index/introducing-gpt-rosalind/">一手</a>。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">
+        Demis Hassabis <span class="date-inline">4/16-19</span>
+        <span class="tag tag-tier">T2</span>
+      </div>
+      <div class="person-role">Google DeepMind CEO</div>
+      <div class="person-content">Fortune 专访（配合传记《The Infinity Machine》出版），重申 AGI 五年内到来「很大概率」，个人持 50% by 2030 概率。强调 AI 最高价值在科学发现而非消费产品，点名 <strong>Isomorphic Labs AI 设计药物临床试验目标 2026 年内落地</strong>。同期 Eric Topol 4/19 在 Ground Truths 联合发布同传记深度解读播客（交叉信号）。<a href="https://fortune.com/2026/04/16/demis-hassabis-google-deepmind-chatbot-wars-ai-safety/">Fortune 专访</a>。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">
+        Elon Musk / xAI <span class="date-inline">4/17</span>
+        <span class="tag tag-tier">T1</span>
+      </div>
+      <div class="person-role">xAI / Tesla / SpaceX</div>
+      <div class="person-content">xAI 官方发布 <strong>Grok 4.1 正式上线</strong>（全用户可用，Auto 模式默认接入）+ <strong>Grok STT/TTS 独立 API</strong>（25 语言、批处理+流式、$0.10-0.20/小时）。Grok 5 仍训练中，Q2 窗口未变，Polymarket 给出 33% by 6/30。Colossus 2 已扩至 1.5GW。<a href="https://x.ai/news">官方</a>。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">
+        <span class="sig sig-notable"></span>
+        Yann LeCun <span class="date-inline">4/18</span>
+        <span class="tag tag-tier">T2</span>
+      </div>
+      <div class="person-role">Meta Chief AI Scientist</div>
+      <div class="person-content">X 原帖直接点名 Dario Amodei：<strong>「Dario 是错的，他对技术革命对劳动力市场的影响一无所知。」</strong>同时点名 Sam Altman、Yoshua Bengio、Geoffrey Hinton（包括自己），建议大众听经济学家而非 AI CEO 的就业预测。配合 AMI Labs 世界模型路线，本周舆论反响持续。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">
+        Jack Clark <span class="date-inline">4/20</span>
+        <span class="tag tag-tier">T1</span>
+      </div>
+      <div class="person-role">Anthropic Co-founder / Import AI 主理</div>
+      <div class="person-content">Import AI #454 核心议题：(1) 自动化 alignment 研究的可行性；(2) <strong>华为 HiFloat4 训练格式在 Ascend NPU 上击败 MXFP4</strong>（BF16 相对误差 ≈1.0% vs 1.5%）——Clark 解读为出口管制推动中国本土低精度格式研发的结构性信号。Clark 本人上周参加 2026 Bilderberg 会议。<a href="https://importai.substack.com/p/import-ai-454-automating-alignment">一手</a>。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">
+        Swyx <span class="date-inline">4/16-17</span>
+        <span class="tag tag-tier">T1</span>
+      </div>
+      <div class="person-role">Latent Space 主理</div>
+      <div class="person-content">4/16 AINews 头条「<strong>RIP Pull Requests (2005-2026)</strong>」——报道 AI 编码正在终结 PR 作为协作单元的地位。4/17 AINews 以 Claude Opus 4.7 为头条（前情），覆盖 tokenizer 换代、xhigh 推理模式、token 成本影响等技术细节，判断「在每个维度上比 4.6 进一步」但引发社区对其定位（继任 vs 蒸馏）的争议。<a href="https://www.latent.space/p/ainews-rip-pull-requests-2005-2026">RIP PR</a>。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">
+        Eric Topol <span class="date-inline">4/16 + 4/19</span>
+        <span class="tag tag-tier">T1</span>
+      </div>
+      <div class="person-role">Scripps Research</div>
+      <div class="person-content">4/16 Indian Express 采访点出 AI 医疗核心缺口：<strong>缺乏真实世界临床数据验证</strong>（real-world evidence gap），并提到 AI 在传递共情上意外优于医生。4/19 在 Ground Truths 与 Sebastian Mallaby 联合发布《The Infinity Machine》深度解读播客，以 Demis Hassabis 为主角梳理 DeepMind 15 年路径，点出「DeepMind 错过 Transformer 时刻」与 OpenAI 崛起的结构性关联。<a href="https://erictopol.substack.com/p/the-infinity-machine">Ground Truths</a>。</div>
+    </div>
+  </div>
+
+  <div class="cross-section">
+    <div class="cross-section-title">实验室横截面（本周一句话）</div>
+    <p><strong>Anthropic</strong>：Opus 4.7 发布余波延续，tokenizer 换代与长上下文回退争议（前情 4/22）持续发酵；v2.1.117 修复 Opus 4.7 context window bug。</p>
+    <p><strong>OpenAI</strong>：GPT-Rosalind 进军生命科学 + Privacy Filter 开源 + Codex 重大更新（前情）——产品攻势明显。</p>
+    <p><strong>xAI</strong>：Grok 4.1 正式发布 + STT/TTS API 商业化，Grok 5 仍训练中——「两周一模型」节奏宣言是本周最激进的产品节奏承诺。</p>
+    <p><strong>Google / DeepMind</strong>：TPU 8t/8i 双芯片架构 + Gemini Enterprise Agent Platform；Hassabis 借传记出版高频亮相，Isomorphic Labs AI 药物临床试验时间线进一步具体化。</p>
+    <p><strong>Meta</strong>：Muse Spark（4/8 前）延续无新动态；LeCun 以就业预测议题高调回应 Anthropic。</p>
+    <p><strong>DeepSeek</strong>：本窗口无新模型或公开声明；Jack Clark 侧面观察华为 HiFloat4 训练格式——中国低精度训练自主研发趋势。</p>
+  </div>
+</div>
+
+<!-- ============================================================
+  4. 技术突破
+  内容规则：1-2 条用 card 详写，其他用 compact-item
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4A1;</span>
+    <h2>技术突破</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      Dual-Trace Memory：跨 Session 记忆准确率 +20pp，零额外 token 成本 <span class="date-inline">4/14</span>
+    </div>
+    <div class="card-body">
+      <p>每个存储事实额外携带一条「<strong>场景叙事轨迹</strong>」（记忆是在什么情境下获得的），而非只存干燥事实。LongMemEval-S 实测：<strong>73.7% vs 53.5%（+20.2pp，p&lt;0.0001）</strong>，零额外 token 成本。提升集中在时序推理（+40pp）、知识更新追踪（+25pp）、多 session 聚合（+30pp）——单 session 检索无增益。</p>
+      <p>对 ORCHE 意义：当前 memory 系统以 flat 文件为介质，缺乏时序与情境标注。Dual-trace 思路可作为 Layer 1 memory 格式演化的设计参考——写入 memory 条目时附带「发现情境」（触发场景、Kevin 当时说了什么）而非仅存结论。<a href="https://arxiv.org/abs/2604.12948">arXiv 2604.12948</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-academic">Academic</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      <span class="sig sig-notable"></span>
+      Scaling Test-Time Compute for Agentic Coding（RTV + PDR） <span class="date-inline">4/16</span>
+      <span class="tag tag-academic">Academic</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
+    </div>
+    <div class="compact-desc">将每次 coding agent rollout 压缩为结构化摘要（假设、进度、失败模式），再做 parallel scaling（Recursive Tournament Voting）+ sequential scaling（Parallel-Distill-Refine）。Claude-4.5-Opus 在 SWE-Bench Verified 从 70.9% 升至 77.6%，Terminal-Bench v2.0 从 46.9% 升至 59.1%。核心洞察：长 horizon agent 的 test-time scaling 本质是「表示、选择与重用」问题，不是更多采样。与 ORCHE session wrap-up 写入 state.md 的机制同构——提供形式化方向。<a href="https://arxiv.org/abs/2604.16529">arXiv 2604.16529</a></div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      MemoSight：CoT KV Cache 压缩 66% + 推理提速 1.56x <span class="date-inline">4/16</span>
+      <span class="tag tag-academic">Academic</span>
+    </div>
+    <div class="compact-desc">统一 context compression 与 multi-token prediction 于单一框架，通过特殊 token + position layout 同时压缩 KV cache 和并行生成候选 token。四个 reasoning benchmark 上 KV cache footprint 降 66%，推理速度提升 1.56x，且不低于当前最好的 CoT 压缩方法。若被 Anthropic / vLLM 采纳，可降低 ORCHE 重度 session 的 token 消耗。<a href="https://arxiv.org/abs/2604.14889">arXiv 2604.14889</a></div>
+  </div>
+</div>
+
+<!-- ============================================================
+  5. 开源生态
+  内容规则：开源社区中影响 AI 生态结构的项目与动向。ORCHE 依生态位影响力自主判断取舍。可 card 或 compact-item
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4E6;</span>
+    <h2>开源生态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="compact-item">
+      <div class="compact-title">
+        <span class="sig sig-notable"></span>
+        Qwen3.6-27B：密集 27B 超越自家 397B MoE + <strong>preserve_thinking</strong> 跨轮推理保留 <span class="date-inline">4/22</span>
+        <span class="tag tag-dev">开发者</span>
+        <span class="tag tag-orche">ORCHE 相关</span>
+        <span class="tag tag-landscape">L 候选</span>
+      </div>
+      <div class="compact-desc">SWE-bench Verified 77.2% / Terminal-Bench 2.0 59.3%，在所有 agentic coding benchmark 上超越 Qwen3.5-397B-A17B。架构：64 层 Gated DeltaNet 线性注意力 + 传统 self-attention 混合，O(n) 推理无需二次方 KV cache，4-bit 量化版约占 <strong>17GB 显存</strong>。关键新特性 <code>preserve_thinking</code> flag——跨对话轮次保留 chain-of-thought 推理轨迹，避免多步 agent loop 重复推导。Apache 2.0；r/LocalLLaMA 4/22 发布当日即有实测帖；ModelScope + HuggingFace 双平台同步。与 ORCHE 跨 session 状态保留问题高度同构——本地部署是 ORCHE 离线 coding 能力潜在升级路径。<a href="https://github.com/QwenLM/Qwen3.6">GitHub</a>（数据为官方评估，待第三方复现）</div>
+    </div>
+
+    <div class="compact-item">
+      <div class="compact-title">
+        Flash Attention 4 beta10：Blackwell GPU 原生 + FP8 支持进入测试尾段 <span class="date-inline">4/22</span>
+        <span class="tag tag-geek">极客</span>
+      </div>
+      <div class="compact-desc">FA4 专为 NVIDIA Blackwell（B200/GB200）重设计，纯 Python CuTe-DSL 实现，编译时间较 C++ 模板版快 20-30x，B200 上达 <strong>1613 TFLOPs/s（71% 利用率）</strong>，cuDNN 9.13 提速 1.3x、Triton 提速 2.7x。beta10 新增 FP8 e4m3/e5m2 支持。beta8→10 两周内连续发布，正式版临近。FA4 将成为新一代 GPU 推理栈基础组件，间接影响所有 Claude API 延迟与吞吐量。<a href="https://github.com/Dao-AILab/flash-attention/releases/tag/fa4-v4.0.0.beta10">Release</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  6. Claude Code 专区
+  三层内容：功能发布 / 应用场景 / 评价
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x2699;</span>
+    <h2>Claude Code 专区</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">功能发布</div>
+    <div class="card-body">
+      <p><strong>v2.1.117 <span class="date-inline">4/22</span>——Opus 4.7 context window bug 修复 + /model 持久化</strong>：修复 Opus 4.7 session <code>/context</code> 百分比虚高、过早 auto-compact 的严重 bug（根因：系统误以 200K 而非 1M 计算）。Pro/Max 用户 Opus 4.6/Sonnet 4.6 默认 effort 从 medium 升至 <strong>high</strong>（前情：Opus 4.7 上线时 xhigh 为新默认）。<code>/model</code> 跨 restart 持久化，不再被 project pin 覆盖；<code>/resume</code> 对 stale 大 session 提供摘要选项。<a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.117">Release</a></p>
+      <p><strong>v2.1.116 <span class="date-inline">4/21</span>——/resume 提速 67%</strong>：<code>/resume</code> 在 40MB+ 大 session 速度提升最高 67%，dead-fork entries 处理改善。thinking spinner 改为 inline 进度文字。security 修复：sandbox auto-allow 不再绕过危险路径检查。<a href="https://cc.bruniaux.com/releases/">官方</a></p>
+      <p><strong>/ultrareview 云端多 agent 代码审查 <span class="date-inline">4/16 前情</span></strong>：多 agent 云端 sandbox 并行审查 diff，每条 finding 独立复现才上报。<strong>Pro/Max 各 3 次免费额度（截止 2026-05-05）</strong>，每次约 $5-$20、10-20 分钟背景执行。不支持 Bedrock/Vertex/Foundry。免费额度用完即付费、不每月刷新。</p>
+      <p><strong>Auto Mode 扩展 Max 用户 + xhigh 成默认 <span class="date-inline">4/16</span></strong>：classifier 自动审批安全 tool call，classifier 独立跑在 Sonnet 4.6 防 prompt injection。Opus 4.7 xhigh 默认使 token 用量约 2~2.7x，订阅用户更快触 usage cap。</p>
+      <p><strong>Anthropic + Amazon 5GW 算力协议 <span class="date-inline">4/20</span></strong>：签署扩充最高 5GW 算力协议，Q2 上线 Trainium2，年底近 1GW Trainium2+3。ARR 已超 $30B（3 月初）。与高盛/摩根大通/摩根士丹利洽谈 IPO，目标最早 2026 年 10 月。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">应用场景讨论</div>
+    <div class="card-body">
+      <p><strong>git worktree 并行多 agent 工作流 <span class="date-inline">4/16 前后</span></strong>：r/ClaudeCode 热帖——每个 session 独立 worktree + 独立端口，多 session 并行互不干扰，Stop hook 加音效通知切换节奏。关键洞察：<strong>「速度来自等待时的并行，不来自单次推理更快。」</strong>与 ORCHE 并行 sub-agent 策略契合。<a href="https://www.reddit.com/r/ClaudeCode/comments/1r8oaef">原帖</a></p>
+      <p><strong>FEATURE_PLAN.md 驱动的 stacked PR 工作流 <span class="date-inline">4/16 前后</span></strong>：agent 先将功能分解为 reviewable chunks 写入 <code>FEATURE_PLAN.md</code>，再逐 chunk 建 stacked PR，每个 PR 只触碰单一关注点（schema / validators / service layer）。社区反馈积极。<a href="https://www.reddit.com/r/ClaudeAI/comments/1ro12vz">原帖</a></p>
+      <p><strong>xhigh 默认导致 token 用量 2.7x 预警 <span class="date-inline">4/18</span></strong>：第三方测量 xhigh vs medium 同任务 token 用量约 2~2.7x。Pro/Max 固定订阅不多付钱但更快触顶。评测者建议：project config 设 xhigh、follow-up 降回 high。ORCHE 长任务（overnight）影响最大——建议 <code>.claude/settings.json</code> 为轻量 session 设 <code>effort: "high"</code>。<a href="https://app.stationx.net/articles/claude-opus-4-7-review">评测</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">评价（竞品格局）</div>
+    <div class="card-body">
+      <p><strong>Cursor 3 + xAI 计算合作 <span class="date-inline">4/15</span></strong>：Cursor 与 xAI 达成 GPU 租赁协议，使用 xAI 约 20 万张 H100/H200 训练 <strong>Composer 2.5</strong>（Cursor 自研模型，基于 Moonshot Kimi K2.5）。Cursor 3.1 新增 Canvases（前情）。自研模型路线降低对 Anthropic/OpenAI 依赖，长期形成价格压力。</p>
+      <p><strong>Windsurf 2.0 Agent Command Center + Devin 集成 <span class="date-inline">4/16</span></strong>：Kanban 式多 agent 管理界面 + Devin 整合至 editor 支持 debugging/deployment/testing。与 Claude Code Desktop Redesign、Cursor 3 同周发布——三家向「multi-agent 控制台」方向收敛，这是赛道共识而非差异化护城河。Claude Code 的差异化点退守到 <strong>API 质量与 xhigh 推理深度</strong>。</p>
+      <p><strong>Codex Mac 大更新 <span class="date-inline">4/16</span></strong>：背景 computer use（多 agent 并行不干扰前台）、Atlas 内嵌浏览器、gpt-image-1.5、GitHub PR review、多终端 tab、SSH 远程环境（alpha）、90+ 插件（Jira/Slack/CI）、Memory preview。$100/月 Pro 订阅。与 Claude Code 功能高度重叠——Claude Code 在代码推理深度和 context window 上仍领先；Codex computer use 整合更深入桌面。</p>
+      <p><strong>GitHub Copilot 接入 Opus 4.7 + Jira 深度集成 <span class="date-inline">4/22</span></strong>：Copilot cloud agent 接入 Opus 4.7；Jira 集成新增自定义 agent 规格 / acceptance criteria 读取 / branch naming rule 遵从 / space-level custom instructions。CLI auto model selection GA（动态路由 GPT-5.4/Sonnet 4.6，10% 折扣）；企业版支持 BYOK。说明 Anthropic 平台分发策略奏效。<a href="https://github.blog/changelog/2026-04-22-github-copilot-for-jira-our-latest-enhancements/">changelog</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-commercial">Commercial</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  7. 横向热度
+  内容规则：5 条以内，限定为其他 section 未涵盖的领域（监管 / 融资 / 跨界 / 学术 / 文化）。每条必须有 .heat-evidence 显式标注依据
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4CA;</span>
+    <h2>横向热度</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="heat-item">
+      <div class="heat-rank">1</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          UK £5 亿 Sovereign AI 基金首批投资出炉 <span class="date-inline">4/22</span>
+          <span class="tag tag-official">Official</span>
+        </div>
+        <div class="heat-evidence">依据：UK Sovereign AI Unit 官方 + ITpro + UKTN 多路验证</div>
+        <div class="heat-desc">UK Sovereign AI Unit 4/16 启动，4/22 首批受资企业：Callosum（AI 跨芯片基础设施）获首笔股权投资，Prima Mente / Cosine / Doubleword 等 6 家获超算算力（每家 1M GPU-hours）。基金规模 £5 亿，单笔最高 £2,000 万，附快速签证通道（1 工作日）。欧美以外主权 AI 投入进入执行阶段——不只是宣示。</div>
+      </div>
+    </div>
+
+    <div class="heat-item">
+      <div class="heat-rank">2</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          Show HN 提交量三倍增：Vibe-coded 前端同质化引发讨论 <span class="date-inline">4/22</span>
+          <span class="tag tag-geek">极客</span>
+        </div>
+        <div class="heat-evidence">依据：HN 讨论串 4/22 15:37 UTC；ORCHE 推断 AI agent 会重视——vibe-coded 同质化将成为 AI-first 产品的差异化障碍</div>
+        <div class="heat-desc">Show HN 提交量较去年同期增长三倍，且绝大多数具有相同的 AI 生成前端风格。核心争议：Claude Code 前端产出普遍违反 WCAG 对比度标准（深色背景配深棕/米色文字）。<a href="https://news.ycombinator.com/item?id=47864651">HN 讨论</a></div>
+      </div>
+    </div>
+
+    <div class="heat-item">
+      <div class="heat-rank">3</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          Harvey 法律 AI 估值 $110 亿融资 <span class="date-inline">4 月中旬</span>
+          <span class="tag tag-commercial">Commercial</span>
+        </div>
+        <div class="heat-evidence">依据：inforcapital.com 汇编数据（非一手来源，参考用）</div>
+        <div class="heat-desc">Harvey 完成 $110 亿估值融资轮，跻身 AI 应用层顶级独角兽。同期 Shield AI（$127 亿）、Grafana Labs（$90 亿）也在同月融资。4 月 AI 融资总额 $3,140 亿，占全球 VC 61%，由 OpenAI $1,220 亿领跑。Harvey 是 Anthropic 早期企业客户之一，估值飙升反映法律 AI 落地加速。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  7. 行动建议
+  内容规则：每条标注去向（Task / Routine / 追踪清单 / Parking lot）
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x26A1;</span>
+    <h2>行动建议</h2>
+  </div>
+  <div class="action-box">
+    <ul>
+      <li><strong>Claude Code v2.1.117 立即升级</strong>——Opus 4.7 用户必升。修复 <code>/context</code> 百分比虚高导致过早 auto-compact 的严重 bug，影响长任务质量。<code>claude update</code> 即可。（去向：<strong>立即行动</strong>）</li>
+      <li><strong>轻量 task 设 effort: "high" 规避 xhigh token 激增</strong>——第三方实测 xhigh vs medium token 用量 2~2.7x，Pro/Max 订阅更快触 usage cap。在相关 project <code>.claude/settings.json</code> 为轻量 session 显式设 <code>effort: "high"</code>。（去向：<strong>立即行动</strong>）</li>
+      <li><strong>Dual-Trace Memory 思路吸收进 ORCHE Layer 1 memory 设计</strong>——「记忆 + 场景叙事轨迹」双轨存储，LongMemEval +20pp 零 token 成本。memory 条目写入时附「发现情境」（触发场景、Kevin 当时说了什么）而非仅结论，是 Phase 3C 知识基础设施的高价值参考。（去向：<strong>Parking lot</strong>）</li>
+      <li><strong>/ultrareview 免费额度 3 次优先用在不可逆 commit</strong>——Max 用户 3 次免费额度截止 2026-05-05。建议用在：美敦力提案 landing 最终合并前、ORCHE 系统架构不可逆变更（如 Layer 1 memory 架构切换）。（去向：<strong>追踪清单 2026-05-04</strong>）</li>
+      <li><strong>Qwen3.6-27B 本地部署评估</strong>——17GB 显存、Apache 2.0、SWE-bench 77.2%，<code>preserve_thinking</code> 机制与 ORCHE 跨 session 状态问题同构。作为 ORCHE 离线 coding 能力备援评估（非立即迁移）。（去向：<strong>Parking lot</strong>）</li>
+      <li><strong>Google TPU 8t/8i GA 追踪</strong>——2026 年底 GA，将显著降低 inference 成本。影响 Claude API 定价与 ORCHE 运行成本测算。（去向：<strong>追踪清单 2026-11-15</strong>）</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================
+  FOOTER
+============================================================ -->
+<div class="footer">
+  Generated by ORCHE &middot; 来源：Anthropic / OpenAI / Google / xAI / Microsoft / GitHub / arXiv / r/ClaudeCode / r/ClaudeAI / HN / Latent Space / Import AI / Ground Truths / Fortune / Bloomberg / Reuters / VentureBeat / TechSifted / 9to5Mac
+  <div class="legend">
+    <span class="legend-item"><span class="sig sig-top"></span>顶级</span>
+    <span class="legend-item"><span class="sig sig-notable"></span>显著</span>
+    <span class="legend-item">无符号 = 值得关注</span>
+  </div>
+</div>
+
+</body>
+</html>
