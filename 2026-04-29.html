@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 情报简报 — 2026-04-29</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --text-soft: #374151;
+    --card-bg: #ffffff;
+    --card-border: #e8e8ed;
+    --section-divider: #e5e7eb;
+    --signal-top: #dc2626;
+    --signal-notable: #ea580c;
+    --tag-geek-fg: #6d28d9;       --tag-geek-bg: #ede9fe;
+    --tag-dev-fg: #1d4ed8;        --tag-dev-bg: #dbeafe;
+    --tag-mass-fg: #57534e;       --tag-mass-bg: #f5f5f4;
+    --tag-official-fg: #b45309;   --tag-official-bg: #fef3c7;
+    --tag-academic-fg: #0e7490;   --tag-academic-bg: #cffafe;
+    --tag-commercial-fg: #be185d; --tag-commercial-bg: #fce7f3;
+    --tag-orche-fg: #047857;      --tag-orche-bg: #d1fae5;
+    --tag-landscape-fg: #78350f;  --tag-landscape-bg: #fef7e0;
+    --tag-tier-fg: #1e40af;       --tag-tier-bg: #dbeafe;
+    --date-fg: #9ca3af;
+    --cross-bg: #eff6ff;
+    --cross-border: #bfdbfe;
+    --cross-text: #1e3a8a;
+    --action-bg: #ecfdf5;
+    --action-border: #a7f3d0;
+    --action-text: #064e3b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-soft: #cbd5e1;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --section-divider: #334155;
+      --signal-top: #f87171;
+      --signal-notable: #fb923c;
+      --tag-geek-fg: #c4b5fd;       --tag-geek-bg: #3b0764;
+      --tag-dev-fg: #93c5fd;        --tag-dev-bg: #1e3a8a;
+      --tag-mass-fg: #d6d3d1;       --tag-mass-bg: #3f3f46;
+      --tag-official-fg: #fcd34d;   --tag-official-bg: #78350f;
+      --tag-academic-fg: #67e8f9;   --tag-academic-bg: #164e63;
+      --tag-commercial-fg: #f9a8d4; --tag-commercial-bg: #831843;
+      --tag-orche-fg: #6ee7b7;      --tag-orche-bg: #064e3b;
+      --tag-landscape-fg: #fcd34d;  --tag-landscape-bg: #713f12;
+      --tag-tier-fg: #bfdbfe;       --tag-tier-bg: #1e3a8a;
+      --date-fg: #64748b;
+      --cross-bg: #1e293b;
+      --cross-border: #1e40af;
+      --cross-text: #bfdbfe;
+      --action-bg: #064e3b;
+      --action-border: #047857;
+      --action-text: #d1fae5;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.65; max-width: 720px; margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+  h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; }
+  .section { margin-bottom: 32px; }
+  .section-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--section-divider);
+  }
+  .section-icon { font-size: 1.3rem; }
+  .section-header h2 { font-size: 1.15rem; font-weight: 700; }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 10px; padding: 16px; margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 1rem; font-weight: 700; margin-bottom: 8px;
+    display: flex; align-items: flex-start; gap: 10px; color: var(--text);
+  }
+  .card-body { font-size: 0.92rem; color: var(--text-soft); }
+  .card-body p { margin-bottom: 8px; }
+  .card-body p:last-child { margin-bottom: 0; }
+  .card-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .compact-item { padding: 10px 0; border-bottom: 1px solid var(--section-divider); font-size: 0.92rem; }
+  .compact-item:last-child { border-bottom: none; }
+  .compact-title {
+    font-weight: 600; display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap; color: var(--text);
+  }
+  .compact-desc { color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; line-height: 1.55; }
+  .sig {
+    display: inline-block; width: 12px; height: 12px;
+    border-radius: 50%; flex-shrink: 0; vertical-align: middle; margin-right: 2px;
+  }
+  .sig-top { background: var(--signal-top); }
+  .sig-notable { background: var(--signal-notable); }
+  .tag {
+    display: inline-flex; align-items: center; font-size: 0.72rem;
+    font-weight: 600; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.02em;
+  }
+  .tag-geek       { color: var(--tag-geek-fg);       background: var(--tag-geek-bg); }
+  .tag-dev        { color: var(--tag-dev-fg);        background: var(--tag-dev-bg); }
+  .tag-mass       { color: var(--tag-mass-fg);       background: var(--tag-mass-bg); }
+  .tag-official   { color: var(--tag-official-fg);   background: var(--tag-official-bg); }
+  .tag-academic   { color: var(--tag-academic-fg);   background: var(--tag-academic-bg); }
+  .tag-commercial { color: var(--tag-commercial-fg); background: var(--tag-commercial-bg); }
+  .tag-orche      { color: var(--tag-orche-fg);      background: var(--tag-orche-bg); }
+  .tag-landscape  { color: var(--tag-landscape-fg);  background: var(--tag-landscape-bg); }
+  .tag-tier       { color: var(--tag-tier-fg);       background: var(--tag-tier-bg); }
+  .date-inline {
+    font-size: 0.78rem; color: var(--date-fg); font-weight: 500;
+    background: var(--section-divider); padding: 2px 7px; border-radius: 4px; vertical-align: middle;
+  }
+  .cross-section {
+    background: var(--cross-bg); border: 1px solid var(--cross-border);
+    border-radius: 10px; padding: 14px 16px; color: var(--cross-text);
+    font-size: 0.9rem; line-height: 1.7; margin-top: 12px;
+  }
+  .cross-section-title { font-weight: 700; margin-bottom: 6px; font-size: 0.92rem; }
+  .person { padding: 14px 0; border-bottom: 1px solid var(--section-divider); }
+  .person:last-child { border-bottom: none; }
+  .person-name { font-weight: 700; font-size: 0.98rem; color: var(--text); }
+  .person-role { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+  .person-content { font-size: 0.9rem; color: var(--text-soft); margin-top: 6px; }
+  .heat-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--section-divider);
+  }
+  .heat-item:last-child { border-bottom: none; }
+  .heat-rank {
+    font-size: 1.3rem; font-weight: 800; color: var(--text-muted);
+    min-width: 30px; flex-shrink: 0;
+  }
+  .heat-content { flex: 1; }
+  .heat-title {
+    font-weight: 600; font-size: 0.94rem; display: flex;
+    align-items: center; gap: 8px; flex-wrap: wrap; color: var(--text);
+  }
+  .heat-evidence { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; font-style: italic; }
+  .heat-desc { font-size: 0.88rem; color: var(--text-soft); margin-top: 4px; }
+  .tracking-empty { color: var(--text-muted); font-style: italic; padding: 12px 0; font-size: 0.9rem; }
+  .action-box {
+    background: var(--action-bg); border: 1px solid var(--action-border);
+    border-radius: 10px; padding: 16px 20px; color: var(--action-text);
+  }
+  .action-box ul { padding-left: 20px; }
+  .action-box li { margin-bottom: 8px; font-size: 0.92rem; color: var(--action-text); }
+  .action-box li:last-child { margin-bottom: 0; }
+  .action-box strong { color: var(--action-text); }
+  a { color: var(--tag-dev-fg); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .inline-note { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+  .audio-player {
+    margin: -12px 0 28px; padding: 12px 14px;
+    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px;
+  }
+  .audio-player-label { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
+  .audio-player audio { width: 100%; height: 36px; display: block; }
+  .footer {
+    margin-top: 40px; padding-top: 16px;
+    border-top: 1px solid var(--section-divider);
+    font-size: 0.78rem; color: var(--text-muted); text-align: center;
+  }
+  .legend { margin-top: 8px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .legend-item { display: inline-flex; align-items: center; gap: 4px; }
+</style>
+</head>
+<body>
+
+<h1>AI 情报简报</h1>
+<p class="meta">2026-04-29 (Wed) &middot; 覆盖 4/26–4/29 &middot; 阅读约 8 分钟</p>
+
+<div class="audio-player">
+  <div class="audio-player-label">&#x1F3A7; 语音播报（约 10 分钟）</div>
+  <audio controls preload="metadata">
+    <source src="audio/2026-04-29.mp3" type="audio/mpeg">
+    您的浏览器不支持音频播放。
+  </audio>
+</div>
+
+<!-- 1. 今日焦点 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F525;</span>
+    <h2>今日焦点</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      OpenAI–Microsoft 终止排他授权,OpenAI 模型登陆 AWS Bedrock <span class="date-inline">4/27–28</span>
+    </div>
+    <div class="card-body">
+      <p>OpenAI 与 Microsoft 4/27 修订协议:微软 IP 授权由独家改为非独家(至 2032),OpenAI 可自由对接任何云商;Microsoft 停止向 OpenAI 支付收益分成,OpenAI 仍付 20% 给微软但设总上限至 2030。</p>
+      <p>4/28 OpenAI 模型(含 GPT-5.5、Codex)正式上线 Amazon Bedrock,同步推出 Bedrock Managed Agents(基于 OpenAI agent harness)。结构性意义:OpenAI 三年云独家约束正式解除,Anthropic 在 AWS Bedrock 上的独家优势被打破,双方现在同一平台直接竞争。</p>
+      <p>来源:<a href="https://openai.com/index/next-phase-of-microsoft-partnership/">openai.com</a> · <a href="https://aws.amazon.com/about-aws/whats-new/2026/04/bedrock-openai-models-codex-managed-agents/">aws.amazon.com</a> · HN frontpage 47921248 高热</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-commercial">Commercial</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      Memanto:13 类型化语义 Memory + 零索引检索 <span class="date-inline">4/23 论文/4/27 HF 精选</span>
+    </div>
+    <div class="card-body">
+      <p>arXiv:2604.22085 提出 13 类预定义 Memory 类别(情节/语义/程序等)+ Moorcheh 信息论搜索引擎(无索引、零摄取延迟、&lt;90ms 检索)。无需知识图谱、无 LLM 介导摄取。</p>
+      <p>LongMemEval 89.8% + LoCoMo 87.1% 均达 SOTA,且单次检索调用完成。<strong>相比 Mem0 节省约 80% input tokens</strong>。PyPI 已上线 v0.0.2。</p>
+      <p>对 ORCHE 直接相关——Layer 1 记忆基础设施一直在评估 Mem0 与 Claude 官方记忆,Memanto 提出的零索引 + 13 类型化 schema 是第三条路线,值得列入下一轮 3C 评估候选。</p>
+      <p>来源:<a href="https://arxiv.org/abs/2604.22085">arxiv.org</a> · <a href="https://pypi.org/project/memanto/">pypi.org/project/memanto</a> · HF Daily Papers 4/27 精选</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-academic">Academic</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      Claude for Creative Work:9 个 MCP Connector + Anthropic 赞助 Blender <span class="date-inline">4/28</span>
+    </div>
+    <div class="card-body">
+      <p>Anthropic 与 Adobe、Blender、Autodesk Fusion、Ableton、Splice、Affinity、SketchUp、Resolume 发布 9 个 MCP 连接器,涵盖 50+ Adobe 工具(Photoshop/Premiere/Firefly 等)、Blender Python API 自然语言接口、Ableton 文档接入等。</p>
+      <p>Blender 连接器基于 MCP 开放标准,可供其他 LLM 接入。Anthropic 同时成为 Blender Development Fund 企业赞助商(≥€240k/年)。</p>
+      <p>对 ORCHE 相关——MCP connector 生态扩张直接影响集成架构评估,Skill 层未来可借力官方 Connector 而非自建。</p>
+      <p>来源:<a href="https://www.anthropic.com/news/claude-for-creative-work">anthropic.com/news</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+</div>
+
+<!-- 2. 追踪中 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4E1;</span>
+    <h2>追踪中</h2>
+  </div>
+  <p class="tracking-empty">尚无追踪项目。对 ORCHE 说「追踪 [主题]」即可新增。</p>
+</div>
+
+<!-- 3. 前沿人物动态 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F399;</span>
+    <h2>前沿人物动态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="person">
+      <div class="person-name">Sam Altman <span class="tag tag-tier">T1</span> <span class="date-inline">4/26–27</span></div>
+      <div class="person-role">OpenAI CEO</div>
+      <div class="person-content">X 原帖 + 官方 blog 列出 OpenAI 五项 AGI 开发原则:民主化、赋权、普惠繁荣、韧性、适应性,明确反对「权力集中于少数公司」。同日另帖称「Post-AGI 没人工作,经济会崩溃」语气轻松但引爆讨论。一手:<a href="https://openai.com/index/next-phase-of-microsoft-partnership/">openai.com</a></div>
+    </div>
+
+    <div class="person">
+      <div class="person-name"><span class="sig sig-notable"></span>Elon Musk <span class="tag tag-tier">T1</span> <span class="date-inline">4/28</span></div>
+      <div class="person-role">xAI / Tesla / SpaceX</div>
+      <div class="person-content">对 OpenAI 提起的 $130B 诉讼进入庭审,Musk 亲自出庭作证,称 AI「could also kill us all」,同步 X 抨击「Scam Altman and Greg Stockman stole a charity」(法官随后要求双方限制庭外发帖)。庭审三周。一手:<a href="https://apnews.com/article/elon-musk-openai-altman-trial-b3c647391fbaa0f081611027b4e98479">AP News</a></div>
+    </div>
+
+    <div class="person">
+      <div class="person-name"><span class="sig sig-notable"></span>Demis Hassabis <span class="tag tag-tier">T1</span> <span class="date-inline">4/27</span></div>
+      <div class="person-role">Google DeepMind CEO</div>
+      <div class="person-content">访韩会见韩国总统李在明,签署 Google DeepMind × 韩国科学技术部 MOU(K-Moonshot 项目);预言「2030 年前 AGI 轮廓将现」;称 AI 五至十年内可同时设计数百种新药;支持「国家提供基本住房/教育/医疗,但引入资本市场原则」作为 AI 时代经济模型。一手:<a href="https://en.sedaily.com/finance/2026/04/27/hassabis-says-ai-could-design-hundreds-of-new-drugs">SEDaily</a></div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Satya Nadella <span class="tag tag-tier">T1</span> <span class="date-inline">4/26–27</span></div>
+      <div class="person-role">Microsoft CEO</div>
+      <div class="person-content">4/26 宣告 GPT-5.5 落地 Copilot 全线产品(GitHub / M365 / Studio / Foundry)。4/27 微软官方 blog 宣布与 OpenAI 修正协议:OpenAI 可多云服务客户(不再 Azure 独家),IP 授权改非排他至 2032,停收 revenue share,但 OpenAI 向微软 revenue share 延续至 2030 并设总上限。Nadella 本人亦在 Musk 诉 OpenAI 案证人名单。一手:<a href="https://blogs.microsoft.com/blog/2026/04/27/the-next-phase-of-the-microsoft-openai-partnership/">blogs.microsoft.com</a></div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Yann LeCun <span class="tag tag-tier">T2</span> <span class="date-inline">4/24</span></div>
+      <div class="person-role">AMI Labs CEO(前 Meta Chief AI Scientist)</div>
+      <div class="person-content">X 发帖澄清立场:「我从未说 LLM 无用,我使用它们;但机器人未来无法建立在不理解物理世界的 AI 上。」为其被媒体片面引用的「LLM 无用」观点正名。窗口边缘,勉强纳入。来源:<a href="https://new-savanna.blogspot.com/2026/04/yann-lecun-clarifies-record.html">blog 转述</a></div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Swyx <span class="tag tag-tier">T1</span> <span class="date-inline">4/28–29</span></div>
+      <div class="person-role">Latent Space 主理</div>
+      <div class="person-content">4/28 发 [AINews] 「ImageGen is on the Path to AGI」(覆盖 4/26-27 动态);4/29 发 [AINews] 「not much happened today」,坦承当日无重大事件,承诺推出 inference demand / multiagents 专题 essay。一手:<a href="https://www.latent.space/p/ainews-not-much-happened-today">latent.space</a></div>
+    </div>
+  </div>
+
+  <div class="cross-section">
+    <div class="cross-section-title">实验室横截面(4/29 快照)</div>
+    <div>
+      <strong>Anthropic</strong>:Claude for Creative Work 9 个 MCP Connector + Mythos Preview 暂缓发布 ·
+      <strong>OpenAI</strong>:AGI 五原则 + GPT-5.5 全面铺开 + Bedrock 登陆 + Musk 庭审开打 ·
+      <strong>xAI</strong>:Musk 庭内庭外两线开战 ·
+      <strong>Google DeepMind</strong>:Hassabis 访韩签 MOU + 2030 AGI 预言 ·
+      <strong>Meta</strong>:Muse Spark 出货,Zuck 下场编码 ·
+      <strong>DeepSeek</strong>:V4 API 上线但 GitHub 仓库仍 404,开源落地存疑
+    </div>
+  </div>
+</div>
+
+<!-- 4. 技术突破 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4A1;</span>
+    <h2>技术突破</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      ARC-AGI-3 Kaggle 竞赛正式开放($2M 奖金) <span class="date-inline">4/26</span>
+    </div>
+    <div class="card-body">
+      <p>首个完全交互式 AGI 基准,AI 必须在无指令环境中探索、推断目标、跨关卡保持学习。当前 frontier 模型评分 &lt;12%,人类 100%——揭示当前模型在「适应性推理」上的根本缺口(有别于 ARC-AGI-2 已被搜索策略攻克的局面)。</p>
+      <p>Francois Chollet 主导 + Sam Altman 对话发布。$2M 奖金。</p>
+      <p>来源:<a href="https://arcprize.org/blog/arc-agi-3-launch">arcprize.org</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-academic">Academic</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      <span class="sig sig-notable"></span>
+      NVIDIA Nemotron 3 Nano Omni:开源全模态 30B Agent 感知模型
+      <span class="tag tag-official">Official</span>
+      <span class="date-inline">4/28</span>
+    </div>
+    <div class="compact-desc">30B 参数(3B active,MoE + Mamba2 Hybrid),统一文本/图像/视频/音频四路感知,单次推理 pass 完成多模态理解。9x 于其他开源 omni 模型的吞吐量(Clarifai 实测 400+ tokens/s)。256K context。已开放 HuggingFace / OpenRouter / AWS SageMaker JumpStart / NVIDIA NIM。架构意义:专为 agent sub-agent 设计,替代分散感知模块栈。<a href="https://blogs.nvidia.com/blog/nemotron-3-nano-omni-multimodal-ai-agents/">blogs.nvidia.com</a></div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      OpenAI Privacy Filter:开源 PII 检测模型(1.5B / 50M activated)
+      <span class="tag tag-official">Official</span>
+      <span class="date-inline">4/22 / 4/28 扩散</span>
+    </div>
+    <div class="compact-desc">稀疏 MoE 128 experts、Apache 2.0、8 类 PII span 检测(账号/地址/邮件/人名/电话/URL/日期/secrets)。128K context、单 pass、可浏览器或笔记本本地运行。OpenAI 内部生产环境自用版本。<a href="https://openai.com/index/introducing-openai-privacy-filter/">openai.com</a></div>
+  </div>
+</div>
+
+<!-- 5. 开源生态 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4E6;</span>
+    <h2>开源生态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="compact-item">
+      <div class="compact-title">
+        <span class="sig sig-notable"></span>
+        GitNexus(abhigyanpatwari/GitNexus):浏览器端 Graph RAG
+      </div>
+      <div class="compact-desc">Stars 32,841(今日 +1,607,GitHub Trending 4/29 高位)。纯浏览器端代码知识图谱生成工具,拖入 GitHub repo 或 ZIP 自动构建交互式 Graph RAG + Agent。零后端、零 API key、零数据上传。社群信号:r/LocalLLaMA 尚无独立线程,但 privacy-first 定位与社群价值观高度契合。<a href="https://github.com/abhigyanpatwari/GitNexus">github.com</a></div>
+    </div>
+
+    <div class="compact-item">
+      <div class="compact-title">
+        <span class="sig sig-notable"></span>
+        microsoft/VibeVoice:Frontier Voice AI 家族
+      </div>
+      <div class="compact-desc">Stars 45,142(今日 +1,483)。Microsoft 开源 Frontier Voice AI 家族(TTS-1.5B + ASR-7B + Realtime-0.5B)。ASR 支持 60 分钟长音频单 pass,含说话人识别/时间戳/自定义词汇。已并入 HuggingFace Transformers(3/6)。<strong>注</strong>:为 2025-08 老项目重新进入 Trending,原 TTS 权重因滥用于 deepfake 已于 2025-09 移除,ASR 仍活跃。<a href="https://github.com/microsoft/VibeVoice">github.com</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. Claude Code 专区 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x2699;</span>
+    <h2>Claude Code 专区</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">功能发布</div>
+    <div class="card-body">
+      <p><strong>Claude Code v2.1.121</strong>(4/28)——`alwaysLoad` MCP 配置项:设为 `true` 后该 server 所有工具跳过 tool-search deferral,始终可用。`/skills` 新增类型搜索框。MCP startup 瞬时错误自动重试最多 3 次。PostToolUse hooks 可触发 `hookSpecificOutput.ToolOutput`。<a href="https://github.com/anthropics/claude-code/releases">GitHub Releases</a></p>
+      <p><strong>Claude Code v2.1.122</strong>(4/28 22:05)——新增 `ANTHROPIC_BEDROCK_SERVICE_TIER` 环境变量(`default`/`flex`/`priority`)控制 Bedrock 服务等级。`/resume` 搜索框支持粘贴 PR URL 自动定位历史 session(覆盖 GitHub/GitLab/Bitbucket)。`/mcp` 修复 claude.ai connector 重复显示问题。</p>
+      <p><strong>Mythos Preview 暂缓发布</strong>(4/28,Axios 独家)——Anthropic 向美国众院国土安全委员会简报,Mythos Preview 因能快速发现并利用关键安全漏洞而暂缓公开发布;OpenAI 的 GPT-5.4-Cyber 采取分级发布策略。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">应用场景讨论</div>
+    <div class="card-body">
+      <p><strong>「停止往 CLAUDE.md 加规则,开始建基础设施」</strong>(r/ClaudeAI 热帖)——开发者将 190 行 CLAUDE.md 精简至 123 行后合规性反而提升;重复型指令迁移为 Skills,质量验证改为自动化 Hooks(每次 Edit 触发 typecheck、session 结束扫描反模式、连续 3 次重复失败触发 circuit breaker)。核心论点:CLAUDE.md 失效时,答案不是加规则,是把执行机制移进基础设施。<strong>与 ORCHE Hook 架构高度共鸣,验证设计方向</strong>。</p>
+      <p><strong>Programmatic Tool Calling(PTC)GA</strong>——Claude API 新功能:PTC 让 Claude 写 Python 脚本在沙盒中编排所有工具,只有最终 stdout 进入 context;3 个工具调用从 3 次 inference pass 降为 1 次。<strong>37% token 节省</strong>。同步 GA:Tool Search Tool(减少 85% tool definition tokens)、Tool Use Examples(准确率 72%→90%)。<a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/programmatic-tool-calling">官方文档</a></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">评价</div>
+    <div class="card-body">
+      <p><strong>OpenAI Codex 登 AWS Bedrock</strong>(4/28)——AWS Bedrock 现提供 OpenAI Codex(支持 CLI/Desktop/VS Code)及 Bedrock Managed Agents(基于 OpenAI agent harness + Bedrock AgentCore)。竞争意义:Anthropic 在 Bedrock 上的独家优势被打破,双方现在同一平台直接竞争。</p>
+      <p><strong>GitHub Copilot 个人计划收紧</strong>——Pro 计划已移除 Opus 模型访问权(Opus 4.7 仅保留在 Pro+);VS Code 和 Copilot CLI 新增用量显示,临近上限时实时提醒。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 7. 横向热度 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4CA;</span>
+    <h2>横向热度</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="heat-item">
+      <div class="heat-rank">1</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          <span class="sig sig-top"></span>
+          Musk v. Altman 联邦诉讼正式开庭,Musk 出庭作证
+          <span class="tag tag-mass">大众</span>
+          <span class="date-inline">4/28</span>
+        </div>
+        <div class="heat-evidence">依据:AP / NPR / CNN / CNBC / ABC 全主流媒体覆盖;Altman 因庭审无法亲出席 AWS 发布会(留视频致辞);审期三周。</div>
+        <div class="heat-desc">马斯克与 Altman / Brockman / Microsoft 的联邦诉讼在加州奥克兰开庭,Musk 寻求 Altman 下台 + $130B 赔偿(或追回「非法所得」回归慈善基金);Nadella 等亦将出庭。涉及 OpenAI 公司结构、IPO、AI 权力格局。</div>
+      </div>
+    </div>
+
+    <div class="heat-item">
+      <div class="heat-rank">2</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          <span class="sig sig-notable"></span>
+          EU AI Act 修正谈判破裂,下月续谈
+          <span class="tag tag-mass">大众</span>
+          <span class="date-inline">4/29</span>
+        </div>
+        <div class="heat-evidence">依据:欧盟理事会 + 欧洲议会 12 小时谈判未达协议;Channel News Asia / Reuters 主流报道;欧洲议会官方新闻(4/27)。L 候选——欧盟监管框架将影响 AI 产品全球合规格局。</div>
+        <div class="heat-desc">修正草案(延缓高风险条款、豁免既受产品安全规范的行业)搁置,预计两周后续谈。隐忧:隐私活动人士批评草案向大科技让步。</div>
+      </div>
+    </div>
+
+    <div class="heat-item">
+      <div class="heat-rank">3</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          <span class="sig sig-notable"></span>
+          美国 CHATBOT Act + American Leadership in AI Act 提案
+          <span class="tag tag-mass">大众</span>
+          <span class="date-inline">4/28</span>
+        </div>
+        <div class="heat-evidence">依据:参议院两党(Cruz + Schatz)推动 CHATBOT Act 关注儿童 AI 使用;众议院 American Leadership in AI Act 包含 20+ 跨党法案;OpenAI 与 Anthropic 同步向众议院国土安全委员会简报 AI 网络威胁。监管节奏明显加速。</div>
+        <div class="heat-desc">CHATBOT Act:要求 AI 聊天机器人提供家长账户管控、禁止针对儿童广告、设使用限制。American Leadership in AI Act:跨党综合立法包。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 8. 行动建议 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x26A1;</span>
+    <h2>行动建议</h2>
+  </div>
+  <div class="action-box">
+    <ul>
+      <li><strong>Memanto 评估列入 3C 候选</strong>——直接挑战 ORCHE Layer 1 路线(Mem0 / Claude 官方记忆 + 第三方:Memanto)。建议<strong>追踪清单 5/15</strong> 评估期合并(原 anchor template 评估同日),三方案横向比较选最优集成路径。</li>
+      <li><strong>Programmatic Tool Calling GA 评估</strong>——37% token 节省 + 3 工具 1 次 inference 直接相关 ORCHE Phase 3 agent 架构。建议入 <strong>parking-lot</strong> 一般候选,纳入 3A 后续优化。</li>
+      <li><strong>Claude Code v2.1.121 alwaysLoad 配置</strong>——claude.ai Zoho CRM 和 Google Drive Connector 当前可能在 deferred 状态,影响响应速度。建议入 <strong>parking-lot 操作改善</strong>,评估配置 alwaysLoad 后的 token 成本与体验权衡。</li>
+      <li><strong>OpenAI 上 Bedrock 对 ORCHE 多模型策略影响</strong>——AWS 单一平台同时提供 Claude + OpenAI + 其他模型,未来 ORCHE LLM 调用层若考虑跨模型 fallback 或专项任务路由,Bedrock 是新可选基础设施。建议入 <strong>parking-lot</strong> 评估时机。</li>
+      <li><strong>ARC-AGI-3 长期追踪</strong>——frontier 模型 &lt;12% vs 人类 100% 的 gap 揭示模型在跨 session 适应性推理上的根本瓶颈。无即时操作,长期关注分数变化。<strong>不做事</strong>,简报内继续监测。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  Generated by ORCHE &middot; 4-agent 并行抓取
+  <div class="legend">
+    <span class="legend-item"><span class="sig sig-top"></span>顶级</span>
+    <span class="legend-item"><span class="sig sig-notable"></span>显著</span>
+    <span class="legend-item">无符号 = 值得关注</span>
+  </div>
+</div>
+
+</body>
+</html>
