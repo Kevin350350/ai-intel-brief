@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 情报简报 — 2026-04-30</title>
+<style>
+  /* ============== Design tokens (light mode) ============== */
+  :root {
+    --bg: #fafafa;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --text-soft: #374151;
+    --card-bg: #ffffff;
+    --card-border: #e8e8ed;
+    --section-divider: #e5e7eb;
+
+    --signal-top: #dc2626;
+    --signal-notable: #ea580c;
+
+    --tag-geek-fg: #6d28d9;       --tag-geek-bg: #ede9fe;
+    --tag-dev-fg: #1d4ed8;        --tag-dev-bg: #dbeafe;
+    --tag-mass-fg: #57534e;       --tag-mass-bg: #f5f5f4;
+    --tag-official-fg: #b45309;   --tag-official-bg: #fef3c7;
+    --tag-academic-fg: #0e7490;   --tag-academic-bg: #cffafe;
+    --tag-commercial-fg: #be185d; --tag-commercial-bg: #fce7f3;
+    --tag-orche-fg: #047857;      --tag-orche-bg: #d1fae5;
+    --tag-landscape-fg: #78350f;  --tag-landscape-bg: #fef7e0;
+    --tag-tier-fg: #1e40af;       --tag-tier-bg: #dbeafe;
+
+    --date-fg: #9ca3af;
+
+    --cross-bg: #eff6ff;
+    --cross-border: #bfdbfe;
+    --cross-text: #1e3a8a;
+
+    --action-bg: #ecfdf5;
+    --action-border: #a7f3d0;
+    --action-text: #064e3b;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-soft: #cbd5e1;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --section-divider: #334155;
+
+      --signal-top: #f87171;
+      --signal-notable: #fb923c;
+
+      --tag-geek-fg: #c4b5fd;       --tag-geek-bg: #3b0764;
+      --tag-dev-fg: #93c5fd;        --tag-dev-bg: #1e3a8a;
+      --tag-mass-fg: #d6d3d1;       --tag-mass-bg: #3f3f46;
+      --tag-official-fg: #fcd34d;   --tag-official-bg: #78350f;
+      --tag-academic-fg: #67e8f9;   --tag-academic-bg: #164e63;
+      --tag-commercial-fg: #f9a8d4; --tag-commercial-bg: #831843;
+      --tag-orche-fg: #6ee7b7;      --tag-orche-bg: #064e3b;
+      --tag-landscape-fg: #fcd34d;  --tag-landscape-bg: #713f12;
+      --tag-tier-fg: #bfdbfe;       --tag-tier-bg: #1e3a8a;
+
+      --date-fg: #64748b;
+      --cross-bg: #1e293b;
+      --cross-border: #1e40af;
+      --cross-text: #bfdbfe;
+
+      --action-bg: #064e3b;
+      --action-border: #047857;
+      --action-text: #d1fae5;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+
+  h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; }
+
+  .section { margin-bottom: 32px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--section-divider);
+  }
+  .section-icon { font-size: 1.3rem; }
+  .section-header h2 { font-size: 1.15rem; font-weight: 700; }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--text);
+  }
+  .card-body {
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+  .card-body p { margin-bottom: 8px; }
+  .card-body p:last-child { margin-bottom: 0; }
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .compact-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--section-divider);
+    font-size: 0.92rem;
+  }
+  .compact-item:last-child { border-bottom: none; }
+  .compact-title {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--text);
+  }
+  .compact-desc {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 4px;
+    line-height: 1.55;
+  }
+
+  .sig {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    vertical-align: middle;
+    margin-right: 2px;
+  }
+  .sig-top { background: var(--signal-top); }
+  .sig-notable { background: var(--signal-notable); }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+  .tag-geek       { color: var(--tag-geek-fg);       background: var(--tag-geek-bg); }
+  .tag-dev        { color: var(--tag-dev-fg);        background: var(--tag-dev-bg); }
+  .tag-mass       { color: var(--tag-mass-fg);       background: var(--tag-mass-bg); }
+  .tag-official   { color: var(--tag-official-fg);   background: var(--tag-official-bg); }
+  .tag-academic   { color: var(--tag-academic-fg);   background: var(--tag-academic-bg); }
+  .tag-commercial { color: var(--tag-commercial-fg); background: var(--tag-commercial-bg); }
+  .tag-orche      { color: var(--tag-orche-fg);      background: var(--tag-orche-bg); }
+  .tag-landscape  { color: var(--tag-landscape-fg);  background: var(--tag-landscape-bg); }
+  .tag-tier       { color: var(--tag-tier-fg);       background: var(--tag-tier-bg); }
+
+  .date-inline {
+    font-size: 0.78rem;
+    color: var(--date-fg);
+    font-weight: 500;
+    background: var(--section-divider);
+    padding: 2px 7px;
+    border-radius: 4px;
+    vertical-align: middle;
+  }
+
+  .cross-section {
+    background: var(--cross-bg);
+    border: 1px solid var(--cross-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: var(--cross-text);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-top: 12px;
+  }
+  .cross-section-title {
+    font-weight: 700;
+    margin-bottom: 6px;
+    font-size: 0.92rem;
+  }
+
+  .person {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--section-divider);
+  }
+  .person:last-child { border-bottom: none; }
+  .person-name {
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: var(--text);
+  }
+  .person-role {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .person-content {
+    font-size: 0.9rem;
+    color: var(--text-soft);
+    margin-top: 6px;
+  }
+
+  .heat-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--section-divider);
+  }
+  .heat-item:last-child { border-bottom: none; }
+  .heat-rank {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    min-width: 30px;
+    flex-shrink: 0;
+  }
+  .heat-content { flex: 1; }
+  .heat-title {
+    font-weight: 600;
+    font-size: 0.94rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--text);
+  }
+  .heat-evidence {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+  .heat-desc {
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    margin-top: 4px;
+  }
+
+  .tracking-empty {
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 12px 0;
+    font-size: 0.9rem;
+  }
+
+  .action-box {
+    background: var(--action-bg);
+    border: 1px solid var(--action-border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: var(--action-text);
+  }
+  .action-box ul { padding-left: 20px; }
+  .action-box li {
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+    color: var(--action-text);
+  }
+  .action-box li:last-child { margin-bottom: 0; }
+  .action-box strong { color: var(--action-text); }
+
+  a { color: var(--tag-dev-fg); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .inline-note {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .audio-player {
+    margin: -12px 0 28px;
+    padding: 12px 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+  }
+  .audio-player-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .audio-player audio {
+    width: 100%;
+    height: 36px;
+    display: block;
+  }
+  .footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--section-divider);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .legend {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .legend-item { display: inline-flex; align-items: center; gap: 4px; }
+</style>
+</head>
+<body>
+
+<h1>AI 情报简报</h1>
+<p class="meta">2026-04-30 (Thu) &middot; 覆盖 4/27–4/30 &middot; 阅读约 8 分钟</p>
+
+<div class="audio-player">
+  <div class="audio-player-label">&#x1F3A7; 语音播报</div>
+  <audio controls preload="metadata">
+    <source src="audio/2026-04-30.mp3" type="audio/mpeg">
+    您的浏览器不支持音频播放。
+  </audio>
+</div>
+
+<!-- ============================================================
+  1. 今日焦点
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F525;</span>
+    <h2>今日焦点</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      Anthropic 估值冲 $850-900B、ARR 已达 $30B+，5 月拍板新一轮 $40-50B 融资 <span class="date-inline">4/29-30</span>
+    </div>
+    <div class="card-body">
+      <p>TechCrunch（4/30 凌晨）+ Bloomberg + Reuters 三方独立来源同日证实：Anthropic 收到多个先发制人报价，估值区间 $850-900B、融资规模 $40-50B，预计 5 月董事会拍板，可能是 IPO 前最后一轮私募。最新财务披露：ARR 已超 $300 亿（较 2025 年底 $90 亿翻 3 倍以上），实际运行率接近 $400 亿，超 1000 家企业客户年花费超 $100 万。</p>
+      <p>若完成，Anthropic 将超越 OpenAI 当前 $852B 估值（2026/3）成为全球估值最高 AI 初创——前情：4/24 Google 投资 $400 亿 + 5GW TPU 协议（已在 4/27 简报报道）是这轮报价的直接前奏。叠加同一周 OpenAI 4/30 宣布 10 GW 算力合约提前数年达成（原定 2029）、Bedrock 服务等级落地，frontier 实验室进入「估值 + 算力」双重指数化阶段。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-commercial">Commercial</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      Musk v. Altman 庭审正式开打，Musk 出庭作证 + Brockman 日记当庭朗读 <span class="date-inline">4/28-29</span>
+    </div>
+    <div class="card-body">
+      <p>4/28 庭审首日，Musk 作为首位证人作证两小时，覆盖 OpenAI 创始背景、AI 风险认知（"could also kill us all"，「不想要终结者结局」）、坚称自己是为慈善使命而非控制权。法官庭前训诫 Musk 因在 X 发「Scam Altman」等帖涉嫌干扰证人，Musk 同意减少社媒活动。当日 Brockman 2017 年私人日记被法官当庭朗读：「这是我们从 Elon 那里逃脱的唯一机会。他是我会选择的『荣耀领袖』吗？」——被援引为 OpenAI 领导层「利益先于使命」的证据。</p>
+      <p>本周内 Altman、Nadella、Brockman 将相继出庭作证，案件求偿 $130B，要求撤销 OpenAI 营利化、移除 Altman。前情：4/29 简报报过的「Musk v. Altman 庭审」属预告，本期升级为「庭审进行中」+ 首日内容披露——对 OpenAI 治理结构与 frontier 竞局有实质重构风险。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-mass">大众</span>
+      <span class="tag tag-commercial">Commercial</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      Ineffable Intelligence $1.1B 种子轮 + David Silver「无人类数据 RL 超级学习者」 <span class="date-inline">4/27</span>
+    </div>
+    <div class="card-body">
+      <p>AlphaGo / AlphaZero / MuZero 首席研究员 David Silver 从 DeepMind 出走创立的 Ineffable Intelligence 完成 $1.1B 种子轮 / $5.1B 估值，创欧洲历史最大种子轮。Sequoia + Lightspeed 联合领投，NVIDIA、Google、英国主权 AI 基金跟投。Silver 本人承诺个人收益全部捐出。</p>
+      <p>核心赌注：完全不使用人类数据，纯强化学习从零构建「超级学习者」——方法论与当前 GPT/Claude 系列的 pretrain-on-human-text 范式正面对立。是否可行存争议，TechFundingNews 原文标注「whether reinforcement learning at this scale can achieve the superintelligence Silver hopes for remains unclear」——属投资者对技术路线的看涨期权，非已验证突破。L 候选标注为「架构路线赌注」。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-academic">Academic</span>
+      <span class="tag tag-commercial">Commercial</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  2. 追踪中
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4E1;</span>
+    <h2>追踪中</h2>
+  </div>
+  <p class="tracking-empty">尚无追踪项目。对 ORCHE 说「追踪 [主题]」即可新增。</p>
+</div>
+
+<!-- ============================================================
+  3. 前沿人物动态
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F399;</span>
+    <h2>前沿人物动态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="person">
+      <div class="person-name">Elon Musk <span class="sig sig-top"></span> <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">xAI / Tesla / SpaceX</div>
+      <div class="person-content">4/28 法庭出庭作证两小时（Musk v. Altman 首位证人，覆盖 OpenAI 创始背景 + AI 风险认知）；庭前因 X 发「Scam Altman」帖被法官训诫，同意减少社媒活动；4/29 继续作证。NPR / Reuters / CNN / AP 四源法庭一手报道。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Dario Amodei <span class="sig sig-notable"></span> <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">Anthropic CEO</div>
+      <div class="person-content">4/29 Axios 独家：白宫正起草行政令，意图绕过 OMB 对 Anthropic 的采购禁令、让联邦机构直接接入 Mythos；NSA 已使用 Mythos，多个机构排队接入。同期 FT 专访（4/23 后扩散）中 Amodei 公开警示：AI 五年内可能消灭 50% 入门级白领职位，呼吁停止粉饰。Pentagon 2 月封锁后的实质破冰信号。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Demis Hassabis <span class="sig sig-notable"></span> <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">Google DeepMind CEO</div>
+      <div class="person-content">4/28-29 首尔行程密集：会见现代汽车主席郑义宣 + LG 集团会长具光谟；4/29 Google for Korea 2026 与十年前 AlphaGo 对手李世石重逢，演讲称 AI「可能在未来 10-20 年解决所有疾病」。与韩国政府签 MOU，年内在江南区建立 DeepMind 首个海外 AI 校区（约 2,000 平米）；李在明总统要求派驻 10 名研究员，Hassabis 正面回应。Yonhap 一手报道。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Mark Zuckerberg <span class="sig sig-notable"></span> <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">Meta CEO</div>
+      <div class="person-content">4/29 Q1 财报：EPS $10.44（预期 $8.15）+ 营收 $56.3B 双超预期；但 2026 年 CapEx 上调至 $125-145B（前指引 $115-135B），股价盘后跌逾 6%。力挺 Muse Spark（Meta Superintelligence Labs 首个模型，闭源），称 Meta AI 用户每日会话量「双位数百分比」增长。回怼分析师：「我们不会因为要赶某周发布而牺牲质量。」Muse Spark 闭源 + 千亿级 CapEx 标志 Meta AI 策略性质转变。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Sam Altman <span class="tag tag-tier">T2</span></div>
+      <div class="person-role">OpenAI CEO</div>
+      <div class="person-content">4/26 X 帖：「是时候重新思考操作系统、用户界面以及互联网的设计——应有一个人类与 Agent 可等量使用的协议」（Firstpost 4/27 转引）。同期发帖调侃将切换多相睡眠，因 GPT-5.5 Codex 太好用「睡觉都是浪费」。4/28 出庭旁听 Musk v. Altman，预计本周出庭作证，已同意限制社交媒体发帖。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Greg Brockman <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">OpenAI Co-founder</div>
+      <div class="person-content">4/28 庭审中 2017 年私人日记被法官当庭朗读：「这是我们从 Elon 那里逃脱的唯一机会。他是我会选择的『荣耀领袖』吗？」——Musk 律师援引为 OpenAI 领导层「利益先于使命」证据。预计本周出庭作证，庭审期间同意减少社媒发帖。Reuters / TechCentral 法庭一手记录。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Jensen Huang <span class="tag tag-tier">T2</span></div>
+      <div class="person-role">NVIDIA CEO</div>
+      <div class="person-content">4/28 Digitimes 转引 Dwarkesh 专访（4/15）：澄清 GPU 分配为「先来先得」非最高出价者；回应 TPU 竞争「前提本身就错的，Nvidia 有足够供应链应对万亿美元规模」。4/29 IEEE 荣誉奖场合表示工程职业将在 AI 时代蓬勃发展，Nvidia 计划十年内员工规模翻倍至 75,000 人。属 4/15 专访的近期扩散，非首发。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Yann LeCun <span class="tag tag-tier">T2</span></div>
+      <div class="person-role">Meta Chief AI Scientist → AMI Labs</div>
+      <div class="person-content">4/24 X 帖澄清立场：「我从未说 LLM 没用，我只是说它们不是通向 AGI 的路。」4/28 CNBC 报道 AMI Labs（LeCun 离开 Meta 后创立，3 月完成 $1B 融资）被纳入大厂人才离巢趋势。本期无全新技术发声。</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Swyx <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">Latent Space 主理</div>
+      <div class="person-content">4/28-29 发布两期 AINews：4/28「ImageGen is on the Path to AGI」聚焦 DALL-E-3 竞争格局；4/29 直接标题「not much happened today」坦言无重大动态，预告将撰写关于 inference 需求与 multi-agent 的深度文章。本周期专家视角的「噪声 vs 信号」校准点。</div>
+    </div>
+  </div>
+
+  <div class="cross-section">
+    <div class="cross-section-title">实验室横截面（近 3 天）</div>
+    <p><strong>Anthropic</strong>：白宫起草 EO 重新纳入联邦采购，Pentagon 对峙走向法律 + 外交双轨；同期估值冲 $900B 融资落地在即。</p>
+    <p><strong>OpenAI</strong>：Musk v. Altman 审判开打，Altman 4/26 呼吁重新设计「人-Agent 共用互联网协议」；4/30 宣布 10 GW 算力合约提前达成。</p>
+    <p><strong>xAI</strong>：Musk 法庭求 Altman 下台 + $130B 求偿，辩称 OpenAI「抢了慈善机构」。</p>
+    <p><strong>Google DeepMind</strong>：Hassabis 首尔行程落实首个海外 AI 校区（韩国），同周 Google 借 Anthropic 缺席向 DoD 开放 Gemini。</p>
+    <p><strong>Meta</strong>：Q1 财报超预期但 CapEx 上调至 $145B 引爆股价跌 6%，Muse Spark 闭源 + 双位数用户增长是唯一护盾。</p>
+    <p><strong>DeepSeek</strong>：本期 3 天无新官方动态，V4 API 上线后 vLLM 等社区集成进行中。</p>
+  </div>
+</div>
+
+<!-- ============================================================
+  4. 技术突破
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4A1;</span>
+    <h2>技术突破</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      StructMem：事件级分层记忆框架 ACL 2026 接收 <span class="date-inline">4/23-24</span>
+    </div>
+    <div class="card-body">
+      <p>浙大 ZJU NLP 团队 StructMem 解决 agent 记忆的结构性困境——平面记忆（高效但丢失关系）vs 图记忆（结构完整但构建昂贵且脆弱）trade-off。用双视角事件级绑定（事件内容 + 时间上下文）+ 语义整合，在 LoCoMo 基准上同时改善多跳推理和时间推理，token 用量、API 调用、运行时均显著低于现有记忆系统。4/23 上传 arXiv（<a href="https://arxiv.org/abs/2604.21748v1" target="_blank">2604.21748</a>），4/24 LightMem 官方 README 更新确认 ACL 2026 接收。LightMem 前身已 ICLR 2026 接收，<a href="https://github.com/zjunlp/LightMem" target="_blank">zjunlp/LightMem</a> 732 stars。</p>
+      <p>对 ORCHE：与 4/23 简报报过的 Memanto（13 类型化 Memory）+ 4/27 简报的 Anthropic Managed Agents Memory 同方向叠加，3C「知识基础设施」启动时的候选参考。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-academic">Academic</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  5. 开源生态
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4E6;</span>
+    <h2>开源生态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="compact-item">
+      <div class="compact-title">
+        <span class="sig sig-notable"></span>
+        langchain-ai/deepagents 22K stars，`deepagents deploy` 直指 Claude Managed Agents 替代方案
+        <span class="date-inline">4/27</span>
+        <span class="tag tag-orche">ORCHE 相关</span>
+        <span class="tag tag-landscape">L 候选</span>
+      </div>
+      <div class="compact-desc">LangChain 4/27 newsletter 标题级报道（4/9 deploy beta 后第二波强推），明确定位为「Anthropic Managed Agents 4/26 公测上线后 1 天的开源替代」。差异化：内存为用户自有格式（AGENTS.md / skills 等开放标准）可直接 API 查询，对比 Anthropic 的闭源 harness。`deepagents deploy` 单命令打包 harness + 内存 + 沙箱为可横向扩展 production 服务器，支持 MCP / A2A / Agent Protocol 三种暴露。gh api 实时验证：22,051 stars，最新 push 4/30。<a href="https://github.com/langchain-ai/deepagents" target="_blank">repo</a> · <a href="https://www.langchain.com/blog/deep-agents-deploy-an-open-alternative-to-claude-managed-agents" target="_blank">blog</a></div>
+    </div>
+
+    <div class="compact-item">
+      <div class="compact-title">
+        openai/privacy-filter：浏览器级 PII 检测模型 Apache 2.0 开源
+        <span class="date-inline">4/22 + 4/27 HF 跟进</span>
+        <span class="tag tag-official">Official</span>
+      </div>
+      <div class="compact-desc">OpenAI 4/22 发布，1.5B 总参 / 50M 推理激活（sparse MoE 128 专家 top-4），128K 上下文单 pass 完成 8 类敏感信息标注（private_person / account_number / secret 等）。Apache 2.0 + HF Transformers.js（可跑浏览器 / Node.js）。gh 1,804 stars + HF 5,774 下载。HuggingFace 4/27 官方博客发三个 demo app 跟进。<a href="https://huggingface.co/openai/privacy-filter" target="_blank">HF</a> · <a href="https://github.com/openai/privacy-filter" target="_blank">repo</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  6. Claude Code 专区
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x2699;</span>
+    <h2>Claude Code 专区</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">功能发布</div>
+    <div class="card-body">
+      <p><strong>v2.1.121</strong>（4/28）：`alwaysLoad` MCP 配置项——指定 server 全部工具跳过 ToolSearch deferral，始终可用。修复 ~2GB 内存泄漏（大量图片 session 中 `/usage` 累积）。<strong>v2.1.122</strong>（4/28）：`ANTHROPIC_BEDROCK_SERVICE_TIER` 环境变量（default/flex/priority 控成本与延迟权衡）；`/resume` 支持直接粘贴 PR URL 定位创建该 PR 的 session（GitHub/GitLab/Bitbucket）。<strong>v2.1.123</strong>（4/29）：修复 `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` 下 OAuth 401 retry loop。</p>
+      <p>对 ORCHE：`alwaysLoad` 解决当前 Zoho CRM MCP 工具需每次 ToolSearch 加载的摩擦——可评估配置。<a href="https://github.com/anthropics/claude-code/releases" target="_blank">releases</a></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">应用场景讨论</div>
+    <div class="card-body">
+      <p><strong>OpenAI Symphony 开源</strong>（4/27）：Codex 多 agent 编排规范，以 SPEC.md 为核心抽象，把 Linear/issue tracker 变成 coding agent 控制平面——每个 issue 由独立 agent workspace 处理，自动监控重启 + 全程 CI/PR 可观测。OpenAI 内部工程团队称上线前三周 PR landed 数量提升 500%，GitHub 18K+ stars（repo 创建 2/26，4/27 公开发布）。设计哲学与 CC 的 `/loop` + subagent 团队机制形成直接竞争——差异是 Symphony 以「管理工作」而非「管理 agent」为抽象层。<a href="https://openai.com/index/open-source-codex-orchestration-symphony/" target="_blank">OpenAI</a></p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">评价</div>
+    <div class="card-body">
+      <p>r/ClaudeCode 本周期出现 Opus 4.7 regression 反馈集中爆发：多个重度用户反映 Opus 4.7 发布前后工作流退步，表现为「被告知不做的事反复犯、规则 decay、跨 session 一致性下降」。代表性帖子（4/21）记录 Opus 在 production 环境循环调用 15 分钟、向真实客户重复发送邮件的事故，标 bug + area:model + memory（GitHub issue #51494，open）。</p>
+      <p>对照声音：另有用户对比 CC、Codex、Copilot 后结论是 Claude Code「真正持续执行到完成」是核心差异化——Codex 和 Copilot 仍频繁中途请求确认。整体：持续执行能力仍是 CC 优势，但 Opus 4.7 的 instruction following 稳定性在复杂长任务中存在真实问题——与 Kevin 4/30 决策（双层架构 POC fall back，理由「不信任 ORCHE × Opus 4.7 当前能力」）社群侧形成回声。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  7. 横向热度
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4CA;</span>
+    <h2>横向热度</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="heat-item">
+      <div class="heat-rank">1</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          美国 AI 立法周：Lieu-Obernolte 综合包 + CREATE AI Act 双轨
+          <span class="date-inline">4/27-29</span>
+          <span class="tag tag-official">Official</span>
+          <span class="tag tag-landscape">L 候选</span>
+        </div>
+        <div class="heat-evidence">依据：CNBC 4/27 头条 + Nextgov + Senate.gov 官方新闻稿 + ross.house.gov 多源</div>
+        <div class="heat-desc">Lieu（民）+ Obernolte（共）跨党发布《American Leadership in AI Act》整合 20+ 既有提案，覆盖标准/研究基础设施/政府采购/劳工保护/Deepfake/教育六大章节，本届国会首个综合改革包。同周 Young/Heinrich/Rounds/Booker 再提 CREATE AI Act 立法确立 NAIRR（国家 AI 研究资源平台）。本周 US Federal AI 立法密度为 2026 迄今最高。前情：4/29 简报报过 American Leadership Act + CHATBOT Act，本期是双轨升级。</div>
+      </div>
+    </div>
+
+    <div class="heat-item">
+      <div class="heat-rank">2</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          中国《人工智能拟人化互动服务管理暂行办法》7/15 施行倒计时
+          <span class="date-inline">4/10 公布 / 7/15 施行</span>
+          <span class="tag tag-official">Official</span>
+          <span class="tag tag-landscape">L 候选</span>
+        </div>
+        <div class="heat-evidence">依据：CAC 五部门联合官方发文（cac.gov.cn）+ MONDAQ 法律分析 + ITTCNET</div>
+        <div class="heat-desc">CAC + 发改委 + 工信部 + 公安部 + 市监总局五部门发布。规管：AI 虚拟伴侣 / 情感互动助手 / 拟人化聊天机器人。关键条款：禁向未成年人提供「虚拟伴侣 / 虚拟亲属」服务，要求算法备案、限制情感操控行为、强制安全评估。本周距施行仅 75 天，行业合规窗口倒计时；国际 AI 公司进中国相关市场须注意。</div>
+      </div>
+    </div>
+
+    <div class="heat-item">
+      <div class="heat-rank">3</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          Cohere 收购 Aleph Alpha 合并为 $200B「跨大西洋主权 AI」
+          <span class="date-inline">4/24</span>
+          <span class="tag tag-commercial">Commercial</span>
+          <span class="tag tag-landscape">L 候选</span>
+        </div>
+        <div class="heat-evidence">依据：CNBC 4/24 + TechCrunch 4/24-25 + The Next Web 三源交叉验证</div>
+        <div class="heat-desc">加拿大 Cohere 主导（9:1）合并德国 Aleph Alpha，合并估值约 $200 亿。Schwarz Group（欧洲最大零售集团）同步注资 $6 亿 Series E，德国数字部长出席柏林发布。目标：欧洲企业与政府的「主权 AI」替代——不依赖美国超大平台。德国政府成锚点客户，合并后跻身美国以外最高估值 AI 公司之列。</div>
+      </div>
+    </div>
+
+    <div class="heat-item">
+      <div class="heat-rank">4</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          Profluent $106M + Fathom $47M：AI × 生物药物设计集中爆发
+          <span class="date-inline">4/23-27</span>
+          <span class="tag tag-commercial">Commercial</span>
+        </div>
+        <div class="heat-evidence">依据：BioPharma Boardroom + PR Newswire 官方新闻稿</div>
+        <div class="heat-desc">Profluent（首个 AI 设计 CRISPR 系统）完成 $1.06 亿融资（Altimeter + Bezos Expeditions 共领），总融资 $1.5 亿（4/23）。Fathom Therapeutics（量子化学 + AI 小分子药物，对蛋白动态建模加速 10,000 倍）超额认购 $4700 万 Series A（Sutter Hill 领投，4/27）。两笔同窗口披露——AI × 结构生物学在融资市场形成独立热点。</div>
+      </div>
+    </div>
+
+    <div class="heat-item">
+      <div class="heat-rank">5</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          Freshfields 全球 5,700 人部署 Claude，头六周使用量暴增 500%
+          <span class="date-inline">4/23</span>
+          <span class="tag tag-commercial">Commercial</span>
+        </div>
+        <div class="heat-evidence">依据：Freshfields 官网 + Legal IT Insider + ABA 2026 报告</div>
+        <div class="heat-desc">Freshfields（全球 33 个办公室顶级律所）与 Anthropic 多年共建协议，5,700 名员工（含律师 + 业务支持）开放 Claude；头六周使用量暴增约 500%。同步共建法律专向 agentic workflows + Thomson Reuters CoCounsel Legal（Anthropic 技术重建版）早期测试方。此前已有 5,000+ 人用 Google Gemini——双 AI 平台并行。法律行业 AI 渗透从 PoC 跨入全所级部署阶段。ABA 2026：69% 律师个人已用 AI，但 54% 法律机构无任何 AI 治理政策。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  8. 行动建议
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x26A1;</span>
+    <h2>行动建议</h2>
+  </div>
+  <div class="action-box">
+    <ul>
+      <li><strong>langchain-ai/deepagents + AGENTS.md 开放标准评估</strong>——对 ORCHE Layer 3 / agent harness 架构有直接参考价值，相对 Claude Managed Agents 的闭源 harness 是开放替代路径。建议入 <strong>parking-lot</strong>，Phase 3B 重启时纳入候选评估。</li>
+      <li><strong>StructMem + LightMem 论文跟踪</strong>——与 Memanto / Anthropic Managed Agents Memory 三条 memory 架构信号同方向叠加。建议入 <strong>追踪清单 ~5/15</strong>，3C「知识基础设施」启动时一并评估候选记忆框架。</li>
+      <li><strong>Claude Code v2.1.121 `alwaysLoad` 配置评估</strong>——直接解决 Zoho CRM MCP 工具每次 ToolSearch deferral 的摩擦。建议建 <strong>Task</strong>（一次性配置 + 验证），可顺手处理。</li>
+      <li><strong>Opus 4.7 regression 社群信号</strong>——r/ClaudeCode 集中反馈与 Kevin 4/30 双层架构 POC fall back（不信任 ORCHE × Opus 4.7 当前能力）形成回声。建议保留为 <strong>持续观察</strong>（无独立 task），下次模型升级或重大 patch 出现时重评 Phase 3B 重启窗口。</li>
+      <li><strong>Anthropic Mythos 政府准入路径</strong>——若白宫 EO 落地，Anthropic 收入曲线 + 政府上下文使用场景将变。建议入 <strong>追踪清单 ~5/15</strong>，与 5/15 P2555N anchor template 评估同窗口检视一次。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  Generated by ORCHE &middot; 来源：TechCrunch / Bloomberg / Reuters / Axios / NPR / CNN / AP / FT / CNBC / Yonhap / Sequoia / TechFundingNews / arXiv / GitHub / HuggingFace / LangChain / OpenAI / r/ClaudeCode / Latent Space / cac.gov.cn / Senate.gov / BioPharma Boardroom / Freshfields / Legal IT Insider
+  <div class="legend">
+    <span class="legend-item"><span class="sig sig-top"></span>顶级</span>
+    <span class="legend-item"><span class="sig sig-notable"></span>显著</span>
+    <span class="legend-item">无符号 = 值得关注</span>
+  </div>
+</div>
+
+</body>
+</html>
