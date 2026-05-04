@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 情报简报 — 2026-05-04</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --text-soft: #374151;
+    --card-bg: #ffffff;
+    --card-border: #e8e8ed;
+    --section-divider: #e5e7eb;
+    --signal-top: #dc2626;
+    --signal-notable: #ea580c;
+    --tag-geek-fg: #6d28d9;       --tag-geek-bg: #ede9fe;
+    --tag-dev-fg: #1d4ed8;        --tag-dev-bg: #dbeafe;
+    --tag-mass-fg: #57534e;       --tag-mass-bg: #f5f5f4;
+    --tag-official-fg: #b45309;   --tag-official-bg: #fef3c7;
+    --tag-academic-fg: #0e7490;   --tag-academic-bg: #cffafe;
+    --tag-commercial-fg: #be185d; --tag-commercial-bg: #fce7f3;
+    --tag-orche-fg: #047857;      --tag-orche-bg: #d1fae5;
+    --tag-landscape-fg: #78350f;  --tag-landscape-bg: #fef7e0;
+    --tag-tier-fg: #1e40af;       --tag-tier-bg: #dbeafe;
+    --date-fg: #9ca3af;
+    --cross-bg: #eff6ff;
+    --cross-border: #bfdbfe;
+    --cross-text: #1e3a8a;
+    --action-bg: #ecfdf5;
+    --action-border: #a7f3d0;
+    --action-text: #064e3b;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-soft: #cbd5e1;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --section-divider: #334155;
+      --signal-top: #f87171;
+      --signal-notable: #fb923c;
+      --tag-geek-fg: #c4b5fd;       --tag-geek-bg: #3b0764;
+      --tag-dev-fg: #93c5fd;        --tag-dev-bg: #1e3a8a;
+      --tag-mass-fg: #d6d3d1;       --tag-mass-bg: #3f3f46;
+      --tag-official-fg: #fcd34d;   --tag-official-bg: #78350f;
+      --tag-academic-fg: #67e8f9;   --tag-academic-bg: #164e63;
+      --tag-commercial-fg: #f9a8d4; --tag-commercial-bg: #831843;
+      --tag-orche-fg: #6ee7b7;      --tag-orche-bg: #064e3b;
+      --tag-landscape-fg: #fcd34d;  --tag-landscape-bg: #713f12;
+      --tag-tier-fg: #bfdbfe;       --tag-tier-bg: #1e3a8a;
+      --date-fg: #64748b;
+      --cross-bg: #1e293b;
+      --cross-border: #1e40af;
+      --cross-text: #bfdbfe;
+      --action-bg: #064e3b;
+      --action-border: #047857;
+      --action-text: #d1fae5;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+  h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; }
+  .section { margin-bottom: 32px; }
+  .section-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--section-divider);
+  }
+  .section-icon { font-size: 1.3rem; }
+  .section-header h2 { font-size: 1.15rem; font-weight: 700; }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px; padding: 16px; margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 1rem; font-weight: 700; margin-bottom: 8px;
+    display: flex; align-items: flex-start; gap: 10px;
+    color: var(--text);
+  }
+  .card-body { font-size: 0.92rem; color: var(--text-soft); }
+  .card-body p { margin-bottom: 8px; }
+  .card-body p:last-child { margin-bottom: 0; }
+  .card-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .compact-item {
+    padding: 10px 0; border-bottom: 1px solid var(--section-divider);
+    font-size: 0.92rem;
+  }
+  .compact-item:last-child { border-bottom: none; }
+  .compact-title {
+    font-weight: 600; display: flex; align-items: center;
+    gap: 8px; flex-wrap: wrap; color: var(--text);
+  }
+  .compact-desc {
+    color: var(--text-muted); font-size: 0.85rem;
+    margin-top: 4px; line-height: 1.55;
+  }
+  .sig {
+    display: inline-block; width: 12px; height: 12px;
+    border-radius: 50%; flex-shrink: 0;
+    vertical-align: middle; margin-right: 2px;
+  }
+  .sig-top { background: var(--signal-top); }
+  .sig-notable { background: var(--signal-notable); }
+  .tag {
+    display: inline-flex; align-items: center;
+    font-size: 0.72rem; font-weight: 600;
+    padding: 3px 9px; border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+  .tag-geek       { color: var(--tag-geek-fg);       background: var(--tag-geek-bg); }
+  .tag-dev        { color: var(--tag-dev-fg);        background: var(--tag-dev-bg); }
+  .tag-mass       { color: var(--tag-mass-fg);       background: var(--tag-mass-bg); }
+  .tag-official   { color: var(--tag-official-fg);   background: var(--tag-official-bg); }
+  .tag-academic   { color: var(--tag-academic-fg);   background: var(--tag-academic-bg); }
+  .tag-commercial { color: var(--tag-commercial-fg); background: var(--tag-commercial-bg); }
+  .tag-orche      { color: var(--tag-orche-fg);      background: var(--tag-orche-bg); }
+  .tag-landscape  { color: var(--tag-landscape-fg);  background: var(--tag-landscape-bg); }
+  .tag-tier       { color: var(--tag-tier-fg);       background: var(--tag-tier-bg); }
+  .date-inline {
+    font-size: 0.78rem; color: var(--date-fg);
+    font-weight: 500; background: var(--section-divider);
+    padding: 2px 7px; border-radius: 4px; vertical-align: middle;
+  }
+  .cross-section {
+    background: var(--cross-bg);
+    border: 1px solid var(--cross-border);
+    border-radius: 10px; padding: 14px 16px;
+    color: var(--cross-text);
+    font-size: 0.9rem; line-height: 1.7; margin-top: 12px;
+  }
+  .cross-section-title { font-weight: 700; margin-bottom: 6px; font-size: 0.92rem; }
+  .person { padding: 14px 0; border-bottom: 1px solid var(--section-divider); }
+  .person:last-child { border-bottom: none; }
+  .person-name { font-weight: 700; font-size: 0.98rem; color: var(--text); }
+  .person-role { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+  .person-content { font-size: 0.9rem; color: var(--text-soft); margin-top: 6px; }
+  .heat-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--section-divider);
+  }
+  .heat-item:last-child { border-bottom: none; }
+  .heat-rank {
+    font-size: 1.3rem; font-weight: 800;
+    color: var(--text-muted); min-width: 30px; flex-shrink: 0;
+  }
+  .heat-content { flex: 1; }
+  .heat-title {
+    font-weight: 600; font-size: 0.94rem;
+    display: flex; align-items: center;
+    gap: 8px; flex-wrap: wrap; color: var(--text);
+  }
+  .heat-evidence {
+    font-size: 0.82rem; color: var(--text-muted);
+    margin-top: 4px; font-style: italic;
+  }
+  .heat-desc { font-size: 0.88rem; color: var(--text-soft); margin-top: 4px; }
+  .tracking-empty {
+    color: var(--text-muted); font-style: italic;
+    padding: 12px 0; font-size: 0.9rem;
+  }
+  .action-box {
+    background: var(--action-bg);
+    border: 1px solid var(--action-border);
+    border-radius: 10px; padding: 16px 20px;
+    color: var(--action-text);
+  }
+  .action-box ul { padding-left: 20px; }
+  .action-box li {
+    margin-bottom: 8px; font-size: 0.92rem;
+    color: var(--action-text);
+  }
+  .action-box li:last-child { margin-bottom: 0; }
+  .action-box strong { color: var(--action-text); }
+  a { color: var(--tag-dev-fg); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .inline-note { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+  .audio-player {
+    margin: -12px 0 28px; padding: 12px 14px;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 10px;
+  }
+  .audio-player-label { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
+  .audio-player audio { width: 100%; height: 36px; display: block; }
+  .footer {
+    margin-top: 40px; padding-top: 16px;
+    border-top: 1px solid var(--section-divider);
+    font-size: 0.78rem; color: var(--text-muted);
+    text-align: center;
+  }
+  .legend {
+    margin-top: 8px; display: flex; justify-content: center;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .legend-item { display: inline-flex; align-items: center; gap: 4px; }
+</style>
+</head>
+<body>
+
+<h1>AI 情报简报</h1>
+<p class="meta">2026-05-04 (Mon) &middot; 覆盖 5/1–5/4（4 天累积，含 4/29–30 余波）&middot; 阅读约 8 分钟</p>
+
+<div class="audio-player">
+  <div class="audio-player-label">&#x1F3A7; 语音播报</div>
+  <audio controls preload="metadata">
+    <source src="audio/2026-05-04.mp3" type="audio/mpeg">
+    您的浏览器不支持音频播放。
+  </audio>
+</div>
+
+<!-- ============================================================
+  1. 今日焦点
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F525;</span>
+    <h2>今日焦点</h2>
+  </div>
+
+  <!-- TOP 1: Claude Code v2.1.126 + Claude Security GA -->
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      Claude Code v2.1.126 发布 + Claude Security 公测 GA <span class="date-inline">5/1</span>
+    </div>
+    <div class="card-body">
+      <p><strong>v2.1.126</strong>（已在 Kevin 本地一手验证）核心新增 <code>claude project purge</code>——首个官方支持的项目状态清理命令，删除 transcripts / tasks / file history / config entry，支持 <code>--dry-run</code> / <code>--interactive</code> / <code>--all</code>。同期改善：<code>/model</code> picker 可从 <code>ANTHROPIC_BASE_URL</code> 兼容网关 <code>/v1/models</code> 动态拉取（企业自建网关直接受益）；OAuth 支持 WSL / SSH / 容器粘贴登录；<code>--dangerously-skip-permissions</code> 覆盖范围扩展至 <code>.claude/</code>、<code>.git/</code>、<code>.vscode/</code> 等保护路径。</p>
+      <p><strong>Claude Security</strong>（原 Claude Code Security 2 月研究预览）正式更名进入公测。Opus 4.7 驱动，不依赖漏洞模式匹配，而像安全研究员追踪数据流 + 跨文件组件交互；多阶段验证 pipeline 每个发现经独立 agent 验证；新增定时扫描、目录级粒度、CSV/Markdown 导出、Slack/Jira webhook。Enterprise GA，Team/Max 即将开放，从 <code>claude.ai/security</code> 直接访问。</p>
+      <p class="inline-note">前情：Anthropic Newsroom 4/28 后无新置顶帖，Claude Security 以新闻通稿形式发布。Claude Labs 系列本周无新产品页面。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-orche">ORCHE 相关</span>
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <!-- TOP 2: Grok 4.3 API + Voice Cloning -->
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      xAI Grok 4.3 全量 API + Voice Cloning Suite 上线 <span class="date-inline">5/1</span>
+    </div>
+    <div class="card-body">
+      <p>定价 $1.25 / $2.50 per M tokens（input / output），较前代 Grok 4.20 降 58–83%；207 tok/s 输出速度；1M context。Artificial Analysis Intelligence Index 53（参照：GPT-5.5 = 60、Opus 4.7 = 57）。⚠ 实际 per-task 成本因 2.5x verbosity 需向上修正。</p>
+      <p><strong>Voice Cloning API</strong>：120s 音频建模、speech-to-speech $3/hr，相比 ElevenLabs 低约 90%。语音生态价格战正式打响。</p>
+      <p class="inline-note">同期庭审记录披露：Musk 出庭作证承认 xAI <strong>partly</strong> 使用 OpenAI 模型蒸馏训练 Grok（来源：The Verge、TechCrunch 5/1 庭审报道）。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-commercial">Commercial</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <!-- TOP 3: Jensen "God complex" -->
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      Jensen Huang 公开点名 Amodei + Musk「God complex」 <span class="date-inline">4/30→5/2 传播</span>
+    </div>
+    <div class="card-body">
+      <p>NVIDIA CEO 在 SCSP 智库《Memos to the President》播客中（4/30 发布）痛批预测大规模失业的 AI CEO 「患有 god complex」，点名 Amodei「50% 白领失业」预测和 Musk「20% 人类灭绝」论调，称「这些言论不负责任，会造成关键职业人才短缺」；以放射科医生为例反驳 AI 取代论。Fortune / Business Insider / The Decoder 5/2 集中报道，行业博弈信号显著——AI 三巨头公开互怼罕见。</p>
+      <p class="inline-note">原 podcast 4/30 严格在窗口边界；5/2 媒体峰值传播纳入。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-mass">大众</span>
+      <span class="tag tag-commercial">Commercial</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  2. 追踪中
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4E1;</span>
+    <h2>追踪中</h2>
+  </div>
+  <p class="tracking-empty">尚无追踪项目。对 ORCHE 说「追踪 [主题]」即可新增。</p>
+</div>
+
+<!-- ============================================================
+  3. 前沿人物动态
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F399;</span>
+    <h2>前沿人物动态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+
+    <div class="person">
+      <div class="person-name">Sam Altman <span class="tag tag-tier" style="margin-left: 6px;">T1</span></div>
+      <div class="person-role">OpenAI CEO</div>
+      <div class="person-content">
+        <span class="date-inline">5/1</span> 在 Stripe Sessions 演讲称 AI 带来「<strong>idea guys 的复仇</strong>」——技术天赋不再是创业必要条件；同日 X 连发数帖：AI 让人「更忙」而非替代人，预测大规模失业「长期来看可能是错的」，并调侃「Artificial goblin intelligence achieved」。配合 Codex「为一切而非编程」战略，攻势全开。
+      </div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Elon Musk <span class="sig sig-notable" style="margin-left: 4px;"></span> <span class="tag tag-tier" style="margin-left: 6px;">T1</span></div>
+      <div class="person-role">xAI / Tesla / SpaceX</div>
+      <div class="person-content">
+        <span class="date-inline">5/1</span> 联邦法庭出庭作证：(1) 承认 xAI <strong>partly 使用 OpenAI 模型蒸馏</strong>训练 Grok；(2) 庭上将 <strong>Anthropic 列业界第一</strong>、OpenAI 第二、Google 第三，自称 xAI 只是「几百人小公司」；(3) 自述「捐 $38M 给一家 $800B 公司」是「傻瓜」。同日 xAI 发布 Grok 4.3 API 全量上线（见今日焦点 #2）。
+      </div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Jensen Huang <span class="sig sig-notable" style="margin-left: 4px;"></span> <span class="tag tag-tier" style="margin-left: 6px;">T2</span></div>
+      <div class="person-role">NVIDIA CEO</div>
+      <div class="person-content">
+        <span class="date-inline">4/30→5/2</span> 见今日焦点 #3。直接公开点名 Amodei + Musk「god complex」，是 AI 三巨头中首次正面冲突信号。
+      </div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Satya Nadella <span class="tag tag-tier" style="margin-left: 6px;">T1</span></div>
+      <div class="person-role">Microsoft CEO</div>
+      <div class="person-content">
+        <span class="date-inline">4/29 财报 + 5/1 后续</span> Q3 财报电话会：Microsoft AI 业务 <strong>年化营收 $370 亿</strong>（+123% YoY）；明示「将充分利用（exploit）OpenAI 修订协议直至 2032 年」；Copilot 周活跃度已与 Outlook 持平。
+      </div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Mark Zuckerberg <span class="tag tag-tier" style="margin-left: 6px;">T1</span></div>
+      <div class="person-role">Meta CEO</div>
+      <div class="person-content">
+        <span class="date-inline">4/29 + 5/1 余波</span> Q1 财报会：基于 MSL Muse Spark 模型开发「给我妈用的」个人 agent + 商业 agent；$1,250–1,450 亿 CapEx 维持；点名 OpenClaw「设置很粗糙」。投资者反应保守（股价承压）。
+      </div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Swyx <span class="tag tag-tier" style="margin-left: 6px;">T1</span></div>
+      <div class="person-role">Latent Space 主理</div>
+      <div class="person-content">
+        <span class="date-inline">5/1</span> AINews 简报《Agents for Everything Else》提出 2026 年核心命题：「<strong>coding agents breaking containment</strong>——从编码扩展到一切」，聚焦 Codex 战略意图。
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 实验室横截面 -->
+  <div class="cross-section">
+    <div class="cross-section-title">实验室横截面（5/1–5/4）</div>
+    <p><strong>Anthropic</strong>：被动防守——Dario「50% 失业」论被 Jensen 当面点名；Claude Security 公测 GA 是少数主动招式。</p>
+    <p><strong>OpenAI</strong>：Altman 密集出牌（演讲 + X + Codex 扩展），攻势全开。</p>
+    <p><strong>xAI</strong>：庭审承认 Grok 蒸馏 OpenAI 模型（被动失分）+ Grok 4.3 激进降价（主动补位）。</p>
+    <p><strong>Google DeepMind</strong>：Hassabis YC 播客（4/29）稳健定调 AGI ~2030；Isomorphic Labs 暗示重大公告。本周相对静默。</p>
+    <p><strong>Meta</strong>：Zuckerberg 财报坚守 CapEx 赌注；agent 路线图清晰但时间表模糊。</p>
+    <p><strong>DeepSeek</strong>：V4 上线后保持技术沉默。</p>
+  </div>
+</div>
+
+<!-- ============================================================
+  4. 技术突破
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4A1;</span>
+    <h2>技术突破</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      IBM Granite 4.1 全家族开源 <span class="date-inline">5/1</span>
+    </div>
+    <div class="card-body">
+      <p>IBM Think 2026（5/4 开幕，Boston，主题「Agentic Enterprise」）前夕发布 Granite 4.1 最大规模开源包：3B / 8B / 30B 语言模型 + Vision 4.1（文档/图表理解）+ Speech 4.1（多语言 ASR，WER 5.33%）+ Guardian 4.1（安全/偏见检测）+ Embedding Multilingual R2（200+ 语言）。<strong>全系列 Apache 2.0</strong>，HuggingFace / vLLM / SGLang / llama.cpp 全支持。约 15T tokens 训练。</p>
+      <p class="inline-note">企业向定位，技术圈讨论度有限；但企业部署可行性 + 多模态全栈覆盖在开源企业 AI 中位置独特。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-commercial">Commercial</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      <span class="sig sig-notable"></span>
+      vLLM v0.20.1 — DeepSeek V4 稳定版 <span class="date-inline">5/3</span>
+      <span class="tag tag-official">Official</span>
+    </div>
+    <div class="compact-desc">79K stars。专攻 DeepSeek V4 性能优化与死锁修复（MTP 并发 &gt;1 死锁、BF16/MXFP8 all-to-all），同步推进 PyTorch 2.11 + CUDA 13.0 + Transformers v5。⚠ 部分 MTP 死锁仍以「暂时禁用 speculative decoding」绕过，issue #41404 主审反对该补丁模式。</div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      Mem0 算法更新 + benchmark 真实性争议 <span class="date-inline">4/16 起，5 月初活跃</span>
+      <span class="tag tag-academic">Academic</span>
+    </div>
+    <div class="compact-desc">前情：4 月初已报记忆论文集中爆发。新增：mem0 公布 ADD-only + entity linking + multi-signal retrieval 算法，官方称 LoCoMo 71.4→91.6、LongMemEval 67.8→93.4，单次调用 &lt;7K tokens。<strong>同期 r/AIMemory 帖揭露</strong> LoCoMo 答案键 6.4% 错误、LongMemEval 可完整放入 1M context；OSS 本地部署实测 LoCoMo 仅 50–56%（GitHub issue #3944 确认）。<strong>对 ORCHE Phase 3C 评估有影响：mem0 数字需谨慎采信</strong>。</div>
+  </div>
+
+  <p class="inline-note" style="margin-top: 12px; padding-left: 4px;">⚠ 本周期窗口 5/1–5/4 内 arXiv 新 cs.AI / cs.CL 论文极少（提交周期错位）；4 月底相关论文（VPS、DiffMAS 等）来源验证不足，本期从严丢弃，待二次核实后下期补报。</p>
+</div>
+
+<!-- ============================================================
+  5. 开源生态
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4E6;</span>
+    <h2>开源生态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+
+    <div class="compact-item">
+      <div class="compact-title">
+        <span class="sig sig-notable"></span>
+        TauricResearch / TradingAgents — 多 agent 金融交易框架 <span class="date-inline">5/1 持续爆增</span>
+        <span class="tag tag-geek">极客</span>
+      </div>
+      <div class="compact-desc"><strong>65,973 stars（5/4 验证）</strong>，上周（4/26–5/2）周增 ~3,300。基本面/情绪/技术分析师 + 风险管理 agent 多角色辩论决策；附论文 arXiv:2412.20138。trendshift.io 本周 Python 排行持续上榜；r/quant + r/LocalLLaMA 多帖讨论实盘风险。<strong>金融多 agent 范例参考价值高</strong>——Citi Arc + Freshfields 趋势的开源对照物。</div>
+    </div>
+
+    <div class="compact-item">
+      <div class="compact-title">
+        vllm-project / vllm v0.20.1 <span class="date-inline">5/3</span>
+        <span class="tag tag-official">Official</span>
+      </div>
+      <div class="compact-desc">78,968 stars。详见技术突破 section。社群：v0.20.0 GitHub reactions 👍57 🚀49；discuss.vllm.ai 兼容性帖活跃。</div>
+    </div>
+
+    <div class="compact-item">
+      <div class="compact-title">
+        langchain-ai / langchain v1.3.0a1 <span class="date-inline">5/1</span>
+        <span class="tag tag-dev">开发者</span>
+      </div>
+      <div class="compact-desc">135,723 stars。1.3 alpha 一次性 bump 标志架构调整阶段，配合 DeepSeek V4 / GPT-5.5 / Qwen3 全新生态整合。⚠ alpha 版社群讨论尚低，stable 待观察。</div>
+    </div>
+
+    <div class="compact-item">
+      <div class="compact-title">
+        google / adk-python v1.32.0 <span class="date-inline">5/1</span>
+        <span class="tag tag-official">Official</span>
+      </div>
+      <div class="compact-desc">19,417 stars。Google 官方 Agent Development Kit，配合 Gemini Enterprise Agent Platform（4/22 上线）推进；code-first Python 工具链覆盖 build / eval / deploy。社区有机讨论仍在建立中，主要靠 Google 生态背书。</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================
+  6. Claude Code 专区
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x2699;</span>
+    <h2>Claude Code 专区</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">功能发布</div>
+    <div class="card-body">
+      <p><strong>v2.1.126</strong>（5/1，本地一手验证）：</p>
+      <ul style="padding-left: 20px; margin: 6px 0;">
+        <li><code>claude project purge</code> 首个官方项目状态清理命令（含 transcripts / tasks / file history / config）</li>
+        <li><code>/model</code> picker 支持兼容网关 <code>/v1/models</code> 动态拉取</li>
+        <li>OAuth 支持 WSL / SSH / 容器粘贴登录</li>
+        <li><code>--dangerously-skip-permissions</code> 覆盖 <code>.claude/</code>、<code>.git/</code>、<code>.vscode/</code></li>
+        <li>Mac sleep/wake stream timeout 修复；Windows CJK 渲染修复；managed sandbox 安全回归修复</li>
+        <li><code>claude_code.skill_activated</code> OpenTelemetry 事件新增 <code>invocation_trigger</code> 属性（user-slash / claude-proactive / nested-skill）；Skills 可引用 <code>${CLAUDE_EFFORT}</code></li>
+      </ul>
+      <p><strong>Claude Security 公测 GA</strong>（5/1）：详见今日焦点 #1。Enterprise GA / Team / Max 即将开放。集成伙伴：CrowdStrike / Microsoft Security / Palo Alto / SentinelOne / Wiz。</p>
+      <p class="inline-note">⚠ <strong>/ultrareview 免费额度 5/5 到期</strong>——Pro / Max 各 3 次免费 run，过期后 $5–$20 / run 计入 extra usage。本周内最后窗口。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">应用场景讨论</div>
+    <div class="card-body">
+      <p><strong>/ultrareview 架构</strong>（5/1）：云端并行 agent fleet，每个发现独立 agent 二次验证，官方误报率 &lt;1%。本地 <code>/review</code> 单 pass，ultrareview 多 agent + 验证层。官方称 5–10 分钟；社区实测大 diff 15–20 分钟。「Max 订阅是起点而非终点」——首个 per-review 额外计费的开发者工具 SKU。</p>
+      <p><strong>/ultrareview bug</strong>（4/28，GitHub Issues #54229，open 状态）：~6.6MB diff / 23 个 Python 文件 monorepo 中 sandbox 启动后无 agent activity，30 分钟 timeout 失败但<strong>免费 run 额度已扣除</strong>。2 次连续失败模式一致。</p>
+      <p><strong>Opus 4.7 长 session 迭代问题</strong>（4/27，GitHub Issues #53958）：claude-opus-4-7[1m] 6 小时 session 内经 8 轮 Codex review 才完成一个 PR；模型「修变体不修类」——同一架构缺陷反复发现。用户请求模型主动调取历史 feedback memory + 自我报告「我在修变体」信号。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">评价</div>
+    <div class="card-body">
+      <p><strong>Boris Cherny（CC Lead）</strong>：Opus 4.7 「更 agentic、更精确、长时运行更好、跨 session 上下文保持更好、处理模糊性更好」（X @bcherny）；驳斥 regression 说法，但 Anthropic PM 同期承认「正在快速推进内部 tuning」。</p>
+      <p><strong>社区分裂持续</strong>：r/ClaudeAI「Opus 4.7 is legendarily bad」帖 2300+ upvotes（举例：strawberry 说成两个 P / 改错 resume 信息 / 主动删 Postgres 表）vs 「Best session ever had」反面（clean context + xhigh + updated skills 用户普遍正面）。<strong>分裂源自使用场景，非全面退步</strong>。</p>
+      <p><strong>xhigh 隐性成本</strong>（llmtest.io 4/21）：xhigh ≈ high 的 2x token 用量；新 tokenizer 再叠 1.0–1.35x 膨胀；API 用户账单 +2–2.7x；订阅用户看不到账单但用量限制更快到顶。<strong>5/5 /ultrareview 免费到期后订阅用户首次直接感受 per-review 计费</strong>。</p>
+      <p><strong>双工具 workflow 成主流</strong>：CC（Opus 4.7 跑 xhigh）做 implementation + UI；Codex（GPT-5.5）做 review / QA / investigation；Gemini CLI 做大 context 批量扫描。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">直接竞品 5/1–5/4 横截面</div>
+    <div class="card-body">
+      <p><strong>OpenAI Codex</strong>：5/1–5/4 无新版本（最后 release 4/30 CLI 0.128.0）。运营变化：Advanced Account Security（4/30）。Codex 战略文（4/16《Codex for almost everything》）持续发酵。</p>
+      <p><strong>Cursor</strong>：5/1 Team Marketplace 无需先连 repo 即可创建（Default Off / On / Required 三级）；4/29 Cursor SDK 公测；4/24 v3.2（<code>/multitask</code> 并行 async subagents + multi-root workspaces）。定位 IDE-integrated 多 agent。</p>
+      <p><strong>GitHub Copilot</strong>：本周无新功能。<strong>6/1 正式切换 usage-based billing</strong>（AI Credits 取代 premium requests）；早 5 月开放 billing preview；4/20 暂停新注册仍在进行中，退款窗口至 5/20。</p>
+      <p><strong>Windsurf</strong>：本周期无更新。最近：4/17 Opus 4.7 支持；2.0 版（Agent Command Center + Devin in Windsurf，4/15）。</p>
+      <p><strong>Aider / Cline</strong>：无重大发布。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  7. 横向热度
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4CA;</span>
+    <h2>横向热度</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+
+    <div class="heat-item">
+      <div class="heat-rank">1</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          Citi 发布企业 AI Agent 平台 Arc <span class="date-inline">5/1</span>
+          <span class="tag tag-commercial">Commercial</span>
+        </div>
+        <div class="heat-evidence">依据：CIO Dive 独家 + Citi 官方公告；金融业 agentic AI 规模信号</div>
+        <div class="heat-desc">花旗内部 agentic AI 平台，初期供开发者构建特定 agent，后续覆盖全员；18 万员工中 80% 已用 Citi AI；CTO：「首次可在每条业务线、每个地理区域大规模部署 AI agents」。继 Freshfields 5,700 人 Claude 之后又一金融正规军落地信号。</div>
+      </div>
+    </div>
+
+    <div class="heat-item">
+      <div class="heat-rank">2</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          OpenAI Workspace Agents 5/6 收费截止 + Advanced Account Security 上线 <span class="date-inline">5/6 deadline</span>
+          <span class="tag tag-official">Official</span>
+        </div>
+        <div class="heat-evidence">依据：OpenAI 官方公告 + Trusted Access for Cyber 6/1 强制启用</div>
+        <div class="heat-desc">ChatGPT Workspace Agents（企业/团队共享 agent）免费预览 5/6 截止后转信用计费；同期 Advanced Account Security 上线（Yubico 合作 YubiKey + 移除邮件/SMS 恢复）。企业用户决策窗口紧迫。</div>
+      </div>
+    </div>
+
+    <div class="heat-item">
+      <div class="heat-rank">3</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          <span class="sig sig-notable"></span>
+          Gemini Embedding 2 GA — 多模态统一向量空间 <span class="date-inline">5/1</span>
+          <span class="tag tag-official">Official</span>
+          <span class="tag tag-landscape">L 候选</span>
+        </div>
+        <div class="heat-evidence">依据：Google 开发者博客 + 多个真实用户引用量化数据</div>
+        <div class="heat-desc">单次调用混合 text / image / video / audio / PDF 到同一向量空间，100+ 语言，MRL 维度可降（3072→1536/768）。Harvey 法律 +3% Recall@20；Supermemory 搜索 +40% Recall@1；Nuuly 视觉搜索 60%→87% Match@20。<strong>多模态 RAG pipeline 不再需要多模型拼接</strong>——结构性影响。</div>
+      </div>
+    </div>
+
+    <div class="heat-item">
+      <div class="heat-rank">4</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          Parallel Web Systems $100M Series B — Agent 互联网入口基础设施 <span class="date-inline">4/29</span>
+          <span class="tag tag-commercial">Commercial</span>
+        </div>
+        <div class="heat-evidence">依据：Sequoia 领投 + 5 个月估值翻倍至 $2B；VC 信号强</div>
+        <div class="heat-desc">AI agent 专用 web 搜索基础设施（非人类浏览器）。Harvey / Attio / Modal / Rogo 已用。主张「agent 将成为 web 主要用户，出版商应直接对 AI 获益」。<strong>Exa / Perplexity / Parallel 三角格局成型</strong>。</div>
+      </div>
+    </div>
+
+    <div class="heat-item">
+      <div class="heat-rank">5</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          Google I/O 2026 倒计时 5/19–20 <span class="date-inline">15 天后</span>
+          <span class="tag tag-mass">大众</span>
+        </div>
+        <div class="heat-evidence">依据：Google 开发者博客持续预热 + Gemini Embedding 2 GA + TPU v7 Ironwood 信号</div>
+        <div class="heat-desc">市场共识预期：Gemini 3.1 Ultra（SWE-bench 75%+、2–4M context）、Project Astra 实时音视频 API GA、TPU v7 Ironwood via Vertex AI。Google Cloud Q1 营收 +50%，I/O 是 Google 反压 OpenAI / Anthropic 最重要年度场合。⚠ 具体内容为预期，未验证。</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================
+  8. 行动建议
+============================================================ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x26A1;</span>
+    <h2>行动建议</h2>
+  </div>
+  <div class="action-box">
+    <ul>
+      <li><strong>/ultrareview 免费额度 5/5 到期</strong> — 本周内最后窗口。如有当前可用 PR / 大 diff，今明两日内试跑一次；过期后 $5–$20 / run 进 extra usage。<em>建议去向：Task（紧急，今明两日触发）</em></li>
+      <li><strong>v2.1.126 <code>claude project purge</code> 评估</strong> — ORCHE 多目录架构（_system / personal-* / work-* / orche worktree）若有 transcripts / config 残留可考虑清理；先用 <code>--dry-run</code> 确认范围。<em>建议去向：Parking lot（试用条目）</em></li>
+      <li><strong>Claude Security 公测应用评估</strong> — 对 ORCHE 自身代码库 + YCYZ 后续涉代码项目的扫描价值。当前 Enterprise GA，Team / Max 即将开放（无明确日期），追踪开放窗口。<em>建议去向：追踪清单（~5/15 评估开放状态）</em></li>
+      <li><strong>Mem0 benchmark 数字向上修正认知</strong> — Phase 3C 知识基础设施评估时，mem0 官方数字（LoCoMo 91.6、LongMemEval 93.4）需配合 OSS 实测（50–56%）+ benchmark 本身缺陷（LoCoMo 6.4% 答案键错误）一并考虑。<em>建议去向：更新 ai-landscape.md mem0 状态断言</em></li>
+      <li><strong>TradingAgents 65K stars 周增 3.3K</strong> — 多 agent 金融决策范例，与 Citi Arc / Freshfields 趋势对照；ORCHE 体系内有无类似多 agent 协作模式可借鉴。<em>建议去向：Parking lot（架构参考）</em></li>
+      <li><strong>Grok 4.3 价格战 + Gemini Embedding 2 多模态 RAG</strong> — 两条结构性能力变化纳入 ai-landscape.md，下次 Phase 3C 评估时一并参考。<em>建议去向：周五 Landscape 批更新（L 候选已标）</em></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================
+  FOOTER
+============================================================ -->
+<div class="footer">
+  Generated by ORCHE &middot; 来源：anthropic.com / docs.claude.com / GitHub releases / VentureBeat / The Verge / TechCrunch / Bloomberg / CNBC / Fortune / IBM Research / CIO Dive / mem0.ai / r/ClaudeAI / r/AIMemory / r/LocalLLaMA / Latent Space / Stripe Sessions / X
+  <div class="legend">
+    <span class="legend-item"><span class="sig sig-top"></span>顶级</span>
+    <span class="legend-item"><span class="sig sig-notable"></span>显著</span>
+    <span class="legend-item">无符号 = 值得关注</span>
+  </div>
+</div>
+
+</body>
+</html>
