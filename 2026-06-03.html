@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 情报简报 — 2026-06-03</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --text-soft: #374151;
+    --card-bg: #ffffff;
+    --card-border: #e8e8ed;
+    --section-divider: #e5e7eb;
+    --signal-top: #dc2626;
+    --signal-notable: #ea580c;
+    --tag-geek-fg: #6d28d9;       --tag-geek-bg: #ede9fe;
+    --tag-dev-fg: #1d4ed8;        --tag-dev-bg: #dbeafe;
+    --tag-mass-fg: #57534e;       --tag-mass-bg: #f5f5f4;
+    --tag-official-fg: #b45309;   --tag-official-bg: #fef3c7;
+    --tag-academic-fg: #0e7490;   --tag-academic-bg: #cffafe;
+    --tag-commercial-fg: #be185d; --tag-commercial-bg: #fce7f3;
+    --tag-orche-fg: #047857;      --tag-orche-bg: #d1fae5;
+    --tag-landscape-fg: #78350f;  --tag-landscape-bg: #fef7e0;
+    --tag-tier-fg: #1e40af;       --tag-tier-bg: #dbeafe;
+    --date-fg: #9ca3af;
+    --cross-bg: #eff6ff;
+    --cross-border: #bfdbfe;
+    --cross-text: #1e3a8a;
+    --action-bg: #ecfdf5;
+    --action-border: #a7f3d0;
+    --action-text: #064e3b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-soft: #cbd5e1;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --section-divider: #334155;
+      --signal-top: #f87171;
+      --signal-notable: #fb923c;
+      --tag-geek-fg: #c4b5fd;       --tag-geek-bg: #3b0764;
+      --tag-dev-fg: #93c5fd;        --tag-dev-bg: #1e3a8a;
+      --tag-mass-fg: #d6d3d1;       --tag-mass-bg: #3f3f46;
+      --tag-official-fg: #fcd34d;   --tag-official-bg: #78350f;
+      --tag-academic-fg: #67e8f9;   --tag-academic-bg: #164e63;
+      --tag-commercial-fg: #f9a8d4; --tag-commercial-bg: #831843;
+      --tag-orche-fg: #6ee7b7;      --tag-orche-bg: #064e3b;
+      --tag-landscape-fg: #fcd34d;  --tag-landscape-bg: #713f12;
+      --tag-tier-fg: #bfdbfe;       --tag-tier-bg: #1e3a8a;
+      --date-fg: #64748b;
+      --cross-bg: #1e293b;
+      --cross-border: #1e40af;
+      --cross-text: #bfdbfe;
+      --action-bg: #064e3b;
+      --action-border: #047857;
+      --action-text: #d1fae5;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+  h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; }
+  .section { margin-bottom: 32px; }
+  .section-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--section-divider);
+  }
+  .section-icon { font-size: 1.3rem; }
+  .section-header h2 { font-size: 1.15rem; font-weight: 700; }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 10px; padding: 16px; margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 1rem; font-weight: 700; margin-bottom: 8px;
+    display: flex; align-items: flex-start; gap: 10px; color: var(--text);
+  }
+  .card-body { font-size: 0.92rem; color: var(--text-soft); }
+  .card-body p { margin-bottom: 8px; }
+  .card-body p:last-child { margin-bottom: 0; }
+  .card-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .compact-item {
+    padding: 10px 0; border-bottom: 1px solid var(--section-divider); font-size: 0.92rem;
+  }
+  .compact-item:last-child { border-bottom: none; }
+  .compact-title {
+    font-weight: 600; display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap; color: var(--text);
+  }
+  .compact-desc {
+    color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; line-height: 1.55;
+  }
+  .sig {
+    display: inline-block; width: 12px; height: 12px; border-radius: 50%;
+    flex-shrink: 0; vertical-align: middle; margin-right: 2px;
+  }
+  .sig-top { background: var(--signal-top); }
+  .sig-notable { background: var(--signal-notable); }
+  .tag {
+    display: inline-flex; align-items: center; font-size: 0.72rem; font-weight: 600;
+    padding: 3px 9px; border-radius: 4px; letter-spacing: 0.02em;
+  }
+  .tag-geek       { color: var(--tag-geek-fg);       background: var(--tag-geek-bg); }
+  .tag-dev        { color: var(--tag-dev-fg);        background: var(--tag-dev-bg); }
+  .tag-mass       { color: var(--tag-mass-fg);       background: var(--tag-mass-bg); }
+  .tag-official   { color: var(--tag-official-fg);   background: var(--tag-official-bg); }
+  .tag-academic   { color: var(--tag-academic-fg);   background: var(--tag-academic-bg); }
+  .tag-commercial { color: var(--tag-commercial-fg); background: var(--tag-commercial-bg); }
+  .tag-orche      { color: var(--tag-orche-fg);      background: var(--tag-orche-bg); }
+  .tag-landscape  { color: var(--tag-landscape-fg);  background: var(--tag-landscape-bg); }
+  .tag-tier       { color: var(--tag-tier-fg);       background: var(--tag-tier-bg); }
+  .date-inline {
+    font-size: 0.78rem; color: var(--date-fg); font-weight: 500;
+    background: var(--section-divider); padding: 2px 7px; border-radius: 4px; vertical-align: middle;
+  }
+  .cross-section {
+    background: var(--cross-bg); border: 1px solid var(--cross-border);
+    border-radius: 10px; padding: 14px 16px; color: var(--cross-text);
+    font-size: 0.9rem; line-height: 1.7; margin-top: 12px;
+  }
+  .cross-section-title { font-weight: 700; margin-bottom: 6px; font-size: 0.92rem; }
+  .person { padding: 14px 0; border-bottom: 1px solid var(--section-divider); }
+  .person:last-child { border-bottom: none; }
+  .person-name { font-weight: 700; font-size: 0.98rem; color: var(--text); }
+  .person-role { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+  .person-content { font-size: 0.9rem; color: var(--text-soft); margin-top: 6px; }
+  .heat-item {
+    display: flex; align-items: flex-start; gap: 12px; padding: 12px 0;
+    border-bottom: 1px solid var(--section-divider);
+  }
+  .heat-item:last-child { border-bottom: none; }
+  .heat-rank {
+    font-size: 1.3rem; font-weight: 800; color: var(--text-muted); min-width: 30px; flex-shrink: 0;
+  }
+  .heat-content { flex: 1; }
+  .heat-title {
+    font-weight: 600; font-size: 0.94rem; display: flex; align-items: center;
+    gap: 8px; flex-wrap: wrap; color: var(--text);
+  }
+  .heat-evidence { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; font-style: italic; }
+  .heat-desc { font-size: 0.88rem; color: var(--text-soft); margin-top: 4px; }
+  .tracking-empty { color: var(--text-muted); font-style: italic; padding: 12px 0; font-size: 0.9rem; }
+  .action-box {
+    background: var(--action-bg); border: 1px solid var(--action-border);
+    border-radius: 10px; padding: 16px 20px; color: var(--action-text);
+  }
+  .action-box ul { padding-left: 20px; }
+  .action-box li { margin-bottom: 8px; font-size: 0.92rem; color: var(--action-text); }
+  .action-box li:last-child { margin-bottom: 0; }
+  .action-box strong { color: var(--action-text); }
+  a { color: var(--tag-dev-fg); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .inline-note { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+  code { font-size: 0.86em; background: var(--section-divider); padding: 1px 5px; border-radius: 4px; }
+  .audio-player {
+    margin: -12px 0 28px; padding: 12px 14px; background: var(--card-bg);
+    border: 1px solid var(--card-border); border-radius: 10px;
+  }
+  .audio-player-label { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
+  .audio-player audio { width: 100%; height: 36px; display: block; }
+  .footer {
+    margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--section-divider);
+    font-size: 0.78rem; color: var(--text-muted); text-align: center;
+  }
+  .legend { margin-top: 8px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .legend-item { display: inline-flex; align-items: center; gap: 4px; }
+</style>
+</head>
+<body>
+
+<h1>AI 情报简报</h1>
+<p class="meta">2026-06-03 (周三) &middot; 覆盖 6/1–6/3 &middot; 阅读约 7 分钟</p>
+
+<div class="audio-player">
+  <div class="audio-player-label">&#x1F3A7; 语音播报（约 3 分 44 秒）</div>
+  <audio controls preload="metadata">
+    <source src="audio/2026-06-03.mp3" type="audio/mpeg">
+    您的浏览器不支持音频播放。
+  </audio>
+</div>
+
+<!-- ============ 1. 今日焦点 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F525;</span>
+    <h2>今日焦点</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      Anthropic 秘密提交 S-1，估值 $965B 冲刺 AI 史上最大 IPO
+      <span class="date-inline">6/1</span>
+    </div>
+    <div class="card-body">
+      <p>Anthropic 6/1 向美国 SEC 保密提交 S-1 注册草稿，完成 $65B H 轮融资，估值达 $965B（约 9650 亿美元），ARR 约 $47B；Dario Amodei 表态年收入有望超越 OpenAI，IPO 具体时程视市场条件而定。是 AI 史上市值最高的拟上市公司之一。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-mass">大众</span>
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-commercial">Commercial</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      Microsoft Build 2026：7 款 MAI 自研模型 + Windows 全面转向 Agent 平台
+      <span class="date-inline">6/2</span>
+    </div>
+    <div class="card-body">
+      <p>微软在 Build 2026（6/2-3，旧金山）发布 7 款自研 MAI 模型，含首款自研推理模型 MAI-Thinking-1（35B active / ~1T MoE、256K context、AIME 97%、零 OpenAI 蒸馏）与 MAI-Code-1-Flash（即时上线 GitHub Copilot）。Project Polaris 将于 8 月替换 Copilot 中的 GPT-4 Turbo；同步推出 Windows Agent Framework v1.0（MIT 开源）、Windows Agent Store（85% 分成）、Azure Agent Mesh。</p>
+      <p>战略信号明确：微软从 OpenAI 依赖转向「AI 选项多元化」，Windows 定位为 agentic 平台。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      白宫签署 AI 创新与安全行政命令：自愿预发布审查
+      <span class="date-inline">6/2</span>
+    </div>
+    <div class="card-body">
+      <p>Trump 签署 EO，核心为「自愿预发布模型审查」——最强模型上市前 30 天自愿送政府测试（非强制），并建立 AI 网络安全信息共享中心；明确拒绝「强制许可或预审批」。与 Anthropic Project Glasswing 扩张同日，显示政策-产业共振。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-mass">大众</span>
+      <span class="tag tag-official">Official</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 2. 追踪中 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4E1;</span>
+    <h2>追踪中</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      超高度自主化进程（追踪自 6/3 · 首期）
+      <span class="tag tag-orche">ORCHE 相关</span>
+    </div>
+    <div class="card-body">
+      <p><strong>命题</strong>：验证 AI agent 是否朝「超高度自主」演进。与 AGI 的区别在领域局限——超高度自主发生在领域之内（有边界），边界扩到全领域才是 AGI。三信号：审批递减 / 自我迭代 / 领域扩张。</p>
+      <p><strong>① 审批递减</strong>：Cursor 3.6 Auto-review<span class="date-inline">5/29</span>对 Shell/MCP 调用三路分流（白名单直通 / 沙箱直运行 / classifier subagent 决定），人从「每次审批」退为「配置分类规则」；GitHub Copilot multi-agent VS Code<span class="date-inline">6/2</span>planner-specialist 结构，人只在最终合并层 review。</p>
+      <p><strong>② 领域扩张</strong>：Cadence ChipStack 发布业界首个 Level-5 自主虚拟工程师<span class="date-inline">6/1</span>（联合 NVIDIA），芯片验证全链路自主（规格理解→RTL 生成→验证→调试→收敛），实测 40x 加速、五周验证缩至一天内，工程师转为「监督结果、引导意图」；SAP 在 Sapphire 发布 50+ 领域专属 Joule agent 自主执行 ERP 流程（HR/采购/招聘）。这是「超高度自主化」框架第一个多领域叠加窗口。</p>
+      <p><strong>③ 自我迭代</strong>：Bun 的 Zig→Rust 迁移（前情·上期已报）双 reviewer agent 逐文件并行 loop 至 build+test 全 clean，75 万行 / 11 天 / 99.8% 测试通过——AI 在领域内「越做越好」的量化样本。</p>
+      <p><strong>⚠ 阻力面（不只收集支持证据）</strong>：EU AI Act Article 14 强制高风险系统配备有效人工监督，8/2 合规截止形成制度阻力；UK AISI 论文指 scalable oversight（AI 监督 AI）面临三重结构难题；调查显示仅 14% 组织有 production-ready agentic 方案、11% 大规模使用——「自主」案例多数仍宣称多于验证，且边界普遍清晰封闭（芯片验证、代码迁移），全领域扩张仍需数年。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 3. 前沿人物动态 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F399;</span>
+    <h2>前沿人物动态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="person">
+      <div class="person-name">Dario Amodei <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">Anthropic CEO</div>
+      <div class="person-content">S-1 机密提交 + $965B 估值<span class="date-inline">6/1</span>；Project Glasswing / Claude Mythos 扩展至 15+ 国 150 家关键基础设施组织（电力/水务/医疗/通信），承诺 $1 亿额度 + $400 万捐款，但通用发版「尚无时间表」。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Sam Altman <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">OpenAI CEO</div>
+      <div class="person-content">受 Macron 邀请出席 G7（6/15-17，法国），议题聚焦青少年安全与 AI 前沿风险<span class="date-inline">6/3</span>；同期 Florida 成为首个以安全疏失起诉 OpenAI 及 Altman 本人的州。另披露最大单一企业用户每月消耗 1000 亿 tokens。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Satya Nadella <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">Microsoft CEO</div>
+      <div class="person-content">Build 2026 主旨「Windows 成为 Agentic AI 平台」<span class="date-inline">6/2</span>，推 Windows Agent Runtime / Store + MAI 七模型族 + $9.69B 五角大楼合约。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Mustafa Suleyman <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">Microsoft AI CEO</div>
+      <div class="person-content">发布 MAI-Thinking-1<span class="date-inline">6/2</span>（声称偏好测试胜 Claude Sonnet 4.6）；警告「18 个月内所有白领工作可被 AI 自动化」，强调 MAI 不依赖 OpenAI 数据训练。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Andrej Karpathy <span class="tag tag-tier">T3</span></div>
+      <div class="person-role">Anthropic（预训练）/ 前 Tesla AI 总监</div>
+      <div class="person-content">加入 Anthropic 后高热推文「我从未感觉自己作为程序员落后这么多」——AI 正从根本上重构编程职业，正确串接工具可达 10x 生产力。<span class="inline-note">⚠ 推文精确日期处窗口边缘（约 5/22-5/28），主 session 若需精确请查 X profile 确认。</span></div>
+    </div>
+    <div class="person">
+      <div class="person-name">Jack Clark <span class="tag tag-tier">T3</span></div>
+      <div class="person-role">Anthropic Co-founder / Import AI 主理</div>
+      <div class="person-content">Import AI #459<span class="date-inline">6/1</span>：引 UK AISI 论文指 AI 监督自身训练面临优化压力偏差 / 异质性错误 / 高相关研究三重挑战；讨论如何为「灭绝风险」定价投入生存资本。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Swyx <span class="tag tag-tier">T2</span></div>
+      <div class="person-role">Latent Space 主理</div>
+      <div class="person-content">AINews 第一时间报道 Build 2026<span class="date-inline">6/2</span>，分析 MAI-Thinking-1 工程选择（MoE、不蒸馏 OpenAI、256k context）对开发者生态影响。</div>
+    </div>
+
+    <div class="cross-section">
+      <div class="cross-section-title">实验室横截面（6/1–6/3）</div>
+      <strong>Anthropic</strong> 机密 S-1 + $965B + Mythos 扩 15 国；<strong>OpenAI</strong> Altman 赴 G7 议青少年安全 + Florida 被起诉；<strong>Microsoft</strong> Build 亮自研 MAI 七模型（脱钩 OpenAI）+ Windows Agentic 平台；<strong>Google DeepMind</strong> Gemini 3.5 Pro GA 仍在「数周内」等待；<strong>xAI</strong> 重组后沉寂；<strong>DeepSeek</strong> V4 后本窗口无新动作。
+    </div>
+  </div>
+</div>
+
+<!-- ============ 4. 技术突破 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4A1;</span>
+    <h2>技术突破</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      Microsoft MAI-Thinking-1 + MAI 七模型族
+      <span class="date-inline">6/2</span>
+    </div>
+    <div class="card-body">
+      <p>微软首款自研推理模型，35B active / ~1T MoE、256k context、AIME 97%、零 OpenAI 蒸馏；同批含 MAI-Image-2.5 / MAI-Voice-2 / MAI-Transcribe-1.5 / MAI-Code-1-Flash，经 Azure AI Foundry GA。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      UK AI Safety Institute：Scalable Oversight 比预期难
+      <span class="tag tag-academic">Academic</span>
+      <span class="date-inline">6/1</span>
+    </div>
+    <div class="compact-desc">论文指 AI 监督 AI 训练（superalignment 核心方案）面临三重结构难题：优化压力使 AI 研究偏向人类认可而非真实、AI 犯错方式对人类不直觉、研究相关性过高致盲区集中。对 superalignment 路线是明确挑战信号。</div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      Gemini 3.5 Pro GA 预期 6 月内
+      <span class="tag tag-official">Official</span>
+    </div>
+    <div class="compact-desc">5/19 I/O 发布 3.5 Flash（GA），Pro 仍在有限 Vertex 预览，Pichai 承诺「6 月内」；2M token context + Deep Think 为主卖点，定价预期约 $15/$60 per 1M。持续追踪。</div>
+  </div>
+</div>
+
+<!-- ============ 5. 开源生态 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4E6;</span>
+    <h2>开源生态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="compact-item">
+      <div class="compact-title">
+        vLLM v0.22.0：DeepSeek V4 生产就绪
+        <span class="tag tag-official">Official</span>
+        <span class="date-inline">5/29</span>
+      </div>
+      <div class="compact-desc">459 commits / 230 贡献者；DeepSeek V4 重构为独立子包，新增 NVFP4 fused MoE、全量 CUDA graph、MTP speculative decoding；Model Runner V2 向默认推进。社区信号：81K+ stars，DeepSeek V4 是本版本 Issue 讨论最高密度话题。（已 gh api 验证版本与日期）</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 6. Claude Code 专区 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x2699;</span>
+    <h2>Claude Code 专区</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">功能发布</div>
+    <div class="card-body">
+      <p><strong>v2.1.160</strong><span class="date-inline">6/2</span>写入 <code>.zshenv</code>/<code>.zlogin</code>/<code>~/.config/git/</code> 等 startup file 前新增确认弹窗（防命令注入）；acceptEdits 扩展到 <code>.npmrc</code>/<code>bunfig.toml</code>/<code>.bazelrc</code>/<code>.devcontainer/</code> 等构建配置。</p>
+      <p><strong>v2.1.161</strong><span class="date-inline">6/2</span><code>OTEL_RESOURCE_ATTRIBUTES</code> 注入指标标签（可按 team/repo 切分用量）；<code>claude agents</code> 显示 done/total 进度；<strong>并行工具调用中单个 Bash 失败不再取消同批其他调用</strong>（各自独立返回）——生产 agent 可靠性提升。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">竞品对照</div>
+    <div class="card-body">
+      <p><strong>GitHub Copilot</strong><span class="date-inline">6/2</span>Build 2026 发 Project Polaris（自研 MoE 编程模型，8 月替换 GPT-4 Turbo）+ VS Code multi-agent（planner-specialist 编排）；CLI agent 进 JetBrains。</p>
+      <p><strong>OpenAI Codex CLI v0.136</strong><span class="date-inline">6/1</span>TUI 可点链接 + <code>/archive</code> + Computer Use 扩展至 Windows。<strong>Windsurf</strong> 接入 Opus 4.7 fast mode（约 2.5x 输出速度）+ Devin Review。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">评价</div>
+    <div class="card-body">
+      <p>CC 负责人 Boris Cherny 据报在 Code with Claude 大会披露「Anthropic 公司已无任何手写代码」——架构为多 Claude via Slack 协调、并行编码、自动测试验证后才 ship。若属实是目前已知最高等级的领域内审批递减案例。<span class="inline-note">⚠ 单一来源（商业媒体 MindStudio 转述），原始陈述未经独立核实，不作定论。</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 7. 横向热度 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4CA;</span>
+    <h2>横向热度</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="heat-item">
+      <div class="heat-rank">1</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          <span class="sig sig-notable"></span>
+          EU 科技主权一揽子计划含 Cloud and AI Development Act
+          <span class="tag tag-official">Official</span>
+          <span class="date-inline">6/3</span>
+        </div>
+        <div class="heat-evidence">依据：欧盟委员会官方采纳当日，多路科技政策媒体同步报道</div>
+        <div class="heat-desc">目标 5-7 年内 EU 数据中心容量扩 3 倍、建立单一云主权框架，与 Digital Omnibus（5/7）配套将高风险 AI 合规延至 2027-12。</div>
+      </div>
+    </div>
+    <div class="heat-item">
+      <div class="heat-rank">2</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          <span class="sig sig-notable"></span>
+          微软 Majorana 2 量子芯片：商用路线提前至 2029
+          <span class="tag tag-geek">极客</span>
+          <span class="date-inline">6/2</span>
+        </div>
+        <div class="heat-evidence">依据：Bloomberg / Tom's Hardware / SiliconAngle 多路重点报道</div>
+        <div class="heat-desc">1000x 可靠性、qubit 寿命 20 秒、铅替换铝材料创新；用自家 Microsoft Discovery agent 参与芯片设计，是「AI 设计硬件」首个规模案例。</div>
+      </div>
+    </div>
+    <div class="heat-item">
+      <div class="heat-rank">3</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          美国 DoD $9.69B 微软政府合约（史上最大单笔）
+          <span class="tag tag-commercial">Commercial</span>
+          <span class="date-inline">6/2</span>
+        </div>
+        <div class="heat-evidence">依据：CNBC 报道，与 Build 2026 同日宣布信号叠加（一手政府公告未直接命中，待补验）</div>
+        <div class="heat-desc">涵盖 M365 / Azure / AI Copilot，与 Build「agent-first 政务」叙事互相强化。</div>
+      </div>
+    </div>
+    <div class="heat-item">
+      <div class="heat-rank">4</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          OpenAI legacy 模型退役时间表
+          <span class="tag tag-official">Official</span>
+          <span class="date-inline">6/2</span>
+        </div>
+        <div class="heat-evidence">依据：OpenAI Model Release Notes 官方公告</div>
+        <div class="heat-desc">GPT-4.5 在 ChatGPT 6/27 下线（API 维持）、o3 在 8/26 下线；用 OpenAI API 的开发者有迁移窗口影响。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 8. 行动建议 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x26A1;</span>
+    <h2>行动建议</h2>
+  </div>
+  <div class="action-box">
+    <ul>
+      <li><strong>超高度自主化追踪首期即验证你的命题方向</strong>——本周罕见地多领域叠加：芯片验证（Cadence Level-5）、ERP（SAP Joule）、软件工程（Anthropic 内部）同窗口出现审批递减 + 领域扩张信号。但全为边界清晰的封闭领域，符合你「先在领域内、非全领域」的判断。（去向：已建追踪主题，持续观察阻力面是否同步增强）</li>
+      <li><strong>Boris Cherny「Anthropic 无手写代码」单一来源</strong>——这是审批递减的强信号但仅 MindStudio 转述，若你重视可作专项核实，目前不宜当定论引用。（去向：追踪清单候选，待你定是否核实）</li>
+      <li><strong>Claude Code v2.1.160/161</strong>（你在用）——v2.1.161 修复「并行工具调用单个失败不再连坐」，对你跑 workflow / 多 agent 编排可靠性直接相关。（去向：知会，已自动随版本更新）</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  Generated by ORCHE &middot; 来源：Anthropic / Microsoft / White House / Cadence / GitHub / vLLM / Import AI / Latent Space 等
+  <div class="legend">
+    <span class="legend-item"><span class="sig sig-top"></span>顶级</span>
+    <span class="legend-item"><span class="sig sig-notable"></span>显著</span>
+    <span class="legend-item">无符号 = 值得关注</span>
+  </div>
+</div>
+
+</body>
+</html>
