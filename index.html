@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 情报简报 — 2026-06-03</title>
+<title>AI 情报简报 — 2026-06-05</title>
 <style>
   :root {
     --bg: #fafafa;
@@ -64,20 +64,15 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.65;
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 20px 16px 40px;
+    background: var(--bg); color: var(--text); line-height: 1.65;
+    max-width: 720px; margin: 0 auto; padding: 20px 16px 40px;
   }
   h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
   .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; }
   .section { margin-bottom: 32px; }
   .section-header {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 14px; padding-bottom: 8px;
-    border-bottom: 2px solid var(--section-divider);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--section-divider);
   }
   .section-icon { font-size: 1.3rem; }
   .section-header h2 { font-size: 1.15rem; font-weight: 700; }
@@ -93,71 +88,40 @@
   .card-body p { margin-bottom: 8px; }
   .card-body p:last-child { margin-bottom: 0; }
   .card-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-  .compact-item {
-    padding: 10px 0; border-bottom: 1px solid var(--section-divider); font-size: 0.92rem;
-  }
+  .compact-item { padding: 10px 0; border-bottom: 1px solid var(--section-divider); font-size: 0.92rem; }
   .compact-item:last-child { border-bottom: none; }
-  .compact-title {
-    font-weight: 600; display: flex; align-items: center; gap: 8px;
-    flex-wrap: wrap; color: var(--text);
-  }
-  .compact-desc {
-    color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; line-height: 1.55;
-  }
-  .sig {
-    display: inline-block; width: 12px; height: 12px; border-radius: 50%;
-    flex-shrink: 0; vertical-align: middle; margin-right: 2px;
-  }
+  .compact-title { font-weight: 600; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: var(--text); }
+  .compact-desc { color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; line-height: 1.55; }
+  .sig { display: inline-block; width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; vertical-align: middle; margin-right: 2px; }
   .sig-top { background: var(--signal-top); }
   .sig-notable { background: var(--signal-notable); }
-  .tag {
-    display: inline-flex; align-items: center; font-size: 0.72rem; font-weight: 600;
-    padding: 3px 9px; border-radius: 4px; letter-spacing: 0.02em;
-  }
-  .tag-geek       { color: var(--tag-geek-fg);       background: var(--tag-geek-bg); }
-  .tag-dev        { color: var(--tag-dev-fg);        background: var(--tag-dev-bg); }
-  .tag-mass       { color: var(--tag-mass-fg);       background: var(--tag-mass-bg); }
-  .tag-official   { color: var(--tag-official-fg);   background: var(--tag-official-bg); }
-  .tag-academic   { color: var(--tag-academic-fg);   background: var(--tag-academic-bg); }
+  .tag { display: inline-flex; align-items: center; font-size: 0.72rem; font-weight: 600; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.02em; }
+  .tag-geek { color: var(--tag-geek-fg); background: var(--tag-geek-bg); }
+  .tag-dev { color: var(--tag-dev-fg); background: var(--tag-dev-bg); }
+  .tag-mass { color: var(--tag-mass-fg); background: var(--tag-mass-bg); }
+  .tag-official { color: var(--tag-official-fg); background: var(--tag-official-bg); }
+  .tag-academic { color: var(--tag-academic-fg); background: var(--tag-academic-bg); }
   .tag-commercial { color: var(--tag-commercial-fg); background: var(--tag-commercial-bg); }
-  .tag-orche      { color: var(--tag-orche-fg);      background: var(--tag-orche-bg); }
-  .tag-landscape  { color: var(--tag-landscape-fg);  background: var(--tag-landscape-bg); }
-  .tag-tier       { color: var(--tag-tier-fg);       background: var(--tag-tier-bg); }
-  .date-inline {
-    font-size: 0.78rem; color: var(--date-fg); font-weight: 500;
-    background: var(--section-divider); padding: 2px 7px; border-radius: 4px; vertical-align: middle;
-  }
-  .cross-section {
-    background: var(--cross-bg); border: 1px solid var(--cross-border);
-    border-radius: 10px; padding: 14px 16px; color: var(--cross-text);
-    font-size: 0.9rem; line-height: 1.7; margin-top: 12px;
-  }
+  .tag-orche { color: var(--tag-orche-fg); background: var(--tag-orche-bg); }
+  .tag-landscape { color: var(--tag-landscape-fg); background: var(--tag-landscape-bg); }
+  .tag-tier { color: var(--tag-tier-fg); background: var(--tag-tier-bg); }
+  .date-inline { font-size: 0.78rem; color: var(--date-fg); font-weight: 500; background: var(--section-divider); padding: 2px 7px; border-radius: 4px; vertical-align: middle; }
+  .cross-section { background: var(--cross-bg); border: 1px solid var(--cross-border); border-radius: 10px; padding: 14px 16px; color: var(--cross-text); font-size: 0.9rem; line-height: 1.7; margin-top: 12px; }
   .cross-section-title { font-weight: 700; margin-bottom: 6px; font-size: 0.92rem; }
   .person { padding: 14px 0; border-bottom: 1px solid var(--section-divider); }
   .person:last-child { border-bottom: none; }
   .person-name { font-weight: 700; font-size: 0.98rem; color: var(--text); }
   .person-role { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
   .person-content { font-size: 0.9rem; color: var(--text-soft); margin-top: 6px; }
-  .heat-item {
-    display: flex; align-items: flex-start; gap: 12px; padding: 12px 0;
-    border-bottom: 1px solid var(--section-divider);
-  }
+  .heat-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--section-divider); }
   .heat-item:last-child { border-bottom: none; }
-  .heat-rank {
-    font-size: 1.3rem; font-weight: 800; color: var(--text-muted); min-width: 30px; flex-shrink: 0;
-  }
+  .heat-rank { font-size: 1.3rem; font-weight: 800; color: var(--text-muted); min-width: 30px; flex-shrink: 0; }
   .heat-content { flex: 1; }
-  .heat-title {
-    font-weight: 600; font-size: 0.94rem; display: flex; align-items: center;
-    gap: 8px; flex-wrap: wrap; color: var(--text);
-  }
+  .heat-title { font-weight: 600; font-size: 0.94rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: var(--text); }
   .heat-evidence { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; font-style: italic; }
   .heat-desc { font-size: 0.88rem; color: var(--text-soft); margin-top: 4px; }
   .tracking-empty { color: var(--text-muted); font-style: italic; padding: 12px 0; font-size: 0.9rem; }
-  .action-box {
-    background: var(--action-bg); border: 1px solid var(--action-border);
-    border-radius: 10px; padding: 16px 20px; color: var(--action-text);
-  }
+  .action-box { background: var(--action-bg); border: 1px solid var(--action-border); border-radius: 10px; padding: 16px 20px; color: var(--action-text); }
   .action-box ul { padding-left: 20px; }
   .action-box li { margin-bottom: 8px; font-size: 0.92rem; color: var(--action-text); }
   .action-box li:last-child { margin-bottom: 0; }
@@ -165,17 +129,10 @@
   a { color: var(--tag-dev-fg); text-decoration: none; }
   a:hover { text-decoration: underline; }
   .inline-note { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
-  code { font-size: 0.86em; background: var(--section-divider); padding: 1px 5px; border-radius: 4px; }
-  .audio-player {
-    margin: -12px 0 28px; padding: 12px 14px; background: var(--card-bg);
-    border: 1px solid var(--card-border); border-radius: 10px;
-  }
+  .audio-player { margin: -12px 0 28px; padding: 12px 14px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; }
   .audio-player-label { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
   .audio-player audio { width: 100%; height: 36px; display: block; }
-  .footer {
-    margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--section-divider);
-    font-size: 0.78rem; color: var(--text-muted); text-align: center;
-  }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--section-divider); font-size: 0.78rem; color: var(--text-muted); text-align: center; }
   .legend { margin-top: 8px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
   .legend-item { display: inline-flex; align-items: center; gap: 4px; }
 </style>
@@ -183,12 +140,12 @@
 <body>
 
 <h1>AI 情报简报</h1>
-<p class="meta">2026-06-03 (周三) &middot; 覆盖 6/1–6/3 &middot; 阅读约 7 分钟</p>
+<p class="meta">2026-06-05 (周五) &middot; 覆盖 6/3–6/5 &middot; 阅读约 9 分钟</p>
 
 <div class="audio-player">
-  <div class="audio-player-label">&#x1F3A7; 语音播报（约 3 分 44 秒）</div>
+  <div class="audio-player-label">&#x1F3A7; 语音播报（约 5 分钟）</div>
   <audio controls preload="metadata">
-    <source src="audio/2026-06-03.mp3" type="audio/mpeg">
+    <source src="audio/2026-06-05.mp3" type="audio/mpeg">
     您的浏览器不支持音频播放。
   </audio>
 </div>
@@ -203,32 +160,15 @@
   <div class="card">
     <div class="card-title">
       <span class="sig sig-top"></span>
-      Anthropic 秘密提交 S-1，估值 $965B 冲刺 AI 史上最大 IPO
-      <span class="date-inline">6/1</span>
+      Claude Code / Agent SDK 计费 6/15 重大变更——自动化用量脱离订阅补贴 <span class="date-inline">官方公告 5/13 · 多家报道 6/2</span>
     </div>
     <div class="card-body">
-      <p>Anthropic 6/1 向美国 SEC 保密提交 S-1 注册草稿，完成 $65B H 轮融资，估值达 $965B（约 9650 亿美元），ARR 约 $47B；Dario Amodei 表态年收入有望超越 OpenAI，IPO 具体时程视市场条件而定。是 AI 史上市值最高的拟上市公司之一。</p>
+      <p>自 <strong>2026-06-15</strong> 起，Agent SDK、headless Claude Code、Claude Code GitHub Actions 将从订阅共享池<strong>剥离</strong>，改按 API 价格计费并使用独立信用池（Pro $20/月、Max 5x $100、Max 20x $200）；用完即停，无自动续费、无滚存。这实际上消除了过去给自动化用量的订阅补贴（业界估计折扣达 15–30 倍）。</p>
+      <p><strong>⚠ 对你的直接影响</strong>：你以 Claude Max 跑 background session / 自动化脚本 / Agent SDK 的用量都落在此次剥离范围内。距生效仅 10 天。Zed、多个 IDE 工具团队公开批评，社群一条 X 帖 42K+ 浏览，Theo Browne 宣布退订。</p>
     </div>
     <div class="card-meta">
-      <span class="tag tag-mass">大众</span>
       <span class="tag tag-official">Official</span>
-      <span class="tag tag-commercial">Commercial</span>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">
-      <span class="sig sig-top"></span>
-      Microsoft Build 2026：7 款 MAI 自研模型 + Windows 全面转向 Agent 平台
-      <span class="date-inline">6/2</span>
-    </div>
-    <div class="card-body">
-      <p>微软在 Build 2026（6/2-3，旧金山）发布 7 款自研 MAI 模型，含首款自研推理模型 MAI-Thinking-1（35B active / ~1T MoE、256K context、AIME 97%、零 OpenAI 蒸馏）与 MAI-Code-1-Flash（即时上线 GitHub Copilot）。Project Polaris 将于 8 月替换 Copilot 中的 GPT-4 Turbo；同步推出 Windows Agent Framework v1.0（MIT 开源）、Windows Agent Store（85% 分成）、Azure Agent Mesh。</p>
-      <p>战略信号明确：微软从 OpenAI 依赖转向「AI 选项多元化」，Windows 定位为 agentic 平台。</p>
-    </div>
-    <div class="card-meta">
-      <span class="tag tag-dev">开发者</span>
-      <span class="tag tag-official">Official</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
       <span class="tag tag-landscape">L 候选</span>
     </div>
   </div>
@@ -236,15 +176,31 @@
   <div class="card">
     <div class="card-title">
       <span class="sig sig-notable"></span>
-      白宫签署 AI 创新与安全行政命令：自愿预发布审查
-      <span class="date-inline">6/2</span>
+      OpenAI Codex「for every role」全面扩展 + 桌面 Computer Use <span class="date-inline">6/3</span>
     </div>
     <div class="card-body">
-      <p>Trump 签署 EO，核心为「自愿预发布模型审查」——最强模型上市前 30 天自愿送政府测试（非强制），并建立 AI 网络安全信息共享中心；明确拒绝「强制许可或预审批」。与 Anthropic Project Glasswing 扩张同日，显示政策-产业共振。</p>
+      <p>OpenAI 6/3 发布 Codex 大更新：新模型 <strong>GPT-5.2-Codex</strong>（专为 agentic coding 优化、长程上下文压缩）；桌面 Computer Use（Mac 多 agent 并行、PR review、SSH 远程 devbox）；新增 Sites（企业内部 web 项目托管预览）、6 个垂直 plugin 聚合 62 个商业应用。非开发者（分析师/营销/投资人）已占 Codex 用量 20% 且增速 3 倍于工程师。同日宣布 OpenAI 前沿模型 + Codex 上架 AWS。</p>
+      <p>桌面 Computer Use 与 Claude Code 的 Dynamic Workflows、Chrome/Computer Use 直接竞争——CC 重度用户值得对照评估。</p>
     </div>
     <div class="card-meta">
-      <span class="tag tag-mass">大众</span>
       <span class="tag tag-official">Official</span>
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      Anthropic 自我迭代信号：Claude 写自身 80% 生产代码，同时罕见呼吁「协调暂停」 <span class="date-inline">报道 6/4-6/5</span>
+    </div>
+    <div class="card-body">
+      <p>Anthropic 内部报告披露：2026 年 5 月，合并进生产代码库的代码<strong>逾 80% 由 Claude 撰写</strong>（2025 年初为个位数百分比），工程师每季产出提升 8 倍；高度开放工程问题成功率从 6 个月前的 26% 升至 76%。Anthropic 称此为「递归自我改进可能路径」的信号，并罕见呼吁——若其他顶级实验室同意，愿参与<strong>协调暂停</strong>前沿研究。</p>
+      <p class="inline-note">时效标注：80% 数据最早见 VentureBeat（4/20），6/4-6/5 经 IBTimes 等二次报道再度放量；「呼吁暂停」引自 Anthropic Institute 报告（二手）。本条与下方「追踪中」呼应。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-commercial">Commercial</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
     </div>
   </div>
 </div>
@@ -256,20 +212,17 @@
     <h2>追踪中</h2>
   </div>
 
-  <div class="card">
-    <div class="card-title">
-      超高度自主化进程（追踪自 6/3 · 首期）
-      <span class="tag tag-orche">ORCHE 相关</span>
-    </div>
-    <div class="card-body">
-      <p><strong>命题</strong>：验证 AI agent 是否朝「超高度自主」演进。与 AGI 的区别在领域局限——超高度自主发生在领域之内（有边界），边界扩到全领域才是 AGI。三信号：审批递减 / 自我迭代 / 领域扩张。</p>
-      <p><strong>① 审批递减</strong>：Cursor 3.6 Auto-review<span class="date-inline">5/29</span>对 Shell/MCP 调用三路分流（白名单直通 / 沙箱直运行 / classifier subagent 决定），人从「每次审批」退为「配置分类规则」；GitHub Copilot multi-agent VS Code<span class="date-inline">6/2</span>planner-specialist 结构，人只在最终合并层 review。</p>
-      <p><strong>② 领域扩张</strong>：Cadence ChipStack 发布业界首个 Level-5 自主虚拟工程师<span class="date-inline">6/1</span>（联合 NVIDIA），芯片验证全链路自主（规格理解→RTL 生成→验证→调试→收敛），实测 40x 加速、五周验证缩至一天内，工程师转为「监督结果、引导意图」；SAP 在 Sapphire 发布 50+ 领域专属 Joule agent 自主执行 ERP 流程（HR/采购/招聘）。这是「超高度自主化」框架第一个多领域叠加窗口。</p>
-      <p><strong>③ 自我迭代</strong>：Bun 的 Zig→Rust 迁移（前情·上期已报）双 reviewer agent 逐文件并行 loop 至 build+test 全 clean，75 万行 / 11 天 / 99.8% 测试通过——AI 在领域内「越做越好」的量化样本。</p>
-      <p><strong>⚠ 阻力面（不只收集支持证据）</strong>：EU AI Act Article 14 强制高风险系统配备有效人工监督，8/2 合规截止形成制度阻力；UK AISI 论文指 scalable oversight（AI 监督 AI）面临三重结构难题；调查显示仅 14% 组织有 production-ready agentic 方案、11% 大规模使用——「自主」案例多数仍宣称多于验证，且边界普遍清晰封闭（芯片验证、代码迁移），全领域扩张仍需数年。</p>
-    </div>
-    <div class="card-meta">
-      <span class="tag tag-landscape">L 候选</span>
+  <div class="card" style="padding: 8px 16px;">
+    <div class="compact-item">
+      <div class="compact-title">超高度自主化进程（Super-Autonomy Trajectory）<span class="date-inline">追踪自 6/3</span></div>
+      <div class="compact-desc">
+        <p style="margin-bottom:8px;"><strong>本期判断：加速明确，节点密度显著高于前期；三信号同步推进。</strong></p>
+        <p style="margin-bottom:6px;"><strong>① 审批递减（人角色后撤）</strong>：OpenAI Codex Auto-review 让人工审批介入减少约 <strong>200 倍</strong>（沙盒内自动批准率 99.93%，4/30）；GitHub Copilot Automations 由「人请求→执行」转为「事件触发→执行→PR 待审」（6/2）；微软 Scout 推出 always-on 自主 agent 类别（6/2）；SmartStream 银行后台例外处理 14 分钟→30 秒（97% 降，6/3）。</p>
+        <p style="margin-bottom:6px;"><strong>② 自我迭代（域内越做越好）</strong>：Anthropic 80% 生产代码由 Claude 写（见今日焦点）；Fujitsu 自我进化多 agent 在生产中连续学习、平均准确率 +28pp（5/25）；Anthropic 工程博客记录 Opus 4.5→4.6 使 harness 脚手架可逐步拆除。</p>
+        <p style="margin-bottom:6px;"><strong>③ 领域扩张（边界扩大）</strong>：NVIDIA GTC Taipei——Cadence/Dassault/Siemens/Synopsys 用 NemoClaw 建「自主 AI 工程师」，数周工作压缩至数小时（6/1）；SAP 报某农业设备企业实际部署 1000+ agents（6/4）；Meta Business Agent 覆盖 100 万商家、扩至 Instagram（6/3）；Gartner 预测 2028 年 50%+ 企业弃 copilot 转「委托执行」agent（4/2）。</p>
+        <p style="margin-bottom:6px;"><strong>阻力面（未破解）</strong>：IBM/Stanford MAP 研究——生产 agent <strong>68% 在 10 步内需人工干预</strong>、74% 依赖人工评估；APEX 专业服务任务（投行/咨询/法律）顶级模型卡在 33% 上限；长任务可靠性平均跌 24.3pp（软件工程域从 0.90 跌至 0.44）；SAP 自承 <strong>90% AI use case 卡在 pilot</strong>，障碍是信任/治理而非精度，反而增加了 human-in-the-loop。</p>
+        <p style="margin-bottom:0;"><strong>临界点线索（本期最值得标注）</strong>：Anthropic 一边公开「80% 代码 + 8 倍产出」，一边呼吁「建立协调暂停机制」——同一机构在同一份报告里确认：超高度自主进程已越过他们自己的「预期快」阈值，而安全框架尚未同步。这是该进程从「进行中」进入「触发紧迫监管讨论」的首个官方内部信号。整体仍是<strong>领域内不均匀推进</strong>——编程/软件工程域明显快于其他领域。</p>
+      </div>
     </div>
   </div>
 </div>
@@ -283,45 +236,55 @@
 
   <div class="card" style="padding: 8px 16px;">
     <div class="person">
-      <div class="person-name">Dario Amodei <span class="tag tag-tier">T1</span></div>
-      <div class="person-role">Anthropic CEO</div>
-      <div class="person-content">S-1 机密提交 + $965B 估值<span class="date-inline">6/1</span>；Project Glasswing / Claude Mythos 扩展至 15+ 国 150 家关键基础设施组织（电力/水务/医疗/通信），承诺 $1 亿额度 + $400 万捐款，但通用发版「尚无时间表」。</div>
+      <div class="person-name">Demis Hassabis <span class="tag tag-tier">T3</span></div>
+      <div class="person-role">Google DeepMind CEO</div>
+      <div class="person-content">6/2 斯坦福商学院对谈，重申「我们正站在奇点山麓」，预测 AGI 在 2029-2030（±1 年）；反对裁员叙事——「工程师生产力提升 3-4 倍，该做 3-4 倍更多的事，不是裁人」，公开向被裁工程师招手。（<a href="https://www.youtube.com/watch?v=DsewHeVbL-0">演讲视频</a>，一手）</div>
     </div>
     <div class="person">
-      <div class="person-name">Sam Altman <span class="tag tag-tier">T1</span></div>
-      <div class="person-role">OpenAI CEO</div>
-      <div class="person-content">受 Macron 邀请出席 G7（6/15-17，法国），议题聚焦青少年安全与 AI 前沿风险<span class="date-inline">6/3</span>；同期 Florida 成为首个以安全疏失起诉 OpenAI 及 Altman 本人的州。另披露最大单一企业用户每月消耗 1000 亿 tokens。</div>
+      <div class="person-name">Jensen Huang <span class="tag tag-tier">T3</span></div>
+      <div class="person-role">NVIDIA CEO</div>
+      <div class="person-content">6/1 GTC Taipei（Computex）主题演讲，宣布 Vera Rubin 正式量产，定义「Agentic AI 已到来，AI 现在是利润与 GDP 来源」，批裁员叙事「nonsense」，预言每个家庭将有 AI agent 本地服务器。（<a href="https://blogs.nvidia.com/blog/korea-ecosystem-2026/">NVIDIA 官方</a>，一手）</div>
     </div>
     <div class="person">
-      <div class="person-name">Satya Nadella <span class="tag tag-tier">T1</span></div>
-      <div class="person-role">Microsoft CEO</div>
-      <div class="person-content">Build 2026 主旨「Windows 成为 Agentic AI 平台」<span class="date-inline">6/2</span>，推 Windows Agent Runtime / Store + MAI 七模型族 + $9.69B 五角大楼合约。</div>
+      <div class="person-name">Mark Zuckerberg <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">Meta CEO</div>
+      <div class="person-content">6/3 伦敦 Meta Conversations 亲自发布 Meta Business Agent——「帮你把整个生意运营起来」，覆盖 WhatsApp/Instagram/Messenger，逾 100 万商家已用早期版，将转付费订阅制。（<a href="https://about.fb.com/news/2026/06/meta-business-agent/">Meta 官方</a>，一手）</div>
     </div>
     <div class="person">
-      <div class="person-name">Mustafa Suleyman <span class="tag tag-tier">T1</span></div>
-      <div class="person-role">Microsoft AI CEO</div>
-      <div class="person-content">发布 MAI-Thinking-1<span class="date-inline">6/2</span>（声称偏好测试胜 Claude Sonnet 4.6）；警告「18 个月内所有白领工作可被 AI 自动化」，强调 MAI 不依赖 OpenAI 数据训练。</div>
+      <div class="person-name">Elon Musk / xAI <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">xAI</div>
+      <div class="person-content">6/3 Grok 成为 Vapi（250 万语音 agent 平台）默认引擎（盲测第一）；6/4 确认 xAI×Cloudflare AI Gateway 深度集成。但同期 Bloomberg 报 xAI 暂停 Grok 训练师招募（内部重组），Grok 5 持续跳票。（<a href="https://x.ai/news/grok-vapi">xAI 官方</a>，一手）</div>
     </div>
     <div class="person">
-      <div class="person-name">Andrej Karpathy <span class="tag tag-tier">T3</span></div>
-      <div class="person-role">Anthropic（预训练）/ 前 Tesla AI 总监</div>
-      <div class="person-content">加入 Anthropic 后高热推文「我从未感觉自己作为程序员落后这么多」——AI 正从根本上重构编程职业，正确串接工具可达 10x 生产力。<span class="inline-note">⚠ 推文精确日期处窗口边缘（约 5/22-5/28），主 session 若需精确请查 X profile 确认。</span></div>
+      <div class="person-name">Yann LeCun <span class="tag tag-tier">T2</span></div>
+      <div class="person-role">前 Meta 首席 AI 科学家 / AMI Labs</div>
+      <div class="person-content">6/3 AMI Labs 融资消息集中爆发（$10.3 亿种子轮，世界模型路线，植根巴黎）；LeCun 公开抨击 Dario Amodei 就业预言「完全是胡说」、指其「对劳动力市场影响一无所知」，并称 LLM 路线终将到顶。（<a href="https://eu.36kr.com/en/p/3836074669061512">36kr</a>，二手；融资官方稿未命中，标为本窗口放量传播）</div>
     </div>
     <div class="person">
-      <div class="person-name">Jack Clark <span class="tag tag-tier">T3</span></div>
-      <div class="person-role">Anthropic Co-founder / Import AI 主理</div>
-      <div class="person-content">Import AI #459<span class="date-inline">6/1</span>：引 UK AISI 论文指 AI 监督自身训练面临优化压力偏差 / 异质性错误 / 高相关研究三重挑战；讨论如何为「灭绝风险」定价投入生存资本。</div>
+      <div class="person-name">Greg Brockman <span class="tag tag-tier">T2</span></div>
+      <div class="person-role">OpenAI 总裁 / 联合创始人</div>
+      <div class="person-content">6/4 报道称 Brockman 正式接管 ChatGPT + Codex 合并后的统一产品线，从「临时负责」变「永久掌控产品战略」；6/2 OpenAI 被迫切割其夫妇向亲 AI 政治 Super PAC 捐款 $2500 万（强调个人行为非公司立场）。（二手，OpenAI 切割声明本身为一手）</div>
     </div>
     <div class="person">
-      <div class="person-name">Swyx <span class="tag tag-tier">T2</span></div>
+      <div class="person-name">Jeff Dean <span class="tag tag-tier">T2</span></div>
+      <div class="person-role">Google 首席科学家</div>
+      <div class="person-content">6/3 播客回应「训练数据耗尽」叙事：视频数据几乎未用、合成数据潜力大、多轮遍历+算法优化三路仍有空间，「不太担心阻碍进步」；强调 2026 年 AI 已用于 Gemini 自身研究迭代，预测明年正式进入「模型参与改进自身」阶段。（二手转述，播客一手）</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Swyx <span class="tag tag-tier">T3</span></div>
       <div class="person-role">Latent Space 主理</div>
-      <div class="person-content">AINews 第一时间报道 Build 2026<span class="date-inline">6/2</span>，分析 MAI-Thinking-1 工程选择（MoE、不蒸馏 OpenAI、256k context）对开发者生态影响。</div>
+      <div class="person-content">6/2 Latent Space 发布「GitHub's plan for Agents」深度对话 GitHub COO，核心观点「2025 是 coding agents 之年，2026 是 coding agents 破圈做一切之年」，引用 Claude Code ARR $25 亿数字。（<a href="https://podcasts.apple.com/us/podcast/githubs-plan-for-agents-kyle-daigle-github/id1674008350?i=1000770807672">Latent Space</a>，一手）</div>
     </div>
+  </div>
 
-    <div class="cross-section">
-      <div class="cross-section-title">实验室横截面（6/1–6/3）</div>
-      <strong>Anthropic</strong> 机密 S-1 + $965B + Mythos 扩 15 国；<strong>OpenAI</strong> Altman 赴 G7 议青少年安全 + Florida 被起诉；<strong>Microsoft</strong> Build 亮自研 MAI 七模型（脱钩 OpenAI）+ Windows Agentic 平台；<strong>Google DeepMind</strong> Gemini 3.5 Pro GA 仍在「数周内」等待；<strong>xAI</strong> 重组后沉寂；<strong>DeepSeek</strong> V4 后本窗口无新动作。
-    </div>
+  <div class="cross-section">
+    <div class="cross-section-title">实验室横截面（本期出牌）</div>
+    <strong>Anthropic</strong>：Dario「AI 就业冲击」叙事进全球媒体循环（WEF），研究侧 Karpathy 已实质加入预训练、安静积累。<br>
+    <strong>OpenAI</strong>：Codex 全面扩展 + Robotics 重启 + Brockman 执掌统一产品线，组织重整信号明确。<br>
+    <strong>xAI</strong>：Grok Voice 商业落地（Vapi/Cloudflare）连续动作，但训练师招募暂停 + Grok 5 跳票，压力大。<br>
+    <strong>Google/DeepMind</strong>：Hassabis「奇点山麓」+ Jeff Dean 三路驳数据枯竭论，进入 MS Build 正面竞争周期。<br>
+    <strong>Meta</strong>：Business Agent 全球开放，直切企业 SaaS 市场。<br>
+    <strong>DeepSeek</strong>：本窗口无新信号（符合其月度发布节奏）。
   </div>
 </div>
 
@@ -335,33 +298,22 @@
   <div class="card">
     <div class="card-title">
       <span class="sig sig-notable"></span>
-      Microsoft MAI-Thinking-1 + MAI 七模型族
-      <span class="date-inline">6/2</span>
+      The Deterministic Horizon：为「LLM 原生推理 vs 工具调用」的边界划定信息论证明 <span class="date-inline">arXiv 6/2</span>
     </div>
     <div class="card-body">
-      <p>微软首款自研推理模型，35B active / ~1T MoE、256k context、AIME 97%、零 OpenAI 蒸馏；同批含 MAI-Image-2.5 / MAI-Voice-2 / MAI-Transcribe-1.5 / MAI-Code-1-Flash，经 Azure AI Foundry GA。</p>
+      <p>Dongxin Guo 等（ICML 2026）证明 decoder-only attention 在确定性状态追踪任务上存在信息论容量上限（Attention Bottleneck Theorem），定义「Deterministic Horizon」——超过此界限，CoT 推理<strong>必须</strong>委托外部工具。横跨 12 模型 8 任务域（含 SWE-Bench/WebArena/SQL）：tool-integrated reasoning 达 86–94%，纯 neural CoT 仅 24–42%。为 agent 设计的「何时该调工具」提供正式理论基准。</p>
     </div>
     <div class="card-meta">
-      <span class="tag tag-official">Official</span>
+      <span class="tag tag-academic">Academic</span>
       <span class="tag tag-landscape">L 候选</span>
     </div>
   </div>
 
-  <div class="compact-item">
-    <div class="compact-title">
-      UK AI Safety Institute：Scalable Oversight 比预期难
-      <span class="tag tag-academic">Academic</span>
-      <span class="date-inline">6/1</span>
+  <div class="card" style="padding: 8px 16px;">
+    <div class="compact-item">
+      <div class="compact-title">Agent 记忆架构论文持续爆发：CoMIC 云-端协同记忆 <span class="date-inline">arXiv 6/2</span></div>
+      <div class="compact-desc">针对 long-horizon agent 在 Cloud-Edge 系统中的记忆管理（Collaborative Memory and Insights Circulation）；延续近两周记忆架构论文集中期（SAM/MemForest/DimMem 等），此批暂无单篇爆发式社群热度。与 ORCHE Phase 3C 记忆基础设施相关，值得归档观察。</div>
     </div>
-    <div class="compact-desc">论文指 AI 监督 AI 训练（superalignment 核心方案）面临三重结构难题：优化压力使 AI 研究偏向人类认可而非真实、AI 犯错方式对人类不直觉、研究相关性过高致盲区集中。对 superalignment 路线是明确挑战信号。</div>
-  </div>
-
-  <div class="compact-item">
-    <div class="compact-title">
-      Gemini 3.5 Pro GA 预期 6 月内
-      <span class="tag tag-official">Official</span>
-    </div>
-    <div class="compact-desc">5/19 I/O 发布 3.5 Flash（GA），Pro 仍在有限 Vertex 预览，Pichai 承诺「6 月内」；2M token context + Deep Think 为主卖点，定价预期约 $15/$60 per 1M。持续追踪。</div>
   </div>
 </div>
 
@@ -374,12 +326,12 @@
 
   <div class="card" style="padding: 8px 16px;">
     <div class="compact-item">
-      <div class="compact-title">
-        vLLM v0.22.0：DeepSeek V4 生产就绪
-        <span class="tag tag-official">Official</span>
-        <span class="date-inline">5/29</span>
-      </div>
-      <div class="compact-desc">459 commits / 230 贡献者；DeepSeek V4 重构为独立子包，新增 NVFP4 fused MoE、全量 CUDA graph、MTP speculative decoding；Model Runner V2 向默认推进。社区信号：81K+ stars，DeepSeek V4 是本版本 Issue 讨论最高密度话题。（已 gh api 验证版本与日期）</div>
+      <div class="compact-title">Devin Desktop（原 Windsurf 品牌重塑）+ 开源 ACP 协议 <span class="tag tag-official">Official</span> <span class="date-inline">6/2</span></div>
+      <div class="compact-desc">Cognition 将 Windsurf 更名 Devin Desktop，新增 Agent Command Center（Kanban 多 agent）、Spaces（agent 间上下文共享）、Devin Local（Rust 重写本地 agent，省 30% tokens，支持 subagents）、<strong>Agent Client Protocol（ACP，开源协议）</strong>——允许任意 ACP 兼容 agent 在编辑器内运行。若 ACP 被广泛采用，可能成 agent 生态互操作层。Claude Code v2.1.162 已同步把 /ide 菜单从 Windsurf 改为 Devin Desktop。（<a href="https://devin.ai/blog/windsurf-is-now-devin-desktop/">官方博客</a>）</div>
+    </div>
+    <div class="compact-item">
+      <div class="compact-title">GitHub Copilot 计量计费正式切换——社群强烈反弹 <span class="tag tag-dev">开发者</span> <span class="date-inline">生效 6/1 · 反弹 6/2</span></div>
+      <div class="compact-desc">（接 6/1 简报）Copilot 全面切 usage-based token billing，Pro $19/月含 1500 credits、新增 Max $100/月含 20,000 credits。开发者社群案例从 $29/月 飙至 $750；GitHub Discussion #192948 高热，The Register 标题「devs vow to flee」，部分开发者明确转向 Claude Code 或 Cursor——间接抬升 CC 相对定价吸引力（详见 Claude Code 专区·评价）。</div>
     </div>
   </div>
 </div>
@@ -392,25 +344,26 @@
   </div>
 
   <div class="card">
-    <div class="card-title">功能发布</div>
+    <div class="card-title">功能发布 <span class="date-inline">v2.1.160–165 · 6/2–6/5</span></div>
     <div class="card-body">
-      <p><strong>v2.1.160</strong><span class="date-inline">6/2</span>写入 <code>.zshenv</code>/<code>.zlogin</code>/<code>~/.config/git/</code> 等 startup file 前新增确认弹窗（防命令注入）；acceptEdits 扩展到 <code>.npmrc</code>/<code>bunfig.toml</code>/<code>.bazelrc</code>/<code>.devcontainer/</code> 等构建配置。</p>
-      <p><strong>v2.1.161</strong><span class="date-inline">6/2</span><code>OTEL_RESOURCE_ATTRIBUTES</code> 注入指标标签（可按 team/repo 切分用量）；<code>claude agents</code> 显示 done/total 进度；<strong>并行工具调用中单个 Bash 失败不再取消同批其他调用</strong>（各自独立返回）——生产 agent 可靠性提升。</p>
+      <p><strong>v2.1.160（6/2）安全基线</strong>：写入 shell 启动文件（.zshenv/.zlogin 等）与 ~/.config/git/ 前新增确认提示；acceptEdits 模式下写构建配置文件（.npmrc/.bazelrc/.pre-commit-config 等）前提示；grep 后可直接 edit 单文件（免额外 Read）；dynamic workflow 触发词从 workflow 改为 <strong>ultracode</strong>。</p>
+      <p><strong>v2.1.161（6/2）可观测性</strong>：OTEL_RESOURCE_ATTRIBUTES 自定义标签透传 metric；claude agents 扇出显示 done/total；并行 tool call 失败隔离（一个 Bash 失败不再取消同批其他）；/mcp 隐藏未登录 connector。</p>
+      <p><strong>v2.1.162（6/3）</strong>：claude agents --json 新增 <code>waitingFor</code>（显示 blocked session 阻塞原因）；/ide 菜单 Windsurf→Devin Desktop；/effort 持久化确认；Remote Control 改常驻 footer pill。</p>
+      <p><strong>v2.1.163（6/4）企业管控</strong>：requiredMinimumVersion/MaximumVersion managed settings（版本不符拒启动）；/plugin list；<strong>Stop/SubagentStop Hooks 可返回 hookSpecificOutput.additionalContext 给 Claude 续 turn</strong>（ORCHE hook 架构可利用）；Skills command body 支持 \$ 转义。v2.1.165（6/5）为 bug fixes。</p>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">竞品对照</div>
+    <div class="card-title">应用场景讨论</div>
     <div class="card-body">
-      <p><strong>GitHub Copilot</strong><span class="date-inline">6/2</span>Build 2026 发 Project Polaris（自研 MoE 编程模型，8 月替换 GPT-4 Turbo）+ VS Code multi-agent（planner-specialist 编排）；CLI agent 进 JetBrains。</p>
-      <p><strong>OpenAI Codex CLI v0.136</strong><span class="date-inline">6/1</span>TUI 可点链接 + <code>/archive</code> + Computer Use 扩展至 Windows。<strong>Windsurf</strong> 接入 Opus 4.7 fast mode（约 2.5x 输出速度）+ Devin Review。</p>
+      <p>Anthropic 官方博客「Introducing dynamic workflows in Claude Code」详述场景：并行 subtask 编排、跨 agent 工作流验证、大型 refactor 批量执行；InfoQ 同步报道。官方明确警告 <strong>dynamic workflow token 消耗显著高于普通 session</strong>，建议从小而 well-scoped 的任务起步——与 ORCHE 周巡检改用 dynamic workflow 的方向一致。</p>
     </div>
   </div>
 
   <div class="card">
     <div class="card-title">评价</div>
     <div class="card-body">
-      <p>CC 负责人 Boris Cherny 据报在 Code with Claude 大会披露「Anthropic 公司已无任何手写代码」——架构为多 Claude via Slack 协调、并行编码、自动测试验证后才 ship。若属实是目前已知最高等级的领域内审批递减案例。<span class="inline-note">⚠ 单一来源（商业媒体 MindStudio 转述），原始陈述未经独立核实，不作定论。</span></p>
+      <p>本周竞品定价剧变意外利好 CC：GitHub Copilot 计量计费引发开发者出走（部分明确转 CC），CC 当前月费制（Max $100/月含大量用量）相对吸引力上升。<strong>但需与今日焦点对照</strong>——CC 自身的 Agent SDK/headless 用量将于 6/15 脱离订阅补贴，自动化重度用户的实际成本结构正在变化，「相对便宜」需重新计算。Devin Desktop 的 ACP 开放协议则带来生态互操作层面的长期竞争压力。</p>
     </div>
   </div>
 </div>
@@ -426,51 +379,41 @@
     <div class="heat-item">
       <div class="heat-rank">1</div>
       <div class="heat-content">
-        <div class="heat-title">
-          <span class="sig sig-notable"></span>
-          EU 科技主权一揽子计划含 Cloud and AI Development Act
-          <span class="tag tag-official">Official</span>
-          <span class="date-inline">6/3</span>
-        </div>
-        <div class="heat-evidence">依据：欧盟委员会官方采纳当日，多路科技政策媒体同步报道</div>
-        <div class="heat-desc">目标 5-7 年内 EU 数据中心容量扩 3 倍、建立单一云主权框架，与 Digital Omnibus（5/7）配套将高风险 AI 合规延至 2027-12。</div>
+        <div class="heat-title"><span class="sig sig-notable"></span>Alphabet $84.75B 股票增发，Berkshire $10B 入股 <span class="tag tag-commercial">融资</span> <span class="date-inline">6/1-6/2</span></div>
+        <div class="heat-evidence">依据：SEC FWP 官方文件（一手）+ CNBC + Bloomberg + Al Jazeera 同日确认</div>
+        <div class="heat-desc">$84.75B（约 847 亿美元，$30B 公开发行 + $40B 零售 + Berkshire $10B 私募），资金全用于 AI 算力基建——史上最大单次 AI 基础设施融资之一。</div>
       </div>
     </div>
     <div class="heat-item">
       <div class="heat-rank">2</div>
       <div class="heat-content">
-        <div class="heat-title">
-          <span class="sig sig-notable"></span>
-          微软 Majorana 2 量子芯片：商用路线提前至 2029
-          <span class="tag tag-geek">极客</span>
-          <span class="date-inline">6/2</span>
-        </div>
-        <div class="heat-evidence">依据：Bloomberg / Tom's Hardware / SiliconAngle 多路重点报道</div>
-        <div class="heat-desc">1000x 可靠性、qubit 寿命 20 秒、铅替换铝材料创新；用自家 Microsoft Discovery agent 参与芯片设计，是「AI 设计硬件」首个规模案例。</div>
+        <div class="heat-title">NVIDIA RTX Spark：首款 ARM 架构 PC SoC（Computex 台北） <span class="tag tag-geek">跨界</span> <span class="date-inline">6/1</span></div>
+        <div class="heat-evidence">依据：NVIDIA 官方（一手）+ CNBC/ServeTheHome/Motley Fool；台湾在地事件</div>
+        <div class="heat-desc">NVIDIA×MediaTek 联合 ARM PC 芯片（Blackwell GPU 6144 CUDA + Grace 20 核），Dell/HP/ASUS/Lenovo/MSI 年底上线；Nvidia 股价 +6%，AMD/Intel/Qualcomm 下跌。</div>
       </div>
     </div>
     <div class="heat-item">
       <div class="heat-rank">3</div>
       <div class="heat-content">
-        <div class="heat-title">
-          美国 DoD $9.69B 微软政府合约（史上最大单笔）
-          <span class="tag tag-commercial">Commercial</span>
-          <span class="date-inline">6/2</span>
-        </div>
-        <div class="heat-evidence">依据：CNBC 报道，与 Build 2026 同日宣布信号叠加（一手政府公告未直接命中，待补验）</div>
-        <div class="heat-desc">涵盖 M365 / Azure / AI Copilot，与 Build「agent-first 政务」叙事互相强化。</div>
+        <div class="heat-title">Q1 2026 AI 风投单季 $255.5B，超越 2025 全年 <span class="tag tag-commercial">融资</span> <span class="date-inline">6/1</span></div>
+        <div class="heat-evidence">依据：KPMG Venture Pulse 原始数据（一手）+ CNBC 二手；投资者视角对 Kevin 相关</div>
+        <div class="heat-desc">Q1 全球 VC $330.9B，AI 占 80%+（$255.5B）；叠加 Anthropic $965B IPO + Cerebras IPO 首日 $95B，「AI 泡沫」争议在华尔街发酵（BofA 警告 S&P 500 科技权重风险）。</div>
       </div>
     </div>
     <div class="heat-item">
       <div class="heat-rank">4</div>
       <div class="heat-content">
-        <div class="heat-title">
-          OpenAI legacy 模型退役时间表
-          <span class="tag tag-official">Official</span>
-          <span class="date-inline">6/2</span>
-        </div>
-        <div class="heat-evidence">依据：OpenAI Model Release Notes 官方公告</div>
-        <div class="heat-desc">GPT-4.5 在 ChatGPT 6/27 下线（API 维持）、o3 在 8/26 下线；用 OpenAI API 的开发者有迁移窗口影响。</div>
+        <div class="heat-title">EU AI Act 8/2 全面适用倒计时 + 欧盟 Tech Sovereignty 包 <span class="tag tag-mass">监管</span> <span class="date-inline">6/1-6/3</span></div>
+        <div class="heat-evidence">依据：欧盟官方文件（一手）+ GDPR Local/mindfoundry 分析</div>
+        <div class="heat-desc">AI Act 将于 2026-08-02 全面生效，6/3 欧盟提 Tech Sovereignty 数字自主方案，Q1 已开 50 张罚单合计 €250M。<span class="inline-note">注：与 6/1 简报「高风险条款延期至 2027/12」不冲突——延期的是部分高风险条款，8/2 生效的是其余 GPAI/通用条款，分轨。</span></div>
+      </div>
+    </div>
+    <div class="heat-item">
+      <div class="heat-rank">5</div>
+      <div class="heat-content">
+        <div class="heat-title">Zvi #171「False Flag」：Trump EO 把美国带入「先发制人审查时代」 <span class="tag tag-geek">专家</span> <span class="date-inline">6/4</span></div>
+        <div class="heat-evidence">依据：Zvi Mowshowitz Substack（Tier 2 固定追踪专家，一手）</div>
+        <div class="heat-desc">Zvi 评 6/2 Trump AI 安全 EO（自愿 30 天预发审）将带来「prior restraint era」；同文确认 Opus 4.8 是其日常驱动、真实增量改进；称 OpenAI 新政策蓝图「remarkably good」。</div>
       </div>
     </div>
   </div>
@@ -484,15 +427,15 @@
   </div>
   <div class="action-box">
     <ul>
-      <li><strong>超高度自主化追踪首期即验证你的命题方向</strong>——本周罕见地多领域叠加：芯片验证（Cadence Level-5）、ERP（SAP Joule）、软件工程（Anthropic 内部）同窗口出现审批递减 + 领域扩张信号。但全为边界清晰的封闭领域，符合你「先在领域内、非全领域」的判断。（去向：已建追踪主题，持续观察阻力面是否同步增强）</li>
-      <li><strong>Boris Cherny「Anthropic 无手写代码」单一来源</strong>——这是审批递减的强信号但仅 MindStudio 转述，若你重视可作专项核实，目前不宜当定论引用。（去向：追踪清单候选，待你定是否核实）</li>
-      <li><strong>Claude Code v2.1.160/161</strong>（你在用）——v2.1.161 修复「并行工具调用单个失败不再连坐」，对你跑 workflow / 多 agent 编排可靠性直接相关。（去向：知会，已自动随版本更新）</li>
+      <li><strong>⚠ 评估 CC 计费 6/15 变更对 ORCHE 运行的影响</strong>——ORCHE 大量以 background session / 自动化（memory 备份、launchd 排程、本次这类编排）运行，这些是否落在 Agent SDK/headless 剥离范围、6/15 后成本如何变，需在生效前算清并决策（继续/调整运行模式）。（建议去向：<strong>Task</strong>，due 6/15 前）</li>
+      <li><strong>OpenAI Codex 桌面 Computer Use 竞品评估</strong>——与 CC Dynamic Workflows + Chrome/Computer Use MCP 对照，判断是否有 ORCHE 可借鉴或须警惕的能力差。（建议去向：<strong>Parking lot</strong>）</li>
+      <li><strong>超高度自主化进程</strong>——本期实证密集（审批递减/自我迭代/领域扩张三信号同步 + Anthropic 两面性临界信号），已在「追踪中」承载，无需额外行动；下期继续追阻力面是否被新证据松动。（建议去向：<strong>追踪中</strong>，已承载）</li>
     </ul>
   </div>
 </div>
 
 <div class="footer">
-  Generated by ORCHE &middot; 来源：Anthropic / Microsoft / White House / Cadence / GitHub / vLLM / Import AI / Latent Space 等
+  Generated by ORCHE &middot; 来源：Anthropic / OpenAI / Microsoft / GitHub / NVIDIA / Meta / SAP / AWS 官方 · SEC · White House · 欧盟 · arXiv · Zvi Substack · Latent Space · GitHub Releases（gh api 实时验证）
   <div class="legend">
     <span class="legend-item"><span class="sig sig-top"></span>顶级</span>
     <span class="legend-item"><span class="sig sig-notable"></span>显著</span>
