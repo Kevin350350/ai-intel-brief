@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 情报简报 — 2026-06-10</title>
+<style>
+  /* ============== Design tokens (light mode) ============== */
+  :root {
+    --bg: #fafafa;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --text-soft: #374151;
+    --card-bg: #ffffff;
+    --card-border: #e8e8ed;
+    --section-divider: #e5e7eb;
+
+    /* Signal symbols (圆形, 仅此类用圆形) */
+    --signal-top: #dc2626;       /* 🔴 顶级 */
+    --signal-notable: #ea580c;   /* 🟠 显著 */
+
+    /* Tag palette (文字 + 颜色, 不用圆形) */
+    --tag-geek-fg: #6d28d9;       --tag-geek-bg: #ede9fe;
+    --tag-dev-fg: #1d4ed8;        --tag-dev-bg: #dbeafe;
+    --tag-mass-fg: #57534e;       --tag-mass-bg: #f5f5f4;
+    --tag-official-fg: #b45309;   --tag-official-bg: #fef3c7;
+    --tag-academic-fg: #0e7490;   --tag-academic-bg: #cffafe;
+    --tag-commercial-fg: #be185d; --tag-commercial-bg: #fce7f3;
+    --tag-orche-fg: #047857;      --tag-orche-bg: #d1fae5;
+    --tag-landscape-fg: #78350f;  --tag-landscape-bg: #fef7e0;
+    --tag-tier-fg: #1e40af;       --tag-tier-bg: #dbeafe;
+
+    --date-fg: #9ca3af;
+
+    --cross-bg: #eff6ff;
+    --cross-border: #bfdbfe;
+    --cross-text: #1e3a8a;
+
+    --action-bg: #ecfdf5;
+    --action-border: #a7f3d0;
+    --action-text: #064e3b;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-soft: #cbd5e1;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --section-divider: #334155;
+
+      --signal-top: #f87171;
+      --signal-notable: #fb923c;
+
+      --tag-geek-fg: #c4b5fd;       --tag-geek-bg: #3b0764;
+      --tag-dev-fg: #93c5fd;        --tag-dev-bg: #1e3a8a;
+      --tag-mass-fg: #d6d3d1;       --tag-mass-bg: #3f3f46;
+      --tag-official-fg: #fcd34d;   --tag-official-bg: #78350f;
+      --tag-academic-fg: #67e8f9;   --tag-academic-bg: #164e63;
+      --tag-commercial-fg: #f9a8d4; --tag-commercial-bg: #831843;
+      --tag-orche-fg: #6ee7b7;      --tag-orche-bg: #064e3b;
+      --tag-landscape-fg: #fcd34d;  --tag-landscape-bg: #713f12;
+      --tag-tier-fg: #bfdbfe;       --tag-tier-bg: #1e3a8a;
+
+      --date-fg: #64748b;
+      --cross-bg: #1e293b;
+      --cross-border: #1e40af;
+      --cross-text: #bfdbfe;
+
+      --action-bg: #064e3b;
+      --action-border: #047857;
+      --action-text: #d1fae5;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+
+  h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; }
+
+  .section { margin-bottom: 32px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--section-divider);
+  }
+  .section-icon { font-size: 1.3rem; }
+  .section-header h2 { font-size: 1.15rem; font-weight: 700; }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--text);
+  }
+  .card-body {
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+  .card-body p { margin-bottom: 8px; }
+  .card-body p:last-child { margin-bottom: 0; }
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .compact-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--section-divider);
+    font-size: 0.92rem;
+  }
+  .compact-item:last-child { border-bottom: none; }
+  .compact-title {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--text);
+  }
+  .compact-desc {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 4px;
+    line-height: 1.55;
+  }
+
+  .sig {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    vertical-align: middle;
+    margin-right: 2px;
+  }
+  .sig-top { background: var(--signal-top); }
+  .sig-notable { background: var(--signal-notable); }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+  .tag-geek       { color: var(--tag-geek-fg);       background: var(--tag-geek-bg); }
+  .tag-dev        { color: var(--tag-dev-fg);        background: var(--tag-dev-bg); }
+  .tag-mass       { color: var(--tag-mass-fg);       background: var(--tag-mass-bg); }
+  .tag-official   { color: var(--tag-official-fg);   background: var(--tag-official-bg); }
+  .tag-academic   { color: var(--tag-academic-fg);   background: var(--tag-academic-bg); }
+  .tag-commercial { color: var(--tag-commercial-fg); background: var(--tag-commercial-bg); }
+  .tag-orche      { color: var(--tag-orche-fg);      background: var(--tag-orche-bg); }
+  .tag-landscape  { color: var(--tag-landscape-fg);  background: var(--tag-landscape-bg); }
+  .tag-tier       { color: var(--tag-tier-fg);       background: var(--tag-tier-bg); }
+
+  .date-inline {
+    font-size: 0.78rem;
+    color: var(--date-fg);
+    font-weight: 500;
+    background: var(--section-divider);
+    padding: 2px 7px;
+    border-radius: 4px;
+    vertical-align: middle;
+  }
+
+  .cross-section {
+    background: var(--cross-bg);
+    border: 1px solid var(--cross-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: var(--cross-text);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-top: 12px;
+  }
+  .cross-section-title {
+    font-weight: 700;
+    margin-bottom: 6px;
+    font-size: 0.92rem;
+  }
+
+  .person {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--section-divider);
+  }
+  .person:last-child { border-bottom: none; }
+  .person-name {
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: var(--text);
+  }
+  .person-role {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .person-content {
+    font-size: 0.9rem;
+    color: var(--text-soft);
+    margin-top: 6px;
+  }
+
+  .heat-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--section-divider);
+  }
+  .heat-item:last-child { border-bottom: none; }
+  .heat-rank {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    min-width: 30px;
+    flex-shrink: 0;
+  }
+  .heat-content { flex: 1; }
+  .heat-title {
+    font-weight: 600;
+    font-size: 0.94rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--text);
+  }
+  .heat-evidence {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+  .heat-desc {
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    margin-top: 4px;
+  }
+
+  .tracking-empty {
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 12px 0;
+    font-size: 0.9rem;
+  }
+
+  .action-box {
+    background: var(--action-bg);
+    border: 1px solid var(--action-border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: var(--action-text);
+  }
+  .action-box ul { padding-left: 20px; }
+  .action-box li {
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+    color: var(--action-text);
+  }
+  .action-box li:last-child { margin-bottom: 0; }
+  .action-box strong { color: var(--action-text); }
+
+  a { color: var(--tag-dev-fg); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .inline-note {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .audio-player {
+    margin: -12px 0 28px;
+    padding: 12px 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+  }
+  .audio-player-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .audio-player audio {
+    width: 100%;
+    height: 36px;
+    display: block;
+  }
+  .footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--section-divider);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .legend {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .legend-item { display: inline-flex; align-items: center; gap: 4px; }
+</style>
+</head>
+<body>
+
+<h1>AI 情报简报</h1>
+<p class="meta">2026-06-10（周三）&middot; 覆盖 6/6&ndash;6/10（6/8 周一期并入本期）&middot; 阅读约 12 分钟</p>
+
+<div class="audio-player">
+  <div class="audio-player-label">&#x1F3A7; 语音播报（约 5 分钟）</div>
+  <audio controls preload="metadata">
+    <source src="audio/2026-06-10.mp3" type="audio/mpeg">
+    您的浏览器不支持音频播放。
+  </audio>
+</div>
+
+<!-- ============ 1. 今日焦点 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F525;</span>
+    <h2>今日焦点</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      Claude Fable 5 + Mythos 5 发布——首款公开 Mythos 级模型 <span class="date-inline">6/9</span>
+    </div>
+    <div class="card-body">
+      <p>Anthropic 发布 <strong>Claude Fable 5</strong>（模型 ID <code>claude-fable-5</code>），定位「已公开模型中最强」，与 Mythos Preview 同底层，任务越复杂领先越大。1M context / 128K 输出，Adaptive thinking 常开。安全机制：网安、生物/化学、蒸馏三类高危查询自动回退 Opus 4.8（实测 95% session 无回退）。同步发布 Mythos 5（解锁版，仅限 Project Glasswing 审核伙伴）。</p>
+      <p><strong>定价与窗口</strong>：API $10/$50 每百万 tokens（Opus 4.8 的 2 倍）；<strong>6/22 前 Pro/Max/Team/Enterprise 订阅免费包含，6/23 起需购买算力积分</strong>。SWE-bench Pro 80.3%（GPT-5.5 为 58.6%）；Stripe 实测一天完成全库迁移；纯视觉通关 Pok&eacute;mon FireRed。HN 当日 #1（780 点 / 502 评）。</p>
+      <p><strong>争议两则</strong>：① 所有 Fable 5 流量强制 30 天留存（覆盖原 zero-retention 企业协议，声明仅用于安全不用于训练），TechCrunch 指可能成行业先例；② 社区发现安全分类器禁止用于加速 ML/LLM 自身开发（训练 pipeline、加速器设计等），被解读为护城河策略——此点为单一来源截图（Alex Volkov），待官方文档确认。Verge 另质疑「无 Fable 1&ndash;4 直接跳 5」命名不透明。</p>
+      <p class="inline-note">ORCHE 注：本简报即由 Fable 5 生成——运行平台模型已于 6/10 切换。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-geek">极客</span>
+      <span class="tag tag-dev">开发者</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-top"></span>
+      Anthropic「When AI Builds Itself」——RSI 警告 + 呼吁全球协调暂停机制 <span class="date-inline">6/4 发布 · 6/5-6/9 发酵</span>
+    </div>
+    <div class="card-body">
+      <p>Jack Clark 与 Marina Favaro 联名长文披露内部数据：Claude 写入 Anthropic 生产代码占比已<strong>超 80%</strong>（Claude Code 推出前为个位数），工程师季度产出为数年前 8 倍，内部 benchmark 上 Claude 改进速度 52 倍 vs 人类 4 倍。文章判断 AI 正逼近「递归自我改进（RSI）」临界点，呼吁前沿实验室建立可验证的协调暂停机制（类比中程核武条约，但承认「训练任务比导弹发射井更容易藏」）。Clark 对 BBC 称现状「有油门没刹车」。</p>
+      <p><strong>反面声音</strong>：同周发布 Fable 5 构成「呼吁刹车同天踩油门」张力；学界（Georgia Tech Riedl、Giansiracusa）与 New Scientist 认为是 IPO 前战略定位——Anthropic 6/1 已机密提交 S-1（5/28 融资 $65B、估值 $9,650 亿美元，超 OpenAI 的 $8,520 亿）。FLI 6/8 跟进声明。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-mass">大众</span>
+      <span class="tag tag-geek">极客</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      Apple WWDC26：Siri AI 全面重做（Gemini 联合驱动），EU/中国缺席 <span class="date-inline">6/8</span>
+    </div>
+    <div class="card-body">
+      <p>iOS 27 系列发布「全新版本 Siri」：Apple Foundation Models + <strong>Google Gemini 联合驱动</strong>（合作首次公开），全系统屏幕感知、跨设备多轮记忆（iCloud 同步）、Write with Siri。开发者测试即日启，公测秋季。最强本地推理限 iPhone 17 Pro / M3+ Mac。</p>
+      <p><strong>监管冲突</strong>：Siri AI 不在 EU 上线，Apple 提「Trusted System Agent」中介 + 18 个月过渡期被拒；EU 委员会 6/9 反击「决定完全是 Apple 自己的，DMA 没有条款禁止上新」。中国同样缺席（未公开理由）。HN 当日 #2（193 点 / 318 评）。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-mass">大众</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 2. 追踪中 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4E1;</span>
+    <h2>追踪中</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">超高度自主化进程（Super-Autonomy Trajectory）<span class="date-inline">追踪自 6/3</span></div>
+    <div class="card-body">
+      <p><strong>本期核心判读：时间表首次具体化。</strong>前沿实验室内部人同周给出具体时点——Jack Clark 估 60% 概率 2028 年前出现「最大化 RSI」（AI 自主设计继任系统，Import AI #460，6/8）；Hassabis 称 AGI 约 2030&plusmn;1 年（Stanford GSB，6/2）。三信号实证持续累积，且首次三个领域同月铺开：</p>
+      <p>&#x2460; <strong>审批递减</strong>：Travelers 保险 AI 理赔系统 85&ndash;90% 首报全程无人工（OpenAI Realtime API，8 州 pilot 两个月扩全美，年均 150 万理赔规模）<span class="date-inline">6/2-6/3</span>；Rakuten 披露 Claude Code 自主 7 小时重构 1,250 万行代码库（99.9% 准确、工程师零介入），下一步「24 个并行 session 的 ambient agent」取代月级人工任务 <span class="date-inline">6/2</span>。</p>
+      <p>&#x2461; <strong>自我迭代</strong>：Anthropic RSI 博客披露罕见一手实证——Claude agent 获开放研究问题后自主完成假设&rarr;实验&rarr;跨 agent 分享&rarr;迭代全循环（$18,000 算力、数百小时）<span class="date-inline">6/4</span>。</p>
+      <p>&#x2462; <strong>领域扩张</strong>：SAP「Autonomous Enterprise」框架落地（Takeda 制造自主管控 +10% 生产力、&minus;25% 缺货损失）<span class="date-inline">6/4-6/8</span>；Meta Business Agent 全球发布——「AI 帮你运营整个生意」，100 万企业已在 WhatsApp 测试 <span class="date-inline">6/3</span>。保险、软件工程、制造、商业运营四领域同步。</p>
+      <p><strong>阻力面（同样在变硬）</strong>：CSA 独立评估 100 款生产 AI agent——<strong>89% 未达基线安全、98% 具备「lethal trifecta」高危架构、83% 供应商安全声明无独立核查</strong> <span class="date-inline">6/6</span>；SAP 自认 90% AI 用例卡在 pilot（前情 6/5 期）；Eric Topol 对 NYT 警告医疗 AI「从未在真实医疗的混乱中被检验」<span class="date-inline">6/8</span>。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-orche">ORCHE 相关</span>
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-academic">Academic</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 3. 前沿人物动态 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F399;</span>
+    <h2>前沿人物动态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="person">
+      <div class="person-name">Jack Clark <span class="tag tag-tier">T2</span></div>
+      <div class="person-role">Anthropic Co-founder / Import AI</div>
+      <div class="person-content"><span class="date-inline">6/8</span> Import AI #460 首次披露 RSI 内部数据（代码量 8 倍、增速仍在加速），估 60% 概率 2028 前「最大化 RSI」；<span class="date-inline">6/4</span> BBC Newsnight：「有油门没刹车」，2 年内可能 100% 代码由 AI 写。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Demis Hassabis <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">Google DeepMind CEO</div>
+      <div class="person-content"><span class="date-inline">6/2 演讲 · 持续发酵至 6/8</span> Stanford GSB 宣称人类处于「奇点的山麓」，AGI 约 2030&plusmn;1 年——其迄今最具体时间表，自称「刻意用刺激性语言」催促政策制定者；将 Mythos 定性为「示警信号」。另与 Sanger 研究所建 5 年基因组 AI 联合体（$500 万美元/年）<span class="date-inline">6/8</span>。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Sam Altman <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">OpenAI CEO</div>
+      <div class="person-content"><span class="date-inline">6/8</span> 主动约见 Bernie Sanders 谈「OpenAI 向政府捐股建公共财富基金」——未达协议（Sanders 坚持 50% 门槛）但表态支持公共所有制原则；同期与 Trump 政府谈监管。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Andrej Karpathy <span class="tag tag-tier">T3</span></div>
+      <div class="person-role">Anthropic 研究员（5/19 加入）</div>
+      <div class="person-content"><span class="date-inline">6/6</span> 发布 2 小时 AI 日常工作流录屏（1.4M 浏览）：用自然语言给 AI 布置任务如同向同事下令，「目标是彻底把自己移出 AI 的 bottleneck」——引爆「做 AI 的管理者而非操作者」讨论。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Elon Musk <span class="tag tag-tier">T3</span></div>
+      <div class="person-role">xAI / Tesla / SpaceX</div>
+      <div class="person-content"><span class="date-inline">6/5</span> X 宣布 Grok V9-Medium 完成训练——1.5 万亿参数（现产线 v8-small 的 3 倍），6 月中旬发布；同期 Grok Voice（接入 250 万 voice agents）、Grok Imagine 1.5（视频 Arena #1）、Grok Build 0.1 编程模型公测。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Yann LeCun <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">AMI Labs（$10.3 亿美元种子轮 / 估值 $35 亿）</div>
+      <div class="person-content"><span class="date-inline">6/6-6/8</span> 两篇预印本引发关注：LeJEPA 可实现「线性可识别性」（特定条件恢复真实隐变量）；stable-worldmodel benchmark 同时自曝短板——对象颜色改变后 world model 成功率 50%&rarr;12%。重申 LLM 无法真正推理规划，预测 2027 初行业认识到范式转移必要。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Mark Zuckerberg <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">Meta CEO</div>
+      <div class="person-content"><span class="date-inline">6/3</span> 伦敦发布 Meta Business Agent（WhatsApp/IG/Messenger 三平台、初期免费），目标「AI 最终帮你运营整个生意」；配套企业级 agentic 平台接入 Shopify/Zendesk 等数百系统。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Sergey Brin <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">Google 共同创办人</div>
+      <div class="person-content"><span class="date-inline">6/4-6/6</span> AGI House 炉边谈话：以 AlphaGo 类比论证「AI 超越人类不终止人类进步」；判断 Gemini 经 transformer+MoE+多模态收敛正走向 AGI，但 AGI 之后「无法想象」。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Greg Brockman <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">OpenAI 总裁</div>
+      <div class="person-content"><span class="date-inline">6/4 确认</span> 正式接管 OpenAI 产品战略：ChatGPT、Codex、API 合并为单一产品团队，打造整合桌面应用（含 Atlas 浏览器），直指 Anthropic 编程竞争；同期多位高管离职（Sora 主管 Peebles 等）。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Mustafa Suleyman <span class="tag tag-tier">T1</span></div>
+      <div class="person-role">Microsoft AI CEO</div>
+      <div class="person-content"><span class="date-inline">6/2（Build 2026）</span> 发布 7 款 MAI 自研模型——旗舰 MAI-Thinking-1（35B active / 256K context）blind test 优于 Sonnet 4.6、SWE-Bench Pro 匹敌 Opus 4.6；提出「Humanist Superintelligence」定位。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Swyx <span class="tag tag-tier">T2</span></div>
+      <div class="person-role">Latent Space 主理</div>
+      <div class="person-content"><span class="date-inline">6/2</span> 引发「微软 Build 幻灯片疑似泄露 Mythos 算力 6.1e27 FLOPs」讨论——被同圈质疑像素测量误差，结论 speculative；AINews 引「Reliability: Reality is the final eval」。</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Eric Topol <span class="tag tag-tier">T1/T2</span></div>
+      <div class="person-role">Scripps Research</div>
+      <div class="person-content"><span class="date-inline">6/6-6/8</span> Ground Truths 播客谈「真正的医学证据」+ NYT 采访警告：医疗 AI「潜力巨大但尚未达到，从未在现实医疗实践的混乱中被真正检验」；合著《健康 AI 准备就绪的幻觉》指前沿模型医疗能力缺口显著。</div>
+    </div>
+  </div>
+
+  <div class="cross-section">
+    <div class="cross-section-title">实验室横截面（本期出牌）</div>
+    <strong>Anthropic</strong>：Fable 5 + Mythos 5 公开发布 + RSI 数据引爆自我改进讨论，IPO S-1 已递。<br>
+    <strong>OpenAI</strong>：Altman 向政治中心靠拢（Sanders/Trump 双线），Brockman 整合 ChatGPT+Codex 产品线，269 页联邦政策蓝图。<br>
+    <strong>xAI</strong>：Grok V9 1.5T 训练完成 + Voice / Imagine 1.5 / Build 0.1 密集发布周。<br>
+    <strong>Google</strong>：Hassabis「奇点山麓」+ Brin 为 Gemini AGI 路线背书 + Sanger 基因组联合体；Siri AI 由 Gemini 联合驱动（Apple 合作公开）。<br>
+    <strong>Meta</strong>：Business Agent 全球落地——agent 商业化最大规模铺开；LeCun 出走后的 world model 路线由 AMI Labs 延续对垒。<br>
+    <strong>DeepSeek</strong>：本期窗口无可验证新动态。
+  </div>
+</div>
+
+<!-- ============ 4. 技术突破 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4A1;</span>
+    <h2>技术突破</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="sig sig-notable"></span>
+      MRAgent：「重构而非检索」记忆范式（ICML 2026）<span class="date-inline">6/5</span>
+    </div>
+    <div class="card-body">
+      <p>以 Cue-Tag-Content 图为记忆结构，检索时将 LLM 推理整合进多轮图遍历并动态剪枝。LoCoMo 相对增益 23.3%（Gemini backbone）；prompt tokens 降至 118K（基线 A-Mem 为 632K）。代码已开源。前情：6/5 期 CoMIC——agent 记忆架构论文连续两期爆发，方向与 ORCHE 记忆工程直接相关。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-academic">Academic</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
+    </div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      Mem0 新算法持续发酵：LoCoMo 91.6（+20pp）<span class="date-inline">4 月升级 · 6/9 仍活跃推送</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+    <div class="compact-desc">单次 ADD-only 抽取 + entity linking + 多信号检索（semantic/BM25/entity 融合）+ 时间推理；LongMemEval 94.8（+27pp），token 维持 ~7K、p50 延迟 0.88s。GitHub 58K stars、331 releases。注：ORCHE Phase 3C 前置条件即含 Mem0 进展扫描——此为关键节点。</div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      Google Agentic RAG：Sufficient Context Agent <span class="date-inline">6/5</span>
+      <span class="tag tag-official">Official</span>
+    </div>
+    <div class="compact-desc">生成前反复搜索直到确认上下文充分（而非空结果即弃答）；FramesQA 跨语料库准确率 90.1%，factuality 数据集较标准 RAG 最高 +34%。已在 Gemini Enterprise Agent Platform public preview。</div>
+  </div>
+
+  <div class="compact-item">
+    <div class="compact-title">
+      Microsoft Lens：3.8B 参数图像生成对垒 80B <span class="date-inline">6/8</span>
+      <span class="tag tag-academic">Academic</span>
+    </div>
+    <div class="compact-desc">训练算力仅同类 1/5，多项 benchmark 胜 Hunyuan-Image-3.0（80B）；Lens-Turbo 4 步生成、H100 上 1MP &lt;1 秒，MIT 开源（研究用）。以「精细 caption &gt; 原始规模」挑战 scale 叙事。注：单一媒体来源（The Decoder）。</div>
+  </div>
+</div>
+
+<!-- ============ 5. 开源生态 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4E6;</span>
+    <h2>开源生态</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="compact-item">
+      <div class="compact-title">
+        llama.cpp b9455 多 GPU 吞吐追平 vLLM <span class="date-inline">6/3 · 持续发酵</span>
+        <span class="tag tag-geek">极客</span>
+        <span class="tag tag-landscape">L 候选</span>
+      </div>
+      <div class="compact-desc">2&times;RTX 3090 跑 Qwen 27B UQ8 达 70 t/s（此前 30&ndash;50），终结 vLLM 多卡独占优势——GGUF 用户不再为速度被迫迁移。社群信号：r/LocalLLaMA 原帖 + dev.to 转载 + 硬件指南引用。</div>
+    </div>
+    <div class="compact-item">
+      <div class="compact-title">
+        Gemma 4 31B FP8 在生产 agent 任务追平 Sonnet 4.6 <span class="date-inline">6/8</span>
+        <span class="tag tag-geek">极客</span>
+        <span class="tag tag-landscape">L 候选</span>
+      </div>
+      <div class="compact-desc">r/LocalLLaMA 开发者实测三类生产 workload（Neo4j Cypher / 实体抽取 / 工具调用）与 Sonnet 4.6 medium 持平；FP8 + QAT 变体是推手。「本地开源模型追平商业前沿」对等点出现——24GB 单卡可跑。</div>
+    </div>
+    <div class="compact-item">
+      <div class="compact-title">
+        mistral.rs 集成 Gemma 4 12B：内置 web search + 沙箱代码执行 <span class="date-inline">6/4</span>
+        <span class="tag tag-geek">极客</span>
+      </div>
+      <div class="compact-desc">Rust 推理引擎一条命令安装，捆绑多模态输入 + multi-token prediction——无云依赖的生产级 agentic pipeline；Gemma 4 发布数日内完成集成。来源：r/LocalLLaMA + AIWeekly。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 6. Claude Code 专区 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x2699;</span>
+    <h2>Claude Code 专区</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">功能发布 <span class="date-inline">v2.1.166&ndash;170 · 6/6&ndash;6/9</span></div>
+    <div class="card-body">
+      <p><strong>v2.1.170</strong>（6/9）：Fable 5 接入的最低版本；修复 VS Code 集成终端 transcript 不保存。<br>
+      <strong>v2.1.169</strong>（6/8）：<code>--safe-mode</code>（禁用全部自定义——CLAUDE.md/plugins/skills/hooks/MCP，troubleshooting 专用）；<code>/cd</code> session 内切目录不打断 prompt cache；<code>disableBundledSkills</code>。<br>
+      <strong>v2.1.166</strong>(6/6)：<code>fallbackModel</code> 最多三级备选模型；deny rule 支持 glob；<strong>cross-session 权限硬化</strong>——SendMessage 中继消息不再携带 user authority（安全修复）；thinking 可全禁。</p>
+      <p>&#x26A0; <strong>退役提醒</strong>：claude-opus-4-20250514 / claude-sonnet-4-20250514 于 <strong>6/15</strong> 退役（ORCHE 体系已查无引用）。</p>
+    </div>
+    <div class="card-meta">
+      <span class="tag tag-official">Official</span>
+      <span class="tag tag-orche">ORCHE 相关</span>
+      <span class="tag tag-landscape">L 候选</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">应用场景讨论</div>
+    <div class="card-body">
+      <p><strong>GitHub Copilot 接入 Fable 5</strong>（6/9）：覆盖 VS Code/CLI/JetBrains/Xcode 等全端；关键限制——Fable 5 需 30 天数据留存跑安全分类器，<strong>打破其他 Claude 模型的 Zero Data Retention 协议</strong>，企业管理员需显式开启（默认 off）。内部数据：Fable 5 完成同等工作的 tool calls 与 token 均低于 Opus。<span class="tag tag-landscape" style="margin-left:4px;">L 候选</span></p>
+      <p><strong>AWS Bedrock 上线</strong>（6/9）：<code>anthropic.claude-fable-5</code>（US East + 斯德哥尔摩）；回退计费——有害 prompt 路由 Opus 4.8 时按 Opus 价格计。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">评价</div>
+    <div class="card-body">
+      <p><strong>正面</strong>：HN 当日 #1（780 点/502 评）；Stripe「数月工程压缩到数天」；Alex Volkov 用 Mythos 5 在 16 小时完成原估 40&ndash;95 天任务；Mike Krieger 周末 2 天构建自维护媒体追踪器；Dan Shipper（Every）内测一周后发 vibe check。</p>
+      <p><strong>负面/质疑</strong>：「nerfed Mythos」——Fable 5 = Mythos 同权重 + 分类器限制，命名逻辑不透明（Verge 点名，Anthropic 未回应）；30 天留存企业合规反弹预期强；HN 6/9 热帖「Cleaning up after AI rockstar developers」议 AI 代码「优质但难接手」的维护困境。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">竞品对照</div>
+    <div class="card-body">
+      <p><strong>OpenAI Lockdown Mode 扩展至消费者</strong>（6/6）：确定性禁用外泄通道工具（实时浏览/Agent Mode/Deep Research）；Simon Willison 指其切断 lethal trifecta 第三要素，但也暗示默认 ChatGPT 对强 prompt injection 无法完全防御；HN 发现不覆盖 Codex 网络访问。<br>
+      <strong>Cursor 3.7 + SDK</strong>（6/4-6/5）：subagents 嵌套不限深度、auto-review 分类器自动决定审批、Design Mode 语音输入。<br>
+      <strong>Codex CLI 0.138</strong>（6/8）：延续 6/2「Codex for every role」角色化 plugin 路线。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 7. 横向热度 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x1F4CA;</span>
+    <h2>横向热度</h2>
+  </div>
+
+  <div class="card" style="padding: 8px 16px;">
+    <div class="heat-item">
+      <div class="heat-rank">1</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          <span class="sig sig-notable"></span>
+          Trump 签署 AI 国安总统备忘录（NSPM-AI）<span class="date-inline">6/5</span>
+          <span class="tag tag-mass">监管</span>
+        </div>
+        <div class="heat-evidence">依据：白宫官方 Fact Sheet + OpenAI 当日公开表态遵从 + 与 Anthropic/DoD 冲突背景联动报道</div>
+        <div class="heat-desc">取代拜登 NSM-25：最先进商业/开源模型快速部署军方与情报机构；禁止任何实体未经授权禁用美军依赖的 AI 系统；建 AI 国安战略储备。</div>
+      </div>
+    </div>
+    <div class="heat-item">
+      <div class="heat-rank">2</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          Anthropic 机密提交 IPO S-1 <span class="date-inline">6/1</span>
+          <span class="tag tag-commercial">融资</span>
+        </div>
+        <div class="heat-evidence">依据：Anthropic 官方声明 + CNBC/TechCrunch 重量级报道「AI 史上最大 IPO 之一」</div>
+        <div class="heat-desc">紧随 5/28 $65B 融资轮（估值 $9,650 亿美元，超 OpenAI $8,520 亿）；OpenAI 亦准备机密提交——双巨头 IPO 竞速开启。</div>
+      </div>
+    </div>
+    <div class="heat-item">
+      <div class="heat-rank">3</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          OpenAI 发布 269 页联邦 AI 政策蓝图 <span class="date-inline">6/5</span>
+          <span class="tag tag-mass">监管</span>
+        </div>
+        <div class="heat-evidence">依据：Zvi Mowshowitz 深度分析「高度合理、远超预期」（T2 权威）+ Techmeme 收录</div>
+        <div class="heat-desc">《Great American AI Act 2026》草案：CAISI 强制评估前沿模型（不批准/拒绝部署）、RSI 列「紧急优先级」、联邦预占州法（引反弹）。与 Anthropic RSI 警告构成一周双重 RSI 话语高峰。</div>
+      </div>
+    </div>
+    <div class="heat-item">
+      <div class="heat-rank">4</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          HN 职业焦虑双热帖：「LLMs are eroding my career」&times;「AI 正碾压 ChatGPT 前创业潮」<span class="date-inline">6/7 / 窗口内</span>
+          <span class="tag tag-mass">文化</span>
+        </div>
+        <div class="heat-evidence">依据：6/7 HN 定调整日讨论方向 + 跨帖讨论串 + 6/9「Cleaning up after AI rockstars」延续</div>
+        <div class="heat-desc">10 年后端工程师称深度领域技能被 Claude Code 加持的初级工程师替代，行业「扁平化为通才」；2020-22 年 NLP 创业公司未完成 PMF 即遭碾压。</div>
+      </div>
+    </div>
+    <div class="heat-item">
+      <div class="heat-rank">5</div>
+      <div class="heat-content">
+        <div class="heat-title">
+          多伦多大学 AI Worm：跨 AI 系统感染演示 <span class="date-inline">窗口内（HN）</span>
+          <span class="tag tag-academic">学术</span>
+        </div>
+        <div class="heat-evidence">依据：HN 热帖 + Palisade Research 独立复现（含复制模型权重，44% 宣称成功率）</div>
+        <div class="heat-desc">AI worm 可跨设备感染并自我复制；与 Fable 5 安全报告「N-day = N-hour」呼应——攻防两侧同步加速。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 8. 行动建议 ============ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">&#x26A1;</span>
+    <h2>行动建议</h2>
+  </div>
+  <div class="action-box">
+    <ul>
+      <li><strong>6/15&ndash;6/23 计费变化密集窗口</strong>——三事叠加：CC 计费 6/15 剥离订阅补贴（前期已报）+ 旧模型 6/15 退役 + Fable 5 订阅免费期 6/22 截止（6/23 起需算力积分）。建议 6/20 前后评估 Fable 5 实际用量与 Max 订阅在新计费下的性价比。（建议去向：追踪清单 6/20）</li>
+      <li><strong>Fable 5 强制 30 天留存适用所有流量</strong>——含 ORCHE 日常对话（覆盖原 zero-retention 协议；Anthropic 声明仅安全用途不训练）。资讯说明，无行动必要，知情即可。</li>
+      <li><strong>旧模型 ID 引用已查</strong>——ORCHE 全 vault + settings 无 claude-opus-4/sonnet-4-20250514 引用，6/15 退役无影响。已完成，无后续。</li>
+      <li><strong>Mem0 算法升级触及 Phase 3C 前置条件</strong>——LoCoMo 91.6 已属生产级记忆方案水位；周五 L 候选批量更新将写入 landscape，3C 评估时点渐近。（建议去向：现有维护线覆盖，无新增）</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  Generated by ORCHE &middot; 来源：Anthropic / OpenAI / Apple / 白宫 / SAP / CSA / Import AI / BBC / CNBC / TechCrunch / The Verge / HN / r/LocalLLaMA / arXiv / Zvi Substack
+  <div class="legend">
+    <span class="legend-item"><span class="sig sig-top"></span>顶级</span>
+    <span class="legend-item"><span class="sig sig-notable"></span>显著</span>
+    <span class="legend-item">无符号 = 值得关注</span>
+  </div>
+</div>
+
+</body>
+</html>
