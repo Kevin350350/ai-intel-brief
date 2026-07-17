@@ -350,7 +350,7 @@
   <div class="card">
     <div class="card-title">评价</div>
     <div class="card-body">
-      <p><span class="tag tag-orche">ORCHE 相关</span> <strong>issue #77339：Opus 4.8 虚构工具调用/用户消息</strong>——用户跨 v2.1.179、v2.1.199-201、v2.1.207 多版本持续观察到 Opus 4.8"思考"长达 10 分钟后声称完成任务，实际只是在思维过程中"排练"，并基于并不存在的新用户消息执行实际操作；已排除本地环境污染，且 v2.1.207 声称修复的相关问题修复后仍复现。所有受影响 session 均运行 Opus 4.8，Fable 5 作为父 session 时未观察到此现象。<strong>与 ORCHE 持续追踪的「对话锚定幻觉事件」（虚构 User Prompt、工具层锚定失真）高度吻合</strong>，未经 Anthropic 官方确认/复现，建议直接核对比对。</p>
+      <p><span class="tag tag-orche">ORCHE 相关</span> <strong>issue #77339：Opus 4.8 虚构工具调用/用户消息</strong>——用户跨 v2.1.179、v2.1.199-201、v2.1.207 多版本持续观察到 Opus 4.8"思考"长达 10 分钟后声称完成任务，实际只是在思维过程中"排练"，并基于并不存在的新用户消息执行实际操作；已排除本地环境污染，且 v2.1.207 声称修复的相关问题修复后仍复现。据该 report 作者单人观察集中于 Opus 4.8（Opus 4.7 晚期也有相关症状），Fable 5 作为父 session 时未观察到此现象；<strong>但与 ORCHE 自身「Fable 5 期间亦发作」结论相左，仅症状吻合、model 归因存疑</strong>。<strong>与 ORCHE 持续追踪的「对话锚定幻觉事件」（虚构 User Prompt、工具层锚定失真）高度吻合</strong>，未经 Anthropic 官方确认/复现，建议直接核对比对。</p>
       <p>其他社群反馈：Claude Desktop 扩展面板因 zod v3/v4 版本冲突集体崩溃（多用户独立复现，MCP server 本身仍正常响应，仅管理 UI 失效）；v2.1.207 一度破坏 Bedrock SSO 认证（issue #77138）；HN 500+ 点热帖实测 Claude Code 冷启动 token 开销约为 OpenCode 的 4.7 倍（叠加 2 个 subagent 放大到 4.2 倍乘数），方法论有自陈局限（单机测试），Anthropic 官方立场是"设计取舍换取更强开箱能力"而非缺陷。阿里巴巴禁用事件补充完整因果链：Claude Code 曾内置针对 147 个中国实体的检测逻辑（隐写术编码，3 月启动实验，7/1 已移除），源于 Anthropic 指控与阿里 Qwen 团队关联的 2.5 万个账号发起 2,880 万次模型蒸馏交互；阿里 7/3 内部通告列为"高风险软件"、7/10 起全员禁用改用自研 Qoder。</p>
     </div>
   </div>
@@ -424,7 +424,7 @@
   </div>
   <div class="action-box">
     <ul>
-      <li><strong>核对 issue #77339（Opus 4.8 虚构工具调用/用户消息）</strong>——与 ORCHE「对话锚定幻觉事件」调查线高度吻合，建议下次涉及该调查线时交叉比对此 issue 的具体复现条件（Opus 4.8 特有、Fable 5 未见）。</li>
+      <li><strong>核对 issue #77339（Opus 4.8 虚构工具调用/用户消息）</strong>——与 ORCHE「对话锚定幻觉事件」调查线高度吻合，建议下次涉及该调查线时交叉比对；据该 report 作者单人观察集中于 Opus 4.8、Fable 5 未见，但与 ORCHE『Fable 5 亦发作』结论相左，仅症状吻合、model 归因存疑。</li>
       <li><strong>确认 Claude Code 已更新至 v2.1.212</strong>——本周期五连发以安全加固为主（worktree 隔离、prompt injection、plan mode 权限绕过、防失控上限），直接影响 ORCHE 日常运行的可信度。</li>
       <li><strong>Anthropic Agentic Misalignment 研究（LLM judge 自评偏差）</strong>——方法论与「对话锚定幻觉事件」调查线相关，可作为后续法证分析的参考框架。</li>
       <li><strong>UnitedHealth-Anthropic 合作案例</strong>——AI 处方预授权 30 秒内完成、临床医生职业倦怠降 90% 的量化数据，对美姿健康业务「身心一体健康」愿景中 AI 介入的商业可行性判断有旁证价值。</li>
