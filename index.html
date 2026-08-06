@@ -37,10 +37,6 @@
     --action-bg: #ecfdf5;
     --action-border: #a7f3d0;
     --action-text: #064e3b;
-
-    --warn-bg: #fef3c7;
-    --warn-border: #fbbf24;
-    --warn-text: #78350f;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -74,10 +70,6 @@
       --action-bg: #064e3b;
       --action-border: #047857;
       --action-text: #d1fae5;
-
-      --warn-bg: #78350f;
-      --warn-border: #b45309;
-      --warn-text: #fef3c7;
     }
   }
 
@@ -309,12 +301,19 @@
   .audio-player {
     margin: 0 0 28px;
     padding: 12px 14px;
-    background: var(--warn-bg);
-    border: 1px solid var(--warn-border);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 10px;
-    color: var(--warn-text);
-    font-size: 0.85rem;
-    line-height: 1.6;
+  }
+  .audio-player-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .audio-player audio {
+    width: 100%;
+    height: 36px;
+    display: block;
   }
   .footer {
     margin-top: 40px;
@@ -340,7 +339,11 @@
 <p class="meta">2026-08-06（四）&middot; 覆盖 2026-07-29 至 2026-08-06（停摆 8 天后重启，Kevin 指定今日执行）&middot; 阅读约 14 分钟</p>
 
 <div class="audio-player">
-  &#x1F3A7; <strong>本期语音播报未生成</strong> — kevin-main（新机）Keychain 尚未配置 <code>orche-ai-intel-brief-openai</code> 这个 TTS 凭证，需 Kevin 提供 OpenAI API key 后补上。文字内容不受影响。
+  <div class="audio-player-label">&#x1F3A7; 语音播报（约 9 分钟）</div>
+  <audio controls preload="metadata">
+    <source src="audio/2026-08-06.mp3" type="audio/mpeg">
+    您的浏览器不支持音频播放。
+  </audio>
 </div>
 
 <!-- ============================================================
