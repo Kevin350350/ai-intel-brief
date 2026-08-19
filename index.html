@@ -367,10 +367,10 @@
   <div class="section-header"><span class="section-icon">&#x1F525;</span><h2>今日焦点</h2></div>
 
   <div class="card" id="focus-openai">
-    <div class="card-title"><span class="sig sig-notable"></span><span class="date-inline">8/18</span> OpenAI 为 cyber-critical 能力放慢 frontier development</div>
+    <div class="card-title"><span class="sig sig-notable"></span><span class="date-inline">8/18</span> OpenAI：Astra 可能触及 cyber-critical 门槛，frontier development 放慢</div>
     <div class="card-body">
-      <p>OpenAI 表示，Hugging Face 事件与内部模型 Astra 可能触及 Preparedness Framework 的 Critical cybersecurity capability 阈值，因此暂停面向部署模型的 reinforcement-learning training 两周，最大 planned frontier RL run 仍在暂停；部分 Astra workload 需迁入更强的 workload／network isolation 后才恢复。</p>
-      <p>新监控从每个 sampled token 的 activation classifier 开始，检查 tool actions、可用 reasoning 与完整 activity sequence；目标是在发现异常后 30 分钟内告警，无法排除误报就暂停活动，监控开销约为被监控 inference compute 的 20%。这不是普通安全声明，而是把训练速度、工具权限、网络边界与运行时监控绑成一个开发基础设施 gate。</p>
+      <p>在 Hugging Face 事件背景下，OpenAI 表示内部模型 Astra 可能触及 Preparedness Framework 的 Critical cybersecurity capability 阈值，因此暂停面向部署模型的 reinforcement-learning training 两周，最大 planned frontier RL run 仍在暂停；部分 Astra workload 需迁入更强的 workload／network isolation 后才恢复。</p>
+      <p>新监控从每个 sampled token 的 activation classifier 开始，检查 tool actions、可用 reasoning 与完整 activity sequence；针对疑似 critical boundary violation，目标是在发现异常后 30 分钟内告警，无法排除误报就暂停活动，监控开销约为被监控 inference compute 的 20%。这不是普通安全声明，而是把训练速度、工具权限、网络边界与运行时监控绑成一个开发基础设施 gate。</p>
       <p>来源：<a href="https://openai.com/index/pacing-model-development-cyber-capabilities/">OpenAI 原文</a>；<a href="https://time.com/article/2026/08/18/openai-slowing-training/">TIME 原访谈</a>；<a href="https://www.theverge.com/ai-artificial-intelligence/981640/openai-security-changes-ai-hugging-face-hack">The Verge</a>。建议：立即把 agent 的 network egress、tool scope、untrusted output 与高影响动作 gate 视为架构层控制，而非只依赖 sandbox。</p>
     </div>
     <div class="card-meta"><span class="tag tag-geek">极客</span><span class="tag tag-official">Official</span><span class="tag tag-orche">ORCHE 相关</span><span class="tag tag-landscape">L 候选</span></div>
@@ -380,8 +380,8 @@
     <div class="card-title"><span class="date-inline">8/18</span> AWS 宣布 AgentCore Payments GA：agent 开始获得经济承诺能力</div>
     <div class="card-body">
       <p>AWS 一手公告称 Amazon Bedrock AgentCore Payments 已 generally available，可让 agent 访问付费 API、MCP server、网页内容与按次推理；钱包凭证留在 AgentCore Identity／Secrets Manager，agent 只拿短期 token，payment session 可设最大金额与 expiry，交易写入 CloudWatch／Observability 审计链，并新增 MPP 与 x402 <code>upto</code> 方案。</p>
-      <p><strong>状态边界：</strong>AWS 公告与 What's New 写 GA，但 AWS 当前 pricing 页面仍把 Payments 标为「Preview」，release notes 也保留 Preview 描述。因此本条只写「AWS 于 8/18 宣布 GA」，不推断所有区域、价格与控制台状态已经一致；生产采用前须复核区域与实际服务状态。</p>
-      <p>来源：<a href="https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-agentcore-payments-is-now-generally-available-enabling-agents-to-transact-safely-and-autonomously-at-scale/">AWS 公告</a>；<a href="https://aws.amazon.com/about-aws/whats-new/2026/08/bedrock-agentcore-payments-ga/">What's New</a>；<a href="https://tpsreport.news/news/amazon-bedrock-agentcore-payments-general-availability">TPS Report 独立报道</a>；<a href="https://aws.amazon.com/bedrock/agentcore/pricing/">当前定价页</a>。对 ORCHE 的长期价值在于三项边界：model 不持有 wallet secret、预算／期限由基础设施确定性拒绝、支付必须可审计。</p>
+      <p><strong>状态边界：</strong>AWS 公告与 What's New 写 GA，但 AWS 当前 pricing 页面仍把 Payments 标为「Preview」，公开 developer guide 也尚未在页面标题／导言同步 GA 文案；release notes 仍可见历史 Preview 段落，但不把它单独当成当前反证。因此本条只写「AWS 于 8/18 宣布 GA」，不推断所有区域、价格与控制台状态已经一致；生产采用前须复核区域与实际服务状态。</p>
+      <p>来源：<a href="https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-agentcore-payments-is-now-generally-available-enabling-agents-to-transact-safely-and-autonomously-at-scale/">AWS 公告</a>；<a href="https://aws.amazon.com/about-aws/whats-new/2026/08/bedrock-agentcore-payments-ga/">What's New</a>；<a href="https://bitcoinworld.co.in/aws-agentcore-payments-usdc-ai-agents/">Bitcoinworld 独立转述（8/19）</a>；<a href="https://en.bloomingbit.io/feed/news/118631">Bloomingbit 独立转述（8/19）</a>；<a href="https://aws.amazon.com/bedrock/agentcore/pricing/">当前定价页</a>。两篇独立报道用于满足来源交叉，但均未独立审计 AWS 的 GA 状态；对 ORCHE 的长期价值在于三项边界：model 不持有 wallet secret、预算／期限由基础设施确定性拒绝、支付必须可审计。</p>
     </div>
     <div class="card-meta"><span class="tag tag-dev">开发者</span><span class="tag tag-official">Official</span><span class="tag tag-commercial">Commercial</span><span class="tag tag-landscape">L 候选</span></div>
   </div>
