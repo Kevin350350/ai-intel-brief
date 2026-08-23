@@ -15,3 +15,16 @@ index.html           # 当天简报副本（根目录入口）
 ```
 
 旧简报改 URL 日期即可查阅：`https://ai-intel-brief.icpc.com.tw/2026-04-18.html`
+
+## 音频保留
+
+HTML 永久保留；站点上的音频采用 **滚动 60 天**保留窗。超过窗口的 MP3 从当前 Git HEAD 移除，但仍可从 Git 历史恢复；旧 HTML 的播放器可能返回 404，这是既定行为，不回补旧音频。
+
+每次生成简报后、commit 前先检查，再执行修剪：
+
+```bash
+python3 prune_audio.py --as-of YYYY-MM-DD
+python3 prune_audio.py --as-of YYYY-MM-DD --apply
+```
+
+脚本以 `git ls-tree` 判断站点实际追踪内容，不依赖 sparse checkout 的本地可见档案。
