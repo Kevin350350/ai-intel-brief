@@ -50,14 +50,27 @@ def main() -> None:
     cutoff = args.as_of - timedelta(days=RETENTION_DAYS)
 
     tracked = git(repo, "ls-tree", "-r", "--name-only", "HEAD", "--", "audio")
-    candidates: list[str] = []
+    tracked_audio: list[tuple[str, date]] = []
+    invalid_paths: list[str] = []
     for path in tracked.splitlines():
         match = AUDIO_PATTERN.fullmatch(path)
         if not match:
+            invalid_paths.append(path)
             continue
-        brief_date = datetime.strptime(match.group(1), "%Y-%m-%d").date()
-        if brief_date < cutoff:
-            candidates.append(path)
+        try:
+            brief_date = datetime.strptime(match.group(1), "%Y-%m-%d").date()
+        except ValueError:
+            invalid_paths.append(path)
+            continue
+        tracked_audio.append((path, brief_date))
+
+    if invalid_paths:
+        print("Invalid tracked audio path(s):")
+        for path in invalid_paths:
+            print(f"invalid {path}")
+        raise SystemExit(1)
+
+    candidates = [path for path, brief_date in tracked_audio if brief_date < cutoff]
 
     mode = "APPLY" if args.apply else "DRY-RUN"
     print(
