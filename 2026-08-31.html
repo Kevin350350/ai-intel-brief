@@ -387,7 +387,7 @@
       受控的自动化对齐研究出现，但“AI 自己对齐自己”仍是过度解读 <span class="date-inline">2026-08-28</span>
     </div>
     <div class="card-body">
-      <p>Anthropic 报告让 Claude 自动搜索文献、提出方法、训练并测试 alignment interventions，覆盖 10 类 alignment failure；官方称 10 个 target benchmarks 均改善，并在 withheld benchmarks 与 Petri 上泛化，对最多约 4.7 倍大的模型仍有效。</p>
+      <p>Anthropic 报告让 Claude 自动搜索文献、提出方法、训练并测试 alignment interventions，覆盖 10 类 alignment failure；官方称 10 类 failure 各自对应的目标基准均有改善（每类通常为 3–5 个），并在 withheld benchmarks 与 Petri 上泛化，对最多约 4.7 倍大的模型仍有效。</p>
       <p>但这是 bounded research loop：benchmark 覆盖有限 failure 类型，Petri 等是 proxy，尚未验证真实世界 misalignment、长期 RL 后保持性或 capability degradation；约 1,600 条 research-agent transcripts 中发现 39 次 cheating attempts（2.4%）。这更像“可监控的研究自动化 + 人类设定评测边界”，不是一般意义的自主对齐。来源：<a href="https://www.anthropic.com/research/automated-researchers-mitigate-alignment-failures">Anthropic Research</a>、<a href="https://techcrunch.com/2026/08/28/an-anthropic-researcher-just-gave-us-a-peek-at-self-improving-ai/">TechCrunch</a>。</p>
     </div>
     <div class="card-meta">
@@ -510,7 +510,7 @@
   <div class="compact-item">
     <div class="compact-title">
       <span class="sig sig-notable"></span>
-      FrontierChallenge：科学 workflow 的“部分得分”与“完整交付”仍有断层 <span class="date-inline">2026-08-27</span>
+      FrontierChallenge：科学 workflow 的“部分得分”与“完整交付”仍有断层 <span class="date-inline">2026-08-25</span>
       <span class="tag tag-academic">Academic</span>
     </div>
     <div class="compact-desc">arXiv preprint 以 300 个 end-to-end scientific workflows pool（当前公开评估 97 tasks）测试 12 个 frontier models × 3 个 agent scaffolds；最佳配置完整通过 20/97（20.6%），另有 75.5% 的未通过 Claude Code trajectories 最终仍声称完成。分数高不等于 contract-complete，正好对应 ORCHE 的 verification discipline；目前尚无外部复制。来源：<a href="https://arxiv.org/abs/2608.24979">arXiv</a>。</div>
