@@ -377,8 +377,8 @@
     </div>
     <div class="card-body">
       <p>Anthropic 同日发布 Claude Fable 5.1（一般可用）与 Claude Mythos 5.1（仅 trusted access）；两者使用相同模型权重，差别在 safeguards。Fable 5.1 的 cache read 从每百万 token 1 美元降至 0.25 美元，输入／输出标价仍为 10／50 美元；Anthropic 估计一般工作负载成本降约 25%，高度 agentic 工作最高约降 45%。官方表格显示 Terminal-Bench-Science 0.1 为 52.6%，Fable 5 为 24.7%，但这些仍是厂商评测。</p>
-      <p>Artificial Analysis Intelligence Index 给 Fable 5.1 最高 effort 评分 66，暂居其测量榜首；该评测说明约 4% output tokens 来自 Anthropic 的 default fallback，同时指出它因输出 token 量约为 Fable 5 的 1.7 倍，单任务成本反而高约 20%。这意味着“cache 更便宜”不等于“每个复杂任务都更便宜”，应以 Kevin 的真实 agent workload 做对照。配套的 Enterprise Frontier Safeguards（EFS）则把活动数据与自动滥用检测移到客户控制的 cloud account；预计秋季分阶段推出，合资格客户过渡期可申请 ZDR。</p>
-      <p>依据：<a href="https://www.anthropic.com/claude-fable-and-mythos-5-1">Anthropic 模型公告</a>、<a href="https://www.anthropic.com/news/enterprise-frontier-safeguards">Anthropic EFS 公告</a>、<a href="https://artificialanalysis.ai/articles/claude-fable-5-1">Artificial Analysis 独立评测</a>、<a href="https://techcrunch.com/2026/09/01/anthropics-new-fable-release-is-cheaper-less-restrictive/">TechCrunch</a>；HN 讨论串截至本期约 1,030 点／961 条评论（<a href="https://news.ycombinator.com/item?id=49525378">HN</a>）。</p>
+      <p>Artificial Analysis Intelligence Index 给 Fable 5.1 最高 effort 评分 66，暂居其测量榜首；该评测说明约 4% output tokens 来自 Anthropic 的 default fallback，同时指出它因输出 token 量约为 Fable 5 的 1.7 倍，单任务成本反而高约 20%。这意味着“cache 更便宜”不等于“每个复杂任务都更便宜”，应以 Kevin 的真实 agent workload 做对照。配套的 Enterprise Frontier Safeguards（EFS）则把活动数据与自动滥用检测移到客户控制的 cloud account；相关 customer-owned storage、CMK 与 automated review 均为 opt-in，不改变模型行为、API 价格或 rate limit。EFS 预计秋季分阶段推出，合资格企业过渡期可申请 ZDR，但 GA 不等于所有入口／企业立即可用；客户仍承担 cloud storage、读写、egress 与监控成本。</p>
+      <p>依据：<a href="https://www.anthropic.com/claude-fable-and-mythos-5-1">Anthropic 模型公告</a>、<a href="https://www.anthropic.com/news/enterprise-frontier-safeguards">Anthropic EFS 公告</a>、<a href="https://artificialanalysis.ai/articles/claude-fable-5-1">Artificial Analysis 独立评测</a>、<a href="https://techcrunch.com/2026/09/01/anthropics-new-fable-release-is-cheaper-less-restrictive/">TechCrunch</a>；HN 讨论串截至本期约 1,047 点／970 条评论（<a href="https://news.ycombinator.com/item?id=49525378">HN</a>）。</p>
     </div>
     <div class="card-meta">
       <span class="tag tag-geek">极客</span>
@@ -397,7 +397,7 @@
     <div class="card-body">
       <p>OpenAI 表示，Astra 在具备适当工具与权限时，能够在没有逐步人工引导的情况下发现此前未知的安全缺陷，并在多类 hardened systems 上设计 exploit；这是该公司首次把模型标为 Preparedness Framework 的 Critical cyber capability。官方还称内部评测中发现并使用两个 zero-day，正向维护者披露，但公开结果仍主要是 OpenAI 自报。</p>
       <p>部署方式是先限制先进 cyber 能力给 Daybreak Blue 测试者，再逐步扩大防御性使用；高风险账号会采用更保守的行为边界，并配合实时监控与 containment。OpenAI 报告 cyber jailbreak refusal rate 为 91.5%，GPT-5.6 Sol 为 59%；TechCrunch 同时指出，外部尚无独立确认，且具体 safeguard 细节要等 system card。对 Kevin 的实际含义不是“立即使用强 cyber 能力”，而是把分级访问、网络出口、凭证隔离、审计与可快速终止作为默认架构。</p>
-      <p>依据：<a href="https://openai.com/index/path-to-astra/">OpenAI 原文</a>、<a href="https://techcrunch.com/2026/09/01/open-ais-astra-model-is-on-the-way-and-very-good-at-breaking-into-computer-systems/">TechCrunch</a>、<a href="https://www.cnbc.com/2026/09/01/open-ai-astra-cyber-model.html">CNBC</a>。本条仅保留防御与治理层信息，不复述可复现攻击链。</p>
+      <p>依据：<a href="https://openai.com/index/path-to-astra/">OpenAI 原文</a>、<a href="https://techcrunch.com/2026/09/01/open-ais-astra-model-is-on-the-way-and-very-good-at-breaking-into-computer-systems/">TechCrunch</a>、<a href="https://www.cnbc.com/2026/09/01/open-ai-astra-cyber-model.html">CNBC</a>；官方 HN 讨论串截至本期约 110 点／50 条评论（<a href="https://news.ycombinator.com/item?id=49527595">HN</a>）。本条仅保留防御与治理层信息，不复述可复现攻击链。</p>
     </div>
     <div class="card-meta">
       <span class="tag tag-geek">极客</span>
@@ -415,7 +415,7 @@
   </div>
   <div class="compact-item">
     <div class="compact-title">中美模型竞争与消费级地端能力差距（追踪自 2026-08-24） <span class="date-inline">8/31—9/2</span></div>
-    <div class="compact-desc">本周期出现“开放权重扩大、硬件门槛仍高”的分化信号：DeepSeek-V4-Flash-Vision-Exp 于 8/31 在 Hugging Face 释出 MIT 权重、约 305B 总参数、48 个 shard，并附 prompt encoding 与 PyTorch reference；截至 9/2，模型页约 17,893 downloads／459 likes。官方运行示例面向 4×GB300，独立 NVIDIA Developer Forum 讨论也集中在多卡与 tensor-parallel 部署，尚非消费级 GPU 可直接运行的模型。能力数字仍以 DeepSeek 自报为主，不能据此宣称赶超 closed frontier；当前判断是地端可及性扩大，但消费级硬件的实际差距没有被这次 release 消除。详见<a href="#opensource">开源生态</a>。</div>
+    <div class="compact-desc">本周期出现“开放权重扩大、硬件门槛仍高”的分化信号：DeepSeek-V4-Flash-Vision-Exp 于 8/31 在 Hugging Face 释出 MIT 权重、约 305B 总参数、48 个 shard，并附 prompt encoding 与 PyTorch reference；截至 9/2，模型页约 17,893 downloads／459 likes。官方运行示例面向 4×GB300，独立 NVIDIA Developer Forum 讨论也集中在多卡与 tensor-parallel 部署，尚非消费级 GPU 可直接运行的模型。能力数字仍以 DeepSeek 自报为主，不能据此宣称赶超 closed frontier；当前判断是地端可及性扩大，但消费级硬件的实际差距没有被这次 release 消除；本期尚无项目同时满足开源生态的显著关注度与独立实际验证门槛。</div>
   </div>
 </div>
 
@@ -490,11 +490,10 @@
   </div>
   <div class="card" style="padding: 8px 16px;">
     <div class="compact-item">
-      <div class="compact-title">DeepSeek-V4-Flash-Vision-Exp：多模态 open weights 释出，但不是消费级部署 <span class="date-inline">8/31</span> <span class="tag tag-dev">开发者</span> <span class="tag tag-official">Official</span> <span class="tag tag-landscape">L 候选</span></div>
-      <div class="compact-desc">Hugging Face 模型页显示 MIT license、约 305B 总参数、48 个 safetensors shard，以及独立的 encoding／inference reference；HF API 截至 9/2 约 17,893 downloads／459 likes。独立实际信号来自 NVIDIA Developer Forum 的多卡部署与 tensor-parallel 工程讨论；HN 的 8/31 权重串约 20 点／2 条评论。这个组合足以说明社区已开始尝试，但不足以证明 benchmark 优于 closed frontier；约 168GB 的权重与官方 4×GB300 示例也说明它更接近 server-class open weight，而非 Kevin 的消费级地端路线。<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp">模型页</a>／<a href="https://forums.developer.nvidia.com/t/deepseek-v4-flash-aiden-recipe-from-reddit-1m-token-session-operational-cuda-12-1-tailored-for-dgx-spark-gb10/372268/772">NVIDIA Developer Forum</a>／<a href="https://news.ycombinator.com/item?id=49508372">HN</a>。</div>
+      <div class="compact-title">本期无项目通过开源生态联合门槛</div>
+      <div class="compact-desc">本期没有项目同时满足“显著关注度＋独立实际验证”。DeepSeek-V4-Flash-Vision-Exp <span class="date-inline">8/31</span> 虽有 MIT 权重、模型页下载与 NVIDIA Developer Forum 部署讨论，但社区信号仍不足以纳入本 section；@huggingface/kernels <span class="date-inline">9/1</span> 的官方工程证据也留在“技术突破”，因为 HN 仅约 2 点／1 评论且暂无窗口内第三方端到端验证。两者继续作为观察对象，不把厂商自测或单一低热度讨论包装成生态采用。</div>
     </div>
   </div>
-  <p class="inline-note">筛选说明：@huggingface/kernels 的官方工程证据很强，但本期 HN 仅约 2 点／1 评论，且独立社区关注度不足，故保留在“技术突破”而不硬塞入本 section。</p>
 </div>
 
 <div class="section">
@@ -512,14 +511,14 @@
   <div class="card">
     <div class="card-title">应用场景讨论 <span class="date-inline">9/1—9/2</span></div>
     <div class="card-body">
-      <p>Simon Willison 记录 ChatGPT／Codex app 在本机 runtime cache 中准备 LibreOffice，指向一个更完整的 agent “应用能力层”路线：模型不只调用 API，也会按任务带上可执行的文档处理依赖。HN 讨论串目前约 306 点／142 条评论，用户补充了 macOS 与 Windows 的不同安装时机；这仍是应用架构观察，不代表所有平台都会预装或每次都会下载。<a href="https://simonwillison.net/2026/Sep/1/codex-libreoffice/">原文</a>／<a href="https://news.ycombinator.com/item?id=49527396">HN</a>。</p>
+      <p>Simon Willison 记录 ChatGPT／Codex app 在本机 runtime cache 中准备 LibreOffice，指向一个更完整的 agent “应用能力层”路线：模型不只调用 API，也会按任务带上可执行的文档处理依赖。HN 讨论串目前约 309 点／144 条评论，用户补充了 macOS 与 Windows 的不同安装时机；这仍是应用架构观察，不代表所有平台都会预装或每次都会下载。<a href="https://simonwillison.net/2026/Sep/1/codex-libreoffice/">原文</a>／<a href="https://news.ycombinator.com/item?id=49527396">HN</a>。</p>
     </div>
     <div class="card-meta"><span class="tag tag-geek">极客</span><span class="tag tag-dev">开发者</span><span class="tag tag-commercial">Commercial</span></div>
   </div>
   <div class="card">
     <div class="card-title">评价</div>
     <div class="card-body">
-      <p>Fable 5.1 是本期 Claude Code 的实质变化，但评价应拆成两条：Artificial Analysis 的外部测试显示最高 effort Intelligence Index 66，但 max effort 单任务成本比 Fable 5 高约 20%；HN 约 1,030 点／961 条评论的讨论则集中在输出可读性、长任务 handoff 与 agent “AI-speak”。因此建议先在自己的长上下文、cached-context、subagent 编排任务中做小样本 A/B，不以单一 benchmark 或首日社区印象替换现有默认模型。详见<a href="https://artificialanalysis.ai/articles/claude-fable-5-1">Artificial Analysis</a>／<a href="https://news.ycombinator.com/item?id=49525378">HN</a>。</p>
+      <p>Fable 5.1 是本期 Claude Code 的实质变化，但评价应拆成两条：Artificial Analysis 的外部测试显示最高 effort Intelligence Index 66，但 max effort 单任务成本比 Fable 5 高约 20%；HN 约 1,047 点／970 条评论的讨论则集中在输出可读性、长任务 handoff 与 agent “AI-speak”。因此建议先在自己的长上下文、cached-context、subagent 编排任务中做小样本 A/B，不以单一 benchmark 或首日社区印象替换现有默认模型。详见<a href="https://artificialanalysis.ai/articles/claude-fable-5-1">Artificial Analysis</a>／<a href="https://news.ycombinator.com/item?id=49525378">HN</a>。</p>
     </div>
     <div class="card-meta"><span class="tag tag-geek">极客</span><span class="tag tag-commercial">Commercial</span><span class="tag tag-orche">ORCHE 相关</span></div>
   </div>
