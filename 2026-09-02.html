@@ -377,7 +377,7 @@
     </div>
     <div class="card-body">
       <p>Anthropic 同日发布 Claude Fable 5.1（一般可用）与 Claude Mythos 5.1（仅 trusted access）；两者使用相同模型权重，差别在 safeguards。Fable 5.1 的 cache read 从每百万 token 1 美元降至 0.25 美元，输入／输出标价仍为 10／50 美元；Anthropic 估计一般工作负载成本降约 25%，高度 agentic 工作最高约降 45%。官方表格显示 Terminal-Bench-Science 0.1 为 52.6%，Fable 5 为 24.7%，但这些仍是厂商评测。</p>
-      <p>Artificial Analysis Intelligence Index 给 Fable 5.1 最高 effort 评分 66，暂居其测量榜首；该评测说明约 4% output tokens 来自 Anthropic 的 default fallback，同时指出它因输出 token 量约为 Fable 5 的 1.7 倍，单任务成本反而高约 20%。这意味着“cache 更便宜”不等于“每个复杂任务都更便宜”，应以 Kevin 的真实 agent workload 做对照。配套的 Enterprise Frontier Safeguards（EFS）则把活动数据与自动滥用检测移到客户控制的 cloud account；相关 customer-owned storage、CMK 与 automated review 均为 opt-in，不改变模型行为、API 价格或 rate limit。EFS 预计秋季分阶段推出，合资格企业过渡期可申请 ZDR，但 GA 不等于所有入口／企业立即可用；客户仍承担 cloud storage、读写、egress 与监控成本。</p>
+      <p>Artificial Analysis Intelligence Index 给 Fable 5.1 最高 effort 评分 66，暂居其测量榜首；该评测说明约 4% output tokens 来自 Anthropic 的 default fallback，同时指出它因输出 token 量约为 Fable 5 的 1.7 倍，单任务成本反而高约 20%。这意味着“cache 更便宜”不等于“每个复杂任务都更便宜”，应以 Kevin 的真实 agent workload 做对照。配套的 Enterprise Frontier Safeguards（EFS）则将监测所需活动数据存于客户控制的云账户，由 Anthropic 的自动系统执行检测；相关 customer-owned storage、CMK 与 automated review 均为 opt-in，不改变模型行为、API 价格或 rate limit。EFS 预计秋季分阶段推出，合资格企业过渡期可申请 ZDR，但 GA 不等于所有入口／企业立即可用；客户仍承担 cloud storage、读写、egress 与监控成本。</p>
       <p>依据：<a href="https://www.anthropic.com/claude-fable-and-mythos-5-1">Anthropic 模型公告</a>、<a href="https://www.anthropic.com/news/enterprise-frontier-safeguards">Anthropic EFS 公告</a>、<a href="https://artificialanalysis.ai/articles/claude-fable-5-1">Artificial Analysis 独立评测</a>、<a href="https://techcrunch.com/2026/09/01/anthropics-new-fable-release-is-cheaper-less-restrictive/">TechCrunch</a>；HN 讨论串截至本期约 1,047 点／970 条评论（<a href="https://news.ycombinator.com/item?id=49525378">HN</a>）。</p>
     </div>
     <div class="card-meta">
@@ -504,7 +504,7 @@
   <div class="card">
     <div class="card-title">功能发布 <span class="date-inline">9/1</span></div>
     <div class="card-body">
-      <p><a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.257">v2.1.257</a>：加入 Claude Fable 5.1（1M context、10／50 美元每百万 token、cache read 0.25 美元）、timeFormat／timeZone、auto mode 的 Containment Escape rule、强制 subagent model 的环境变量、`/effort s`、stale sandbox mask 的 `/doctor` 警告，以及大量 Remote Control、MCP、permission、transcript、background session 修复。<a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.258">v2.1.258</a> 紧接着修复 macOS 12 Monterey 启动回归与 remote／scheduled session 的非空消息错误。两版发布时间分别为 9/1 17:53 UTC 与 22:33 UTC。</p>
+      <p><a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.257">v2.1.257</a>：加入 Claude Fable 5.1（1M context、10／50 美元每百万 token、cache read 0.25 美元）、timeFormat／timeZone、auto mode 的 Containment Escape rule、强制 subagent model 的环境变量、在 `/effort` 中新增 `s` 选项，仅调整当前 session、stale sandbox mask 的 `/doctor` 警告，以及大量 Remote Control、MCP、permission、transcript、background session 修复。<a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.258">v2.1.258</a> 紧接着修复 macOS 12 Monterey 启动回归与 permission approval 重送后产生空 user message 的错误。Monterey 修复只坐实 standalone CLI；Desktop-managed build 当时仍可能停在 2.1.255，gateway 未配置 5.1 时 alias 可能仍落到 Fable 5。两版发布时间分别为 9/1 17:53 UTC 与 22:33 UTC。</p>
     </div>
     <div class="card-meta"><span class="tag tag-dev">开发者</span><span class="tag tag-official">Official</span><span class="tag tag-orche">ORCHE 相关</span><span class="tag tag-landscape">L 候选</span></div>
   </div>
